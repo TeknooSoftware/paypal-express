@@ -93,4 +93,9 @@ interface TransportInterface
      * @return int
      */
     public function getApiTimeout();
+
+    public function call()
+    {
+        
+    }
 }

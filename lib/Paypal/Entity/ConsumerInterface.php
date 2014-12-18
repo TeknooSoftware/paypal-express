@@ -1,12 +1,12 @@
 <?php
 
-namespace UniAlteri\Paypal\Express\Service;
+namespace UniAlteri\Paypal\Express\Entity;
 
 /**
  * Interface ConsumerInterface
  * Interface to represent consumer accounts of transactions to get informations
  * for Paypal API
- * @package UniAlteri\Paypal\Express\Service
+ * @package UniAlteri\Paypal\Express\Entity
  */
 interface ConsumerInterface
 {

@@ -4,6 +4,11 @@ namespace UniAlteri\Paypal\Express\Transport;
 
 use Zeroem\CurlBundle\Curl\RequestGenerator;
 
+/**
+ * Class Curl93
+ * Implementation of TransportInterface with Curl library to use the paypal api
+ * @package UniAlteri\Paypal\Express\Transport
+ */
 class Curl93 implements TransportInterface
 {
     /**

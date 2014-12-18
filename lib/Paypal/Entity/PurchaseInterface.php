@@ -1,12 +1,12 @@
 <?php
 
-namespace UniAlteri\Paypal\Express\Service;
+namespace UniAlteri\Paypal\Express\Entity;
 
 /**
  * Interface PurchaseInterface
  * Interface to represent a purchase in the vendor's informations system
  * to communicate data to Paypal API
- * @package UniAlteri\Paypal\Express\Service
+ * @package UniAlteri\Paypal\Express\Entity
  */
 interface PurchaseInterface
 {

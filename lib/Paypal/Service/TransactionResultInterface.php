@@ -2,6 +2,11 @@
 
 namespace UniAlteri\Paypal\Express\Service;
 
+/**
+ * Interface TransactionResultInterface
+ * Interface to define object parsing paypal return
+ * @package UniAlteri\Paypal\Express\Service
+ */
 interface TransactionResultInterface
 {
     /**
