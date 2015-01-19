@@ -14,4 +14,22 @@ interface TransactionResultInterface
      * @return string
      */
     public function getAckValue();
+
+    /**
+     * Return the raw value of the Token field from the paypal API for this transaction
+     * @return string
+     */
+    public function getTokenValue();
+
+    /**
+     * Return the raw value of the PayerId field from the paypal API for this transaction
+     * @return string
+     */
+    public function getPayerIdValue();
+
+    /**
+     * Return raw value from the request
+     * @return mixed
+     */
+    public function getRawValues();
 }

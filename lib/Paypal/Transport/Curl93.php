@@ -65,6 +65,39 @@ class Curl93 implements TransportInterface
     protected $requestGenerator;
 
     /**
+     * @param string|null $userId
+     * @param string|null $password
+     * @param string|null $signature
+     * @param string|null $apiEndPoint
+     * @param string|null $paypalUrl
+     * @param int|null $paypalVersion
+     * @param string|null $bNCode
+     * @param int|null $apiTimeout
+     * @param RequestGenerator|null $requestGenerator
+     */
+    public function __construct(
+        $userId=null,
+        $password=null,
+        $signature=null,
+        $apiEndPoint=null,
+        $paypalUrl=null,
+        $paypalVersion=93,
+        $bNCode='PP-ECWizard',
+        $apiTimeout=60,
+        $requestGenerator=null
+    ) {
+        $this->userId = $userId;
+        $this->password = $password;
+        $this->signature = $signature;
+        $this->apiEndPoint = $apiEndPoint;
+        $this->paypalUrl = $paypalUrl;
+        $this->paypalVersion = $paypalVersion;
+        $this->bNCode = $bNCode;
+        $this->apiTimeout = $apiTimeout;
+        $this->requestGenerator = $requestGenerator;
+    }
+
+    /**
      * Setter to define the user identifier to use with the api to get an access
      * @param string $userId
      * @return $this
@@ -198,5 +231,53 @@ class Curl93 implements TransportInterface
     public function getApiTimeout()
     {
         return $this->apiTimeout;
+    }
+
+    /**
+     * @param string $methodName
+     * @param ArgumentBagInterface $arguments
+     * @return \ArrayAccess
+     */
+    public function call($methodName, $arguments)
+    {
+        $request = $this->requestGenerator->getRequest();
+
+        //setting the curl parameters.
+        $request->setMethod('POST');
+        $request->setOption(CURLOPT_URL, $this->apiEndPoint);
+        $request->setOption(CURLOPT_VERBOSE, true);
+
+        //turning off the server and peer verification(TrustManager Concept).
+        $request->setOption(CURLOPT_SSL_VERIFYPEER, false);
+        $request->setOption(CURLOPT_SSL_VERIFYHOST, 0);
+
+        $request->setOption(CURLOPT_RETURNTRANSFER, true);
+        $request->setOption(CURLOPT_POST, true);
+        $request->setOption(CURLOPT_TIMEOUT, $this->apiTimeout*10);
+        $request->setOption(CURLOPT_CONNECTTIMEOUT, $this->apiTimeout);
+
+        $argumentsArray = [];
+        foreach ($arguments->toArray() as $key=>$value) {
+            $argumentsArray[$key] = $value;
+        }
+
+        //Finalise request with arguments
+        $argumentsArray['METHOD'] = $methodName;
+        $argumentsArray['VERSION'] = $this->paypalVersion;
+        $argumentsArray['PWD'] = $this->password;
+        $argumentsArray['USER'] = $this->userId;
+        $argumentsArray['SIGNATURE'] = $this->signature;
+        $argumentsArray['BUTTONSOURCE'] = $this->bNCode;
+
+        //setting the nvpreq as POST FIELD to curl
+        $request->setOption(CURLOPT_POSTFIELDS, http_build_query($argumentsArray));
+
+        //getting response from server
+        $response = $request->execute();
+
+        //converting request response to an Associative Array
+        $resultArray = array();
+        parse_str(urldecode($response), $resultArray);
+        return new \ArrayObject($resultArray);
     }
 }

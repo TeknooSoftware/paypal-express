@@ -37,9 +37,11 @@ interface ServiceInterface
     /**
      * To confirm an active transaction on the Paypal API and unblock amounts
      * @param string $token
+     * @param string $payerId
+     * @param PurchaseInterface $purchase
      * @return $this
      */
-    public function confirmTransaction($token);
+    public function confirmTransaction($token, $payerId, PurchaseInterface $purchase);
 
     /**
      * To cancel an active transaction on the Paypal API

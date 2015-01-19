@@ -94,8 +94,10 @@ interface TransportInterface
      */
     public function getApiTimeout();
 
-    public function call()
-    {
-        
-    }
+    /**
+     * @param string $methodName
+     * @param ArgumentBagInterface $arguments
+     * @return \ArrayAccess
+     */
+    public function call($methodName, $arguments);
 }
