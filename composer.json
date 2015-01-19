@@ -32,8 +32,7 @@
     "autoload": {
         "psr-4": {
             "UniAlteri\\Paypal\\Express": ["lib/Paypal/"],
-            "UniAlteri\\Tests\\Paypal\\": ["tests/Paypal"],
-            "UniAlteri\\Tests\\Support\\": ["tests/Support"]
+            "UniAlteri\\Tests\\Paypal\\": ["tests/Paypal"]
         }
     },
     "archive": {
