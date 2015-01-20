@@ -16,6 +16,12 @@ interface TransactionResultInterface
     public function getAckValue();
 
     /**
+     * Return a boolean to test if the operation via the api is successful
+     * @return boolean
+     */
+    public function isSuccessful();
+
+    /**
      * Return the raw value of the Token field from the paypal API for this transaction
      * @return string
      */

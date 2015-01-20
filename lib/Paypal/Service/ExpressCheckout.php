@@ -100,7 +100,7 @@ class ExpressCheckout implements ServiceInterface
      * Prepare a transaction via the Paypal API and get the token to identify
      * the transaction and the consumer on the paypal service
      * @param PurchaseInterface $purchase
-     * @return string
+     * @return TransactionResultInterface
      */
     public function generateToken(PurchaseInterface $purchase)
     {
@@ -146,7 +146,7 @@ class ExpressCheckout implements ServiceInterface
      */
     public function prepareTransaction(PurchaseInterface $purchase)
     {
-        return str_replace('{token}', $this->generateToken($purchase), $this->transport->getPaypalUrl());
+        return str_replace('{token}', $this->generateToken($purchase)->getTokenValue(), $this->transport->getPaypalUrl());
     }
 
     /**
@@ -166,7 +166,7 @@ class ExpressCheckout implements ServiceInterface
      * @param string $token
      * @param string $payerId
      * @param PurchaseInterface $purchase
-     * @return $this
+     * @return TransactionResultInterface
      */
     public function confirmTransaction($token, $payerId, PurchaseInterface $purchase)
     {
@@ -183,7 +183,7 @@ class ExpressCheckout implements ServiceInterface
     /**
      * To cancel an active transaction on the Paypal API
      * @param string $token
-     * @return $this
+     * @return TransactionResultInterface
      */
     public function cancelTransaction($token)
     {

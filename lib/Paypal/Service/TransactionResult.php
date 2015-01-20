@@ -38,6 +38,20 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
+     * Return a boolean to test if the operation via the api is successful
+     * @return boolean
+     */
+    public function isSuccessful()
+    {
+        $ack = strtoupper($this->getAckValue());
+        if ('SUCCESS' == $ack || 'SUCCESSWITHWARNING' == $ack) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Return the raw value of the Token field from the paypal API for this transaction
      * @return string
      */
@@ -47,7 +61,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['TOKEN'];
         }
 
-        throw new \RuntimeException('Error, the ACK value is not available in the response');
+        throw new \RuntimeException('Error, the TOCKEN value is not available in the response');
     }
 
     /**
@@ -60,7 +74,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['PAYERID'];
         }
 
-        throw new \RuntimeException('Error, the ACK value is not available in the response');
+        throw new \RuntimeException('Error, the PAYERID value is not available in the response');
     }
 
     /**

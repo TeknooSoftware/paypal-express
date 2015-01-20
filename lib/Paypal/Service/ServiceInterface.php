@@ -15,7 +15,7 @@ interface ServiceInterface
      * Prepare a transaction via the Paypal API and get the token to identify
      * the transaction and the consumer on the paypal service
      * @param PurchaseInterface $purchase
-     * @return string
+     * @return TransactionResultInterface
      */
     public function generateToken(PurchaseInterface $purchase);
 
@@ -39,14 +39,14 @@ interface ServiceInterface
      * @param string $token
      * @param string $payerId
      * @param PurchaseInterface $purchase
-     * @return $this
+     * @return TransactionResultInterface
      */
     public function confirmTransaction($token, $payerId, PurchaseInterface $purchase);
 
     /**
      * To cancel an active transaction on the Paypal API
      * @param string $token
-     * @return $this
+     * @return TransactionResultInterface
      */
     public function cancelTransaction($token);
 }
