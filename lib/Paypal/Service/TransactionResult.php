@@ -78,6 +78,81 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
+     * Return the raw value of the Timestamp field from the paypal API for this transaction
+     * @return string
+     */
+    public function getTimestampValue()
+    {
+        if (isset($this->values['TIMESTAMP'])) {
+            return $this->values['TIMESTAMP'];
+        }
+
+        throw new \RuntimeException('Error, the TIMESTAMP value is not available in the response');
+    }
+
+    /**
+     * Return the raw value of the CorrelationId field from the paypal API for this transaction
+     * @return string
+     */
+    public function getCorrelationIdValue()
+    {
+        if (isset($this->values['CORRELATIONID'])) {
+            return $this->values['CORRELATIONID'];
+        }
+
+        throw new \RuntimeException('Error, the CORRELATIONID value is not available in the response');
+    }
+
+    /**
+     * Return the raw value of the Version field from the paypal API for this transaction
+     * @return string
+     */
+    public function getVersionValue()
+    {
+        if (isset($this->values['VERSION'])) {
+            return $this->values['VERSION'];
+        }
+
+        throw new \RuntimeException('Error, the VERSION value is not available in the response');
+    }
+
+    /**
+     * Return the raw value of the Build field from the paypal API for this transaction
+     * @return string
+     */
+    public function getBuildValue()
+    {
+        if (isset($this->values['PAYERID'])) {
+            return $this->values['PAYERID'];
+        }
+
+        throw new \RuntimeException('Error, the PAYERID value is not available in the response');
+    }
+
+    /**
+     * Return errors from paypal
+     * @return ErrorInterface[]
+     */
+    public function getErrors()
+    {
+        $errorList = [];
+
+        $i = 0;
+        while (isset($this->values['L_ERRORCODE'.$i])) {
+            $errorList[] = new Error(
+                $this->values['L_ERRORCODE'.$i],
+                $this->values['L_SHORTMESSAGE'.$i],
+                $this->values['L_LONGMESSAGE'.$i],
+                $this->values['L_SEVERITYCODE'.$i]
+            );
+
+            $i++;
+        }
+
+        return $errorList;
+    }
+
+    /**
      * Return raw value from the request
      * @return mixed
      */

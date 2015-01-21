@@ -34,6 +34,36 @@ interface TransactionResultInterface
     public function getPayerIdValue();
 
     /**
+     * Return the raw value of the Timestamp field from the paypal API for this transaction
+     * @return string
+     */
+    public function getTimestampValue();
+
+    /**
+     * Return the raw value of the CorrelationId field from the paypal API for this transaction
+     * @return string
+     */
+    public function getCorrelationIdValue();
+
+    /**
+     * Return the raw value of the Version field from the paypal API for this transaction
+     * @return string
+     */
+    public function getVersionValue();
+
+    /**
+     * Return the raw value of the Build field from the paypal API for this transaction
+     * @return string
+     */
+    public function getBuildValue();
+
+    /**
+     * Return errors from paypal
+     * @return ErrorInterface[]
+     */
+    public function getErrors();
+
+    /**
      * Return raw value from the request
      * @return mixed
      */

@@ -278,6 +278,7 @@ class Curl93 implements TransportInterface
         //converting request response to an Associative Array
         $resultArray = array();
         parse_str(urldecode($response), $resultArray);
+
         return new \ArrayObject($resultArray);
     }
 }
