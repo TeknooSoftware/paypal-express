@@ -17,7 +17,7 @@ class Consumer implements ConsumerInterface
      */
     public function getConsumerName()
     {
-        return 'Richard Déloge';
+        return 'Richard Deloge';
     }
 
     /**
@@ -36,7 +36,7 @@ class Consumer implements ConsumerInterface
      */
     public function getShippingExtraAddress()
     {
-        return 'Le Colisée';
+        return 'Le Colisee';
     }
 
     /**
@@ -82,6 +82,6 @@ class Consumer implements ConsumerInterface
      */
     public function getPhone()
     {
-        return '+33123456789';
+        return '0033123456789';
     }
 }
