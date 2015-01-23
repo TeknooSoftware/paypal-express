@@ -22,6 +22,7 @@ interface ArgumentBagInterface
      * @param string $name
      * @param mixed $value
      * @return $this
+     * @throws \InvalidArgumentException when $name is not a string
      */
     public function set($name, $value);
 
@@ -29,6 +30,7 @@ interface ArgumentBagInterface
      * Return an argument defined in the bag
      * @param string $name
      * @return mixed
+     * @throws \InvalidArgumentException when $name is not a string
      */
     public function get($name);
 

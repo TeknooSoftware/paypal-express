@@ -40,9 +40,14 @@ class ArgumentBag implements ArgumentBagInterface
      * @param string $name
      * @param mixed $value
      * @return $this
+     * @throws \InvalidArgumentException when $name is not a string
      */
     public function set($name, $value)
     {
+        if (!is_string($name)) {
+            throw new \InvalidArgumentException('The name is not a string');
+        }
+
         $this->parameters[$name] = $value;
 
         return $this;
@@ -52,9 +57,14 @@ class ArgumentBag implements ArgumentBagInterface
      * Return an argument defined in the bag
      * @param string $name
      * @return mixed
+     * @throws \InvalidArgumentException when $name is not a string
      */
     public function get($name)
     {
+        if (!is_string($name)) {
+            throw new \InvalidArgumentException('The name is not a string');
+        }
+
         if (isset($this->parameters[$name])) {
             return $this->parameters[$name];
         }

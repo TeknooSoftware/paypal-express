@@ -1,7 +1,37 @@
 <?php
-/**
- * Created by PhpStorm.
- * Author : Richard Déloge, richard@uni-alteri.fr, www.uni-alteri.fr
- * Date: 19/01/15
- * Time: 22:50
- */
+
+namespace UniAlteri\Tests\Paypal\Transport;
+
+use UniAlteri\Paypal\Express\Transport\ArgumentBag;
+
+class ArgumentBagTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Generate testable object
+     * @return ArgumentBag
+     */
+    protected function generateObject()
+    {
+        return new ArgumentBag();
+    }
+
+    public function testReset()
+    {
+
+    }
+
+    public function testSet()
+    {
+
+    }
+
+    public function testGet()
+    {
+
+    }
+
+    public function testToArray()
+    {
+
+    }
+}

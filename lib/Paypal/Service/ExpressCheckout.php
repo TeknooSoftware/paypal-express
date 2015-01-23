@@ -197,5 +197,4 @@ class ExpressCheckout implements ServiceInterface
     public function cancelTransaction($token)
     {
     }
-
 }

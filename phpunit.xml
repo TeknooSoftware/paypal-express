@@ -10,8 +10,8 @@
         bootstrap="tests/bootstrap.php"
         colors="true">
     <testsuites>
-        <testsuite name="Uni Alteri/States Test Suite">
-            <directory>tests/UniAlteri/Tests</directory>
+        <testsuite name="Uni Alteri/Paypal Express Test Suite">
+            <directory>tests/Paypal</directory>
         </testsuite>
     </testsuites>
 
