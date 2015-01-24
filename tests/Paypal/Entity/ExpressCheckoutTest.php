@@ -2,6 +2,8 @@
 
 namespace UniAlteri\Tests\Paypal\Entity;
 
+use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
+use UniAlteri\Paypal\Express\Entity\PurchaseInterface;
 use UniAlteri\Paypal\Express\Service\ExpressCheckout;
 use UniAlteri\Paypal\Express\Transport\TransportInterface;
 
@@ -11,6 +13,16 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
      * @var TransportInterface
      */
     protected $transport;
+
+    /**
+     * @var ConsumerInterface
+     */
+    protected $consumer;
+
+    /**
+     * @var PurchaseInterface
+     */
+    protected $purchase;
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|TransportInterface
@@ -31,22 +43,56 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $userId
-     * @param string $password
-     * @param string $signature
-     * @param boolean $sandbox
-     * @param boolean $apiEndPoint
-     * @param boolean $paypalUrl
+     * @return \PHPUnit_Framework_MockObject_MockObject|ConsumerInterface
+     */
+    protected function builConsumerInterfaceMock()
+    {
+        if (!$this->consumer instanceof \PHPUnit_Framework_MockObject_MockObject) {
+            $this->consumer = $this->getMock(
+                'UniAlteri\Paypal\Express\Entity\ConsumerInterface',
+                array(),
+                array(),
+                '',
+                false
+            );
+        }
+
+        return $this->consumer;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|PurchaseInterface
+     */
+    protected function builPurchaseInterfaceMock()
+    {
+        if (!$this->purchase instanceof \PHPUnit_Framework_MockObject_MockObject) {
+            $this->purchase = $this->getMock(
+                'UniAlteri\Paypal\Express\Entity\PurchaseInterface',
+                array(),
+                array(),
+                '',
+                false
+            );
+
+            $this->purchase->expects($this->any())
+                ->method('getConsumer')
+                ->willReturn($this->builConsumerInterfaceMock());
+        }
+
+        return $this->purchase;
+    }
+
+    /**
      * @return ExpressCheckout
      */
-    public function buildService($userId, $password, $signature, $sandbox, $apiEndPoint, $paypalUrl)
+    public function buildService()
     {
         return new ExpressCheckout(
             $this->builTransportInterfaceMock()
         );
     }
 
-    public function testGetTokenWithoutAddress()
+    public function testGenerateTokenWithoutAddress()
     {
         $user = new User();
         $user->setFirstName('prenom');
@@ -128,11 +174,11 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'tokenFake',
             $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->getToken($project, $invoice, 'returnUrl', 'cancelUrl')
+                ->generateToken($project, $invoice, 'returnUrl', 'cancelUrl')
         );
     }
 
-    public function testGetTokenAddress()
+    public function testGenerateTokenAddress()
     {
         $user = new User();
         $user->setFirstName('prenom');
@@ -222,11 +268,11 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'tokenFake',
             $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->getToken($project, $invoice, 'returnUrl', 'cancelUrl')
+                ->generateToken($project, $invoice, 'returnUrl', 'cancelUrl')
         );
     }
 
-    public function testGetTokenAddressNo()
+    public function testGenerateTokenAddressNo()
     {
         $user = new User();
         $user->setFirstName('prenom');
@@ -313,11 +359,11 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse(
             $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->getToken($project, $invoice, 'returnUrl', 'cancelUrl')
+                ->generateToken($project, $invoice, 'returnUrl', 'cancelUrl')
         );
     }
 
-    public function testGetShippingResult()
+    public function testGetTransactionResult()
     {
         $requestMock = $this->getMock(
             '\Zeroem\CurlBundle\Curl\Request',
@@ -375,11 +421,11 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             array('foo'=>'bar'),
             $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->getShippingResult('789456123')
+                ->getTransactionResult('789456123')
         );
     }
 
-    public function testConfirmPayment()
+    public function testConfirmTransaction()
     {
         $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
         $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
@@ -444,756 +490,16 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             array('foo'=>'bar'),
             $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->confirmPayment('789456123', 'aaaa', $invoice)
+                ->confirmTransaction('789456123', 'aaaa', $invoice)
         );
     }
 
-    public function testCheckAndValidatePaymentNoAck()
-    {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
-
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->once())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->once())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody]
-            );
-
-        $requestMock->expects($this->once())
-            ->method('execute')
-            ->willReturn(
-                urlencode(
-                    http_build_query(
-                        array('foo'=>'bar')
-                    )
-                )
-            );
-
-        try {
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->checkAndValidatePayment('789456123', $invoice);
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, if no ack, exception must be throw');
-    }
-
-    public function testCheckAndValidatePaymentNoSuccess()
-    {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
-
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->once())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->once())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody]
-            );
-
-        $requestMock->expects($this->once())
-            ->method('execute')
-            ->willReturn(
-                urlencode(
-                    http_build_query(
-                        array('ACK'=>'No')
-                    )
-                )
-            );
-
-        $this->assertFalse(
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->checkAndValidatePayment('789456123', $invoice)
-        );
-    }
-
-    public function testCheckAndValidatePaymentNoConfirmNoWarningException()
-    {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
-
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->once())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->once())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $exceptedBody2 = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'PAYERID' => 'aaaa',
-                'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE',
-                'PAYMENTREQUEST_0_AMT' => (15000/100),
-                'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
-                'METHOD' => 'DoExpressCheckoutPayment',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody],
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody2]
-            );
-
-        $counter = 0;
-        $requestMock->expects($this->once())
-            ->method('execute')
-            ->willReturn(
-                function () use (&$counter) {
-                    if (0 == $counter++) {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK' => 'SUCCESS', 'PAYERID' => 'aaaa')
-                            )
-                        );
-                    } else {
-                        return urlencode(
-                            http_build_query(
-                                array('foo'=>'bar')
-                            )
-                        );
-                    }
-                }
-            );
-
-        try {
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->checkAndValidatePayment('789456123', $invoice);
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, if no ack, exception must be throw');
-    }
-
-    public function testCheckAndValidatePaymentConfirmNoWarning()
-    {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
-
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->any())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->any())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $exceptedBody2 = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'PAYERID' => 'aaaa',
-                'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE',
-                'PAYMENTREQUEST_0_AMT' => (15000/100),
-                'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
-                'METHOD' => 'DoExpressCheckoutPayment',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody],
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody2]
-            );
-
-        $counter = 0;
-        $requestMock->expects($this->any())
-            ->method('execute')
-            ->willReturnCallback(
-                function () use (&$counter) {
-                    if (0 == $counter++) {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK' => 'SUCCESS', 'PAYERID' => 'aaaa')
-                            )
-                        );
-                    } else {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK'=>'SUCCESS')
-                            )
-                        );
-                    }
-                }
-            );
-
-        $this->assertTrue(
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->checkAndValidatePayment('789456123', $invoice)
-        );
-    }
-
-    public function testCheckAndValidatePaymentConfirmNoWarningWarning()
-    {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
-
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->any())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->any())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $exceptedBody2 = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'PAYERID' => 'aaaa',
-                'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE',
-                'PAYMENTREQUEST_0_AMT' => (15000/100),
-                'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
-                'METHOD' => 'DoExpressCheckoutPayment',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody],
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody2]
-            );
-
-        $counter = 0;
-        $requestMock->expects($this->any())
-            ->method('execute')
-            ->willReturnCallback(
-                function () use (&$counter) {
-                    if (0 == $counter++) {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK' => 'SUCCESS', 'PAYERID' => 'aaaa')
-                            )
-                        );
-                    } else {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK'=>'SUCCESSWITHWARNING')
-                            )
-                        );
-                    }
-                }
-            );
-
-        $this->assertTrue(
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->checkAndValidatePayment('789456123', $invoice)
-        );
-    }
-
-    public function testCheckAndValidatePaymentConfirmWarningWarning()
-    {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
-
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->any())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->any())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $exceptedBody2 = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'PAYERID' => 'aaaa',
-                'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE',
-                'PAYMENTREQUEST_0_AMT' => (15000/100),
-                'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
-                'METHOD' => 'DoExpressCheckoutPayment',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody],
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody2]
-            );
-
-        $counter = 0;
-        $requestMock->expects($this->any())
-            ->method('execute')
-            ->willReturnCallback(
-                function () use (&$counter) {
-                    if (0 == $counter++) {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK' => 'SUCCESSWITHWARNING', 'PAYERID' => 'aaaa')
-                            )
-                        );
-                    } else {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK'=>'SUCCESSWITHWARNING')
-                            )
-                        );
-                    }
-                }
-            );
-
-        $this->assertTrue(
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->checkAndValidatePayment('789456123', $invoice)
-        );
-    }
-
-    public function testCheckAndValidatePaymentConfirmWarningNo()
-    {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
-
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->any())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->any())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $exceptedBody2 = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'PAYERID' => 'aaaa',
-                'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE',
-                'PAYMENTREQUEST_0_AMT' => (15000/100),
-                'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
-                'METHOD' => 'DoExpressCheckoutPayment',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody],
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody2]
-            );
-
-        $counter = 0;
-        $requestMock->expects($this->any())
-            ->method('execute')
-            ->willReturnCallback(
-                function () use (&$counter) {
-                    if (0 == $counter++) {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK' => 'SUCCESSWITHWARNING', 'PAYERID' => 'aaaa')
-                            )
-                        );
-                    } else {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK'=>'NO')
-                            )
-                        );
-                    }
-                }
-            );
-
-        $this->assertFalse(
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->checkAndValidatePayment('789456123', $invoice)
-        );
-    }
-
-    public function testCheckAndValidatePaymentConfirmWarningException()
-    {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
-
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->any())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->any())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $exceptedBody2 = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'PAYERID' => 'aaaa',
-                'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE',
-                'PAYMENTREQUEST_0_AMT' => (15000/100),
-                'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
-                'METHOD' => 'DoExpressCheckoutPayment',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody],
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody2]
-            );
-
-        $counter = 0;
-        $requestMock->expects($this->any())
-            ->method('execute')
-            ->willReturnCallback(
-                function () use (&$counter) {
-                    if (0 == $counter++) {
-                        return urlencode(
-                            http_build_query(
-                                array('ACK' => 'SUCCESSWITHWARNING', 'PAYERID' => 'aaaa')
-                            )
-                        );
-                    } else {
-                        return urlencode(
-                            http_build_query(
-                                array('foo'=>'bar')
-                            )
-                        );
-                    }
-                }
-            );
-
-        try {
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->checkAndValidatePayment('789456123', $invoice);
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, exception not throwed');
-    }
-
-    public function testGeneratePaypalUrl()
+    public function testPrepareTransaction()
     {
         $this->assertEquals(
             'http://paypalUrl/789456123/aaa',
             $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'http://paypalUrl/{token}/aaa')
-                ->generatePaypalUrl('789456123')
+                ->prepareTransaction('789456123')
         );
     }
 }

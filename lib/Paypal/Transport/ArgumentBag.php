@@ -74,7 +74,7 @@ class ArgumentBag implements ArgumentBagInterface
 
     /**
      * Return the list of argument as an array object
-     * @return \ArrayAccess
+     * @return \ArrayAccess|\Countable
      */
     public function toArray()
     {
