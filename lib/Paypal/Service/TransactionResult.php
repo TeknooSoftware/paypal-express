@@ -122,11 +122,11 @@ class TransactionResult implements TransactionResultInterface
      */
     public function getBuildValue()
     {
-        if (isset($this->values['PAYERID'])) {
-            return $this->values['PAYERID'];
+        if (isset($this->values['BUILD'])) {
+            return $this->values['BUILD'];
         }
 
-        throw new \RuntimeException('Error, the PAYERID value is not available in the response');
+        throw new \RuntimeException('Error, the BUILD value is not available in the response');
     }
 
     /**

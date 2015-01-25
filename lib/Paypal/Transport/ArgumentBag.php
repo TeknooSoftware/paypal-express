@@ -17,9 +17,12 @@ class ArgumentBag implements ArgumentBagInterface
     /**
      * To initialize this bag
      */
-    public function __construct()
+    public function __construct($parameters=null)
     {
         $this->reset();
+        if (!empty($parameters)) {
+            $this->parameters->exchangeArray($parameters);
+        }
     }
 
     /**

@@ -145,7 +145,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCorrelationIdValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['CORRELATION' => 'fooBar'])->getCorrelationIdValue());
+        $this->assertEquals('fooBar', $this->generateObject(['CORRELATIONID' => 'fooBar'])->getCorrelationIdValue());
     }
 
     /**
@@ -284,6 +284,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRawValues()
     {
-        $this->assertEquals(['foo' => 'bar', 'hello' => 'world'], $this->generateObject(['foo' => 'bar', 'hello' => 'world'])->getErrors());
+        $array = $this->generateObject(['foo' => 'bar', 'hello' => 'world'])->getRawValues();
+        $this->assertEquals(['foo' => 'bar', 'hello' => 'world'], $array);
     }
 }

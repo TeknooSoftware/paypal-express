@@ -98,6 +98,9 @@ class ExpressCheckout implements ServiceInterface
     }
 
     /**
+     * @param PurchaseInterface $purchase
+     * @return TransactionResultInterface
+     * @throws \Exception
      * Prepare a transaction via the Paypal API and get the token to identify
      * the transaction and the consumer on the paypal service
      * @param PurchaseInterface $purchase
