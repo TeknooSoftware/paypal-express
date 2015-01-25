@@ -2,6 +2,7 @@
 
 namespace UniAlteri\Paypal\Express\Service;
 
+use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
 use UniAlteri\Paypal\Express\Entity\PurchaseInterface;
 use UniAlteri\Paypal\Express\Transport\ArgumentBag;
 use UniAlteri\Paypal\Express\Transport\TransportInterface;
@@ -101,10 +102,15 @@ class ExpressCheckout implements ServiceInterface
      * the transaction and the consumer on the paypal service
      * @param PurchaseInterface $purchase
      * @return TransactionResultInterface
+     * @throws \RuntimeException if the purchase object is invalid
      */
     public function generateToken(PurchaseInterface $purchase)
     {
         $user = $purchase->getConsumer();
+
+        if (!$user instanceof ConsumerInterface) {
+            throw new \RuntimeException('Error, invalid consumer');
+        }
 
         $requestParams = new ArgumentBag();
 

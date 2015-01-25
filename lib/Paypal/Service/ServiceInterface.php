@@ -16,6 +16,7 @@ interface ServiceInterface
      * the transaction and the consumer on the paypal service
      * @param PurchaseInterface $purchase
      * @return TransactionResultInterface
+     * @throws \RuntimeException if the purchase object is invalid
      */
     public function generateToken(PurchaseInterface $purchase);
 

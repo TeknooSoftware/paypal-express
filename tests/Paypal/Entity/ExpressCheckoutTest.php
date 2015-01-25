@@ -45,7 +45,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|ConsumerInterface
      */
-    protected function builConsumerInterfaceMock()
+    protected function buildConsumerInterfaceMock()
     {
         if (!$this->consumer instanceof \PHPUnit_Framework_MockObject_MockObject) {
             $this->consumer = $this->getMock(
@@ -63,7 +63,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|PurchaseInterface
      */
-    protected function builPurchaseInterfaceMock()
+    protected function buildPurchaseInterfaceMock()
     {
         if (!$this->purchase instanceof \PHPUnit_Framework_MockObject_MockObject) {
             $this->purchase = $this->getMock(
@@ -73,10 +73,6 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 '',
                 false
             );
-
-            $this->purchase->expects($this->any())
-                ->method('getConsumer')
-                ->willReturn($this->builConsumerInterfaceMock());
         }
 
         return $this->purchase;
@@ -90,6 +86,38 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         return new ExpressCheckout(
             $this->builTransportInterfaceMock()
         );
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|ConsumerInterface
+     */
+    protected function setIdentityToConsumer()
+    {
+        $consumer = $this->buildConsumerInterfaceMock();
+
+        $this->buildPurchaseInterfaceMock()->expects($this->any())
+            ->method('getConsumer')
+            ->willReturn($consumer);
+
+        $consumer->expects($this->any())
+            ->method('getConsumerName')
+            ->willReturn('Roger Rabbit');
+
+        $consumer->expects($this->any())
+            ->method('getPhone')
+            ->willReturn('0102030405');
+
+        return $consumer;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|ConsumerInterface
+     */
+    protected function setAddressToConsumer()
+    {
+        $consumer = $this->setIdentityToConsumer();
+
+        return $consumer;
     }
 
     public function testGenerateTokenWithoutAddress()
