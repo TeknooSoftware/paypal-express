@@ -148,9 +148,8 @@ class ExpressCheckout implements ServiceInterface
 
         if (!$result->isSuccessful()) {
             $errors = $result->getErrors();
-            foreach ($errors as $error) {
-                throw new \Exception($error->getShortMessage().' : '.$error->getLongMessage());
-            }
+            $error = $errors[0];
+            throw new \Exception($error->getShortMessage().' : '.$error->getLongMessage());
         }
 
         return $result;

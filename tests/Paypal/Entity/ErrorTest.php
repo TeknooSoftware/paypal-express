@@ -54,4 +54,12 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->generateError()->getSeverity());
         $this->assertEquals('fooBar', $this->generateError(null, null, null, 'fooBar')->getSeverity());
     }
+
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\Error::__construct()
+     */
+    public function testConstruct()
+    {
+        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\Error', $this->generateError('code', 'sort', 'long', 'fooBar'));
+    }
 }

@@ -38,6 +38,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 '',
                 false
             );
+
+            $this->transport->expects($this->any())
+                ->method('getPaypalUrl')
+                ->willReturn('http://paypalUrl/{token}');
         }
 
         return $this->transport;
@@ -163,6 +167,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         return $purchase;
     }
 
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @throws \Exception
+     */
     public function testGenerateTokenWithoutAddress()
     {
         $exceptedBody = array(
@@ -194,10 +202,15 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->generateToken($this->setPurchase());
 
+        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
         $this->assertTrue($result->isSuccessful());
         $this->assertEquals('tokenFake', $result->getTokenValue());
     }
 
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @throws \Exception
+     */
     public function testGenerateTokenAddress()
     {
         $exceptedBody = array(
@@ -235,10 +248,14 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->generateToken($this->setPurchase());
 
+        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
         $this->assertTrue($result->isSuccessful());
         $this->assertEquals('tokenFake', $result->getTokenValue());
     }
 
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     */
     public function testGenerateTokenAddressFailure()
     {
         $exceptedBody = array(
@@ -286,143 +303,113 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $this->fail('Error, on bad return must throws exception');
     }
 
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getTransactionResult()
+     */
     public function testGetTransactionResult()
     {
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
+        $exceptedBody = array(
+            'TOKEN' => 'fakeToken'
         );
 
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->once())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->once())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'METHOD' => 'GetExpressCheckoutDetails',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody]
+        $this->builTransportInterfaceMock()
+            ->expects($this->once())
+            ->method('call')
+            ->willReturnCallback(
+                function ($name, $args) use (&$exceptedBody) {
+                    $this->assertEquals('GetExpressCheckoutDetails', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    return array(
+                        'ACK' => 'SUCCESS',
+                        'PAYERID' => 'idFake'
+                    );
+                }
             );
 
-        $requestMock->expects($this->once())
-            ->method('execute')
-            ->willReturn(
-                urlencode(
-                    http_build_query(
-                        array('foo'=>'bar')
-                    )
-                )
-            );
+        $this->setAddressToConsumer();
+        $result = $this->buildService()
+            ->getTransactionResult('fakeToken');
 
-        $this->assertEquals(
-            array('foo'=>'bar'),
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->getTransactionResult('789456123')
-        );
+        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+        $this->assertTrue($result->isSuccessful());
+        $this->assertEquals('idFake', $result->getPayerIdValue());
     }
 
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::confirmTransaction()
+     */
     public function testConfirmTransaction()
     {
-        $invoice = $this->getMock('Areha\ProRt2012Bundle\Entity\Invoice', ['computeTTC', 'getUser'], [], '', false);
-        $invoice->expects($this->any())->method('computeTTC')->willReturn(15000);
-
-        $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
+        $exceptedBody = array(
+            'TOKEN' => 'fakeToken',
+            'PAYERID' => 'fakeId',
+            'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale', //Sale, Authorization, Order
+            'PAYMENTREQUEST_0_AMT' => 150.12,
+            'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
         );
 
-        $curlMock = $this->builRequestGeneratorMock();
-        $curlMock->expects($this->once())
-            ->method('getRequest')
-            ->willReturn($requestMock);
-
-        $requestMock->expects($this->once())
-            ->method('setMethod')
-            ->with('POST');
-
-        $exceptedBody = http_build_query(
-            array(
-                'TOKEN' => '789456123',
-                'PAYERID' => 'aaaa',
-                'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE',
-                'PAYMENTREQUEST_0_AMT' => (15000/100),
-                'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
-                'METHOD' => 'DoExpressCheckoutPayment',
-                'VERSION' => 93,
-                'PWD' => 'pwd',
-                'USER' => '123',
-                'SIGNATURE' => 'azer',
-                'BUTTONSOURCE' => 'PP-ECWizard'
-            )
-        );
-
-        $requestMock->expects($this->any())
-            ->method('setOption')
-            ->withConsecutive(
-                [CURLOPT_URL,'endPointFake'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,60*10],
-                [CURLOPT_CONNECTTIMEOUT,60],
-                [CURLOPT_POSTFIELDS,$exceptedBody]
+        $this->builTransportInterfaceMock()
+            ->expects($this->once())
+            ->method('call')
+            ->willReturnCallback(
+                function ($name, $args) use (&$exceptedBody) {
+                    $this->assertEquals('DoExpressCheckoutPayment', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    return array(
+                        'ACK' => 'SUCCESS',
+                    );
+                }
             );
 
-        $requestMock->expects($this->once())
-            ->method('execute')
-            ->willReturn(
-                urlencode(
-                    http_build_query(
-                        array('foo'=>'bar')
-                    )
-                )
-            );
+        $this->setAddressToConsumer();
+        $result = $this->buildService()
+            ->confirmTransaction('fakeToken', 'fakeId', $this->setPurchase());
 
-        $this->assertEquals(
-            array('foo'=>'bar'),
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'paypalUrl')
-                ->confirmTransaction('789456123', 'aaaa', $invoice)
-        );
+        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+        $this->assertTrue($result->isSuccessful());
     }
 
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::prepareTransaction()
+     */
     public function testPrepareTransaction()
     {
+        $exceptedBody = array(
+            'PAYMENTREQUEST_0_AMT' => 150.12,
+            'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale', //Sale, Authorization, Order
+            'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
+            'ADDROVERRIDE' => 1,
+            'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
+            'PAYMENTREQUEST_0_SHIPTOSTREET' => 'adr1',
+            'PAYMENTREQUEST_0_SHIPTOZIP' => 14000,
+            'PAYMENTREQUEST_0_SHIPTOCITY' => 'Caen',
+            'PAYMENTREQUEST_0_SHIPTOSTATE' => '',
+            'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'FR',
+            'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
+            'RETURNURL' => 'http://teknoo.it',
+            'CANCELURL' => 'http://teknoo.it/cancel',
+            'PAYMENTREQUEST_0_SHIPTOSTREET2' => null
+        );
+
+        $this->builTransportInterfaceMock()
+            ->expects($this->once())
+            ->method('call')
+            ->willReturnCallback(
+                function ($name, $args) use (&$exceptedBody) {
+                    $this->assertEquals('SetExpressCheckout', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    return array(
+                        'ACK' => 'SUCCESS',
+                        'TOKEN' => 'tokenFake'
+                    );
+                }
+            );
+
+        $this->setAddressToConsumer();
         $this->assertEquals(
-            'http://paypalUrl/789456123/aaa',
+            'http://paypalUrl/tokenFake',
             $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'http://paypalUrl/{token}/aaa')
-                ->prepareTransaction('789456123')
+                ->prepareTransaction($this->setPurchase())
         );
     }
 }

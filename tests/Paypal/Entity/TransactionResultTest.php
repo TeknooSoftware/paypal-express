@@ -17,6 +17,14 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::__construct()
+     */
+    public function testConstruct()
+    {
+        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResult', $this->generateObject([]));
+    }
+
+    /**
      * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getAckValue()
      */
     public function testGetAckValueFailure()
@@ -57,7 +65,9 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsSuccessful()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['ACK' => 'fooBar'])->getAckValue());
+        $this->assertFalse($this->generateObject(['ACK' => 'fooBar'])->isSuccessful());
+        $this->assertTrue($this->generateObject(['ACK' => 'SUCCESS'])->isSuccessful());
+        $this->assertTrue($this->generateObject(['ACK' => 'SUCCESSWITHWARNING'])->isSuccessful());
     }
 
     /**
@@ -79,7 +89,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTokenValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['ACK' => 'fooBar'])->getAckValue());
+        $this->assertEquals('fooBar', $this->generateObject(['TOKEN' => 'fooBar'])->getTokenValue());
     }
 
     /**
