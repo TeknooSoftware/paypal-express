@@ -17,6 +17,7 @@ interface ServiceInterface
      * @param PurchaseInterface $purchase
      * @return TransactionResultInterface
      * @throws \RuntimeException if the purchase object is invalid
+     * @throws \Exception
      */
     public function generateToken(PurchaseInterface $purchase);
 
@@ -43,11 +44,4 @@ interface ServiceInterface
      * @return TransactionResultInterface
      */
     public function confirmTransaction($token, $payerId, PurchaseInterface $purchase);
-
-    /**
-     * To cancel an active transaction on the Paypal API
-     * @param string $token
-     * @return TransactionResultInterface
-     */
-    public function cancelTransaction($token);
 }

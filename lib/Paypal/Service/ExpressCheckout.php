@@ -98,14 +98,12 @@ class ExpressCheckout implements ServiceInterface
     }
 
     /**
-     * @param PurchaseInterface $purchase
-     * @return TransactionResultInterface
-     * @throws \Exception
      * Prepare a transaction via the Paypal API and get the token to identify
      * the transaction and the consumer on the paypal service
      * @param PurchaseInterface $purchase
      * @return TransactionResultInterface
      * @throws \RuntimeException if the purchase object is invalid
+     * @throws \Exception
      */
     public function generateToken(PurchaseInterface $purchase)
     {
@@ -195,14 +193,5 @@ class ExpressCheckout implements ServiceInterface
         $arguments->set('PAYMENTREQUEST_0_CURRENCYCODE', $this->getValidCurrencyCode($purchase->getCurrencyCode()));
 
         return $this->buildTransactionResultObject($this->transport->call('DoExpressCheckoutPayment', $arguments));
-    }
-
-    /**
-     * To cancel an active transaction on the Paypal API
-     * @param string $token
-     * @return TransactionResultInterface
-     */
-    public function cancelTransaction($token)
-    {
     }
 }
