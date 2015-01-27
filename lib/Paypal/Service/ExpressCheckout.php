@@ -61,7 +61,7 @@ class ExpressCheckout implements ServiceInterface
             case 'THB':
             case 'TRY':
             case 'USD':
-                return $currencyCode;
+                return strtoupper($currencyCode);
                 break;
             default:
                 throw new \DomainException('Error, the payment action is not valid');
@@ -80,7 +80,7 @@ class ExpressCheckout implements ServiceInterface
             case 'SALE':
             case 'AUTHORIZATION':
             case 'ORDER':
-                return $paymentAction;
+                return strtoupper($paymentAction);
                 break;
             default:
                 throw new \DomainException('Error, the payment action is not valid');
@@ -92,7 +92,7 @@ class ExpressCheckout implements ServiceInterface
      * @param array|\ArrayAccess $result
      * @return TransactionResultInterface
      */
-    protected function buildTransactionResultObjectt($result)
+    protected function buildTransactionResultObject($result)
     {
         return new TransactionResult($result);
     }
@@ -144,7 +144,7 @@ class ExpressCheckout implements ServiceInterface
 
         $requestParams->set('PAYMENTREQUEST_0_SHIPTOPHONENUM', $user->getPhone());
 
-        $result = $this->buildTransactionResultObjectt($this->transport->call('SetExpressCheckout', $requestParams));
+        $result = $this->buildTransactionResultObject($this->transport->call('SetExpressCheckout', $requestParams));
 
         if (!$result->isSuccessful()) {
             $errors = $result->getErrors();
@@ -175,7 +175,7 @@ class ExpressCheckout implements ServiceInterface
     {
         $arguments = new ArgumentBag();
         $arguments->set('TOKEN', $token);
-        return $this->buildTransactionResultObjectt($this->transport->call('GetExpressCheckoutDetails', $arguments));
+        return $this->buildTransactionResultObject($this->transport->call('GetExpressCheckoutDetails', $arguments));
     }
 
     /**
@@ -194,7 +194,7 @@ class ExpressCheckout implements ServiceInterface
         $arguments->set('PAYMENTREQUEST_0_AMT', $purchase->getAmount());
         $arguments->set('PAYMENTREQUEST_0_CURRENCYCODE', $this->getValidCurrencyCode($purchase->getCurrencyCode()));
 
-        return $this->buildTransactionResultObjectt($this->transport->call('DoExpressCheckoutPayment', $arguments));
+        return $this->buildTransactionResultObject($this->transport->call('DoExpressCheckoutPayment', $arguments));
     }
 
     /**

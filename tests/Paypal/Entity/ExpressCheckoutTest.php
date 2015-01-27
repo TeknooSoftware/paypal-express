@@ -140,7 +140,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|PurchaseInterface
      */
-    protected function setPurchase()
+    protected function setPurchase($currency='EUR', $operation='SALE')
     {
         $purchase =$this->buildPurchaseInterfaceMock();
 
@@ -150,7 +150,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
         $purchase->expects($this->any())
             ->method('getPaymentAction')
-            ->willReturn('Sale');
+            ->willReturn($operation);
 
         $purchase->expects($this->any())
             ->method('getReturnUrl')
@@ -162,20 +162,32 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
         $purchase->expects($this->any())
             ->method('getCurrencyCode')
-            ->willReturn('EUR');
+            ->willReturn($currency);
 
         return $purchase;
     }
 
+
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::__construct()
+     */
+    public function testConstruct()
+    {
+        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\ExpressCheckout', $this->buildService());
+    }
+
     /**
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      * @throws \Exception
      */
     public function testGenerateTokenWithoutAddress()
     {
         $exceptedBody = array(
             'PAYMENTREQUEST_0_AMT' => 150.12,
-            'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale', //Sale, Authorization, Order
+            'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
             'ADDROVERRIDE' => 1,
             'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
@@ -209,13 +221,16 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      * @throws \Exception
      */
     public function testGenerateTokenAddress()
     {
         $exceptedBody = array(
             'PAYMENTREQUEST_0_AMT' => 150.12,
-            'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale', //Sale, Authorization, Order
+            'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
             'ADDROVERRIDE' => 1,
             'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
@@ -255,12 +270,195 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @throws \Exception
+     */
+    public function testGenerateTokenAddressCurrency()
+    {
+        $currencies = ['AUD', 'BRL', 'CAD', 'CZK', 'DKK', 'EUR', 'HKD', 'HUF', 'ILS', 'JPY', 'MYR', 'MXN', 'NOK', 'NZD', 'PHP', 'PLN', 'GBP', 'RUB', 'SGD', 'SEK', 'CHF', 'TWD', 'THB', 'TRY', 'USD'];
+
+        foreach ($currencies as $currency) {
+            $this->purchase = null;
+            $this->consumer = null;
+            $this->transport = null;
+            $exceptedBody = array(
+                'PAYMENTREQUEST_0_AMT' => 150.12,
+                'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
+                'PAYMENTREQUEST_0_CURRENCYCODE' => $currency,
+                'ADDROVERRIDE' => 1,
+                'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
+                'PAYMENTREQUEST_0_SHIPTOSTREET' => 'adr1',
+                'PAYMENTREQUEST_0_SHIPTOZIP' => 14000,
+                'PAYMENTREQUEST_0_SHIPTOCITY' => 'Caen',
+                'PAYMENTREQUEST_0_SHIPTOSTATE' => '',
+                'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'FR',
+                'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
+                'RETURNURL' => 'http://teknoo.it',
+                'CANCELURL' => 'http://teknoo.it/cancel',
+                'PAYMENTREQUEST_0_SHIPTOSTREET2' => null
+            );
+
+            $this->builTransportInterfaceMock()
+                ->expects($this->any())
+                ->method('call')
+                ->willReturnCallback(
+                    function ($name, $args) use (&$exceptedBody) {
+                        $this->assertEquals('SetExpressCheckout', $name);
+                        $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                        return array(
+                            'ACK' => 'SUCCESS',
+                            'TOKEN' => 'tokenFake'
+                        );
+                    }
+                );
+
+            $this->setAddressToConsumer();
+            $result = $this->buildService()
+                ->generateToken($this->setPurchase($currency));
+
+            $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+            $this->assertTrue($result->isSuccessful());
+            $this->assertEquals('tokenFake', $result->getTokenValue());
+        }
+    }
+
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @throws \Exception
+     */
+    public function testGenerateTokenAddressBadCurrency()
+    {
+        $this->builTransportInterfaceMock()
+            ->expects($this->never())
+            ->method('call');
+
+        $this->setAddressToConsumer();
+        try {
+            $this->buildService()->generateToken($this->setPurchase('BAD'));
+        } catch (\DomainException $e) {
+            return;
+        } catch (\Exception $e) {
+        }
+
+        $this->fail('Error, the service must throws exception when the currency is not accepted');
+    }
+
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @throws \Exception
+     */
+    public function testGenerateTokenAddressOperation()
+    {
+        $operations = ['SALE', 'AUTHORIZATION', 'ORDER'];
+
+        foreach ($operations as $operation) {
+            $this->purchase = null;
+            $this->consumer = null;
+            $this->transport = null;
+            $exceptedBody = array(
+                'PAYMENTREQUEST_0_AMT' => 150.12,
+                'PAYMENTREQUEST_0_PAYMENTACTION' => $operation, //SALE, Authorization, Order
+                'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
+                'ADDROVERRIDE' => 1,
+                'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
+                'PAYMENTREQUEST_0_SHIPTOSTREET' => 'adr1',
+                'PAYMENTREQUEST_0_SHIPTOZIP' => 14000,
+                'PAYMENTREQUEST_0_SHIPTOCITY' => 'Caen',
+                'PAYMENTREQUEST_0_SHIPTOSTATE' => '',
+                'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'FR',
+                'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
+                'RETURNURL' => 'http://teknoo.it',
+                'CANCELURL' => 'http://teknoo.it/cancel',
+                'PAYMENTREQUEST_0_SHIPTOSTREET2' => null
+            );
+
+            $this->builTransportInterfaceMock()
+                ->expects($this->any())
+                ->method('call')
+                ->willReturnCallback(
+                    function ($name, $args) use (&$exceptedBody) {
+                        $this->assertEquals('SetExpressCheckout', $name);
+                        $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                        return array(
+                            'ACK' => 'SUCCESS',
+                            'TOKEN' => 'tokenFake'
+                        );
+                    }
+                );
+
+            $this->setAddressToConsumer();
+            $result = $this->buildService()
+                ->generateToken($this->setPurchase('EUR', $operation));
+
+            $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+            $this->assertTrue($result->isSuccessful());
+            $this->assertEquals('tokenFake', $result->getTokenValue());
+        }
+    }
+
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @throws \Exception
+     */
+    public function testGenerateTokenAddressBadOperation()
+    {
+        $this->builTransportInterfaceMock()
+            ->expects($this->never())
+            ->method('call');
+
+        $this->setAddressToConsumer();
+        try {
+            $this->buildService()->generateToken($this->setPurchase('EUR', 'BAD'));
+        } catch (\DomainException $e) {
+            return;
+        } catch (\Exception $e) {
+        }
+
+        $this->fail('Error, the service must throws exception when the currency is not accepted');
+    }
+
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     */
+    public function testGenerateTokenBadConsumer()
+    {
+        $this->builTransportInterfaceMock()
+            ->expects($this->never())
+            ->method('call');
+
+        try {
+            $this->buildService()->generateToken($this->setPurchase());
+        } catch (\RuntimeException $e) {
+            return;
+        } catch (\Exception $e) {
+
+        }
+
+        $this->fail('Error, If no consumer object are provided by the purchase object, the service must throw an exception');
+    }
+
+    /**
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      */
     public function testGenerateTokenAddressFailure()
     {
         $exceptedBody = array(
             'PAYMENTREQUEST_0_AMT' => 150.12,
-            'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale', //Sale, Authorization, Order
+            'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
             'ADDROVERRIDE' => 1,
             'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
@@ -305,6 +503,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getTransactionResult()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testGetTransactionResult()
     {
@@ -337,13 +536,14 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::confirmTransaction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testConfirmTransaction()
     {
         $exceptedBody = array(
             'TOKEN' => 'fakeToken',
             'PAYERID' => 'fakeId',
-            'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale', //Sale, Authorization, Order
+            'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_AMT' => 150.12,
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
         );
@@ -371,12 +571,13 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::prepareTransaction()
+     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testPrepareTransaction()
     {
         $exceptedBody = array(
             'PAYMENTREQUEST_0_AMT' => 150.12,
-            'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale', //Sale, Authorization, Order
+            'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
             'ADDROVERRIDE' => 1,
             'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
