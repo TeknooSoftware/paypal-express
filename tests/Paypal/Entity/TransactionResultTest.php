@@ -17,9 +17,7 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
-namespace UniAlteri\Tests\Paypal\Entity;
+namespace UniAlteri\tests\Paypal\Entity;
 
 use UniAlteri\Paypal\Express\Service\TransactionResult;
 
@@ -36,7 +34,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Generate testable object
-     * @param array $param
+     * @param  array             $param
      * @return TransactionResult
      */
     protected function generateObject($param)
@@ -248,7 +246,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
                 'L_ERRORCODE0' => 'err1',
                 'L_SHORTMESSAGE0' => 'shortMess',
                 'L_LONGMESSAGE0' => 'longMess',
-                'L_SEVERITYCODE0' => 'warning'
+                'L_SEVERITYCODE0' => 'warning',
             ]
         )->getErrors();
 
@@ -274,7 +272,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
                 'L_LONGMESSAGE0' => 'longMess',
                 'L_LONGMESSAGE1' => 'longMess2',
                 'L_SEVERITYCODE0' => 'warning',
-                'L_SEVERITYCODE1' => 'warning2'
+                'L_SEVERITYCODE1' => 'warning2',
             ]
         )->getErrors();
 
@@ -305,7 +303,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
                 'L_LONGMESSAGE0' => 'longMess',
                 'L_LONGMESSAGE3' => 'longMess2',
                 'L_SEVERITYCODE0' => 'warning',
-                'L_SEVERITYCODE3' => 'warning2'
+                'L_SEVERITYCODE3' => 'warning2',
             ]
         )->getErrors();
 

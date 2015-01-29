@@ -17,8 +17,6 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
 namespace UniAlteri\Paypal\Express\Transport;
 
 /**
@@ -35,7 +33,7 @@ interface TransportInterface
 {
     /**
      * Setter to define the user identifier to use with the api to get an access
-     * @param string $userId
+     * @param  string $userId
      * @return $this
      */
     public function setUserId($userId);
@@ -48,7 +46,7 @@ interface TransportInterface
 
     /**
      * Setter to define the password to use with the api to get an access
-     * @param string $password
+     * @param  string $password
      * @return $this
      */
     public function setPassword($password);
@@ -61,7 +59,7 @@ interface TransportInterface
 
     /**
      * Setter to define the user's signature to usee with the api to get an access
-     * @param string $signature
+     * @param  string $signature
      * @return $this
      */
     public function setSignature($signature);
@@ -74,7 +72,7 @@ interface TransportInterface
 
     /**
      * Setter to define the API End point to use for next transactions
-     * @param string $apiEndPoint
+     * @param  string $apiEndPoint
      * @return $this
      */
     public function setApiEndPoint($apiEndPoint);
@@ -87,7 +85,7 @@ interface TransportInterface
 
     /**
      * Setter to define the url to contact the Paypal api
-     * @param string $url
+     * @param  string $url
      * @return $this
      */
     public function setPaypalUrl($url);
@@ -107,7 +105,7 @@ interface TransportInterface
     /**
      * Setter to define the timeout accepted by the transport to close the transaction when the api
      * could not respond
-     * @param int $second
+     * @param  int   $second
      * @return $this
      */
     public function setApiTimeout($second);
@@ -119,8 +117,8 @@ interface TransportInterface
     public function getApiTimeout();
 
     /**
-     * @param string $methodName
-     * @param ArgumentBagInterface $arguments
+     * @param  string               $methodName
+     * @param  ArgumentBagInterface $arguments
      * @return \ArrayAccess
      */
     public function call($methodName, $arguments);

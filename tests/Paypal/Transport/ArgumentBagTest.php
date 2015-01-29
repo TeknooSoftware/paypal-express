@@ -17,9 +17,7 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
-namespace UniAlteri\Tests\Paypal\Transport;
+namespace UniAlteri\tests\Paypal\Transport;
 
 use UniAlteri\Paypal\Express\Transport\ArgumentBag;
 
@@ -38,7 +36,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
      * Generate testable object
      * @return ArgumentBag
      */
-    protected function generateObject($args=null)
+    protected function generateObject($args = null)
     {
         return new ArgumentBag($args);
     }
@@ -76,7 +74,6 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
         } catch (\InvalidArgumentException $e) {
             return;
         } catch (\Exception $e) {
-
         }
 
         $this->fail('Error, if the key name is not a string, the object must throws an exception');
@@ -105,7 +102,6 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
         } catch (\InvalidArgumentException $e) {
             return;
         } catch (\Exception $e) {
-
         }
 
         $this->fail('Error, if the key name is not a string, the object must throws an exception');
@@ -122,7 +118,6 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
         } catch (\RuntimeException $e) {
             return;
         } catch (\Exception $e) {
-
         }
 
         $this->fail('Error, if the key name does not exist the object must throws an exception');

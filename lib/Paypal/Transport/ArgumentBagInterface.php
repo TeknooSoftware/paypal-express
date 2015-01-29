@@ -17,8 +17,6 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
 namespace UniAlteri\Paypal\Express\Transport;
 
 /**
@@ -43,8 +41,8 @@ interface ArgumentBagInterface
     /**
      * Define an argument in the bag
      *
-     * @param string $name
-     * @param mixed $value
+     * @param  string                    $name
+     * @param  mixed                     $value
      * @return $this
      * @throws \InvalidArgumentException when $name is not a string
      */
@@ -52,7 +50,7 @@ interface ArgumentBagInterface
 
     /**
      * Return an argument defined in the bag
-     * @param string $name
+     * @param  string                    $name
      * @return mixed
      * @throws \InvalidArgumentException when $name is not a string
      */

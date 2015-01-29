@@ -17,8 +17,6 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
 namespace Acme\Demo;
 
 use UniAlteri\Paypal\Express\Service\ExpressCheckout;
@@ -54,7 +52,7 @@ try {
     $service = new ExpressCheckout($transport);
 
     //Prepare demo purchase
-    $purchase = new Purchase('http://localhost:' . $_SERVER['SERVER_PORT'].'/index.php');
+    $purchase = new Purchase('http://localhost:'.$_SERVER['SERVER_PORT'].'/index.php');
 
     //To avoid bad html generation on exception
     ob_start();
@@ -71,25 +69,26 @@ try {
             <p>Checkout canceled by the consumer</p>
         <?php else:
             $result = $service->getTransactionResult($_GET['token']);
-            if ($result->isSuccessful()) {
-                $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
-                if ($confirmationResult->isSuccessful()) {
-                    echo '<p>Checkout successful</p>';
-                } else {
-                    $errors = $confirmationResult->getErrors();
-                    foreach ($errors as $error) {
-                        echo '<p>'.$error->getShortMessage().' : '.$error->getLongMessage().'</p>';
-                    }
-                }
-            } else {
-                echo '<p>Error from Paypal</p>';
+    if ($result->isSuccessful()) {
+        $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
+        if ($confirmationResult->isSuccessful()) {
+            echo '<p>Checkout successful</p>';
+        } else {
+            $errors = $confirmationResult->getErrors();
+            foreach ($errors as $error) {
+                echo '<p>'.$error->getShortMessage().' : '.$error->getLongMessage().'</p>';
             }
-        endif;
-    else: ?>
+        }
+    } else {
+        echo '<p>Error from Paypal</p>';
+    }
+    endif; else: ?>
         <p>
-            <a href="<?php echo $service->prepareTransaction($purchase); ?>">Process to checkout to paypal</a>
+            <a href="<?php echo $service->prepareTransaction($purchase);
+    ?>">Process to checkout to paypal</a>
         </p>
-    <?php endif; ?>
+    <?php endif;
+    ?>
     </body>
     </html>
 <?php

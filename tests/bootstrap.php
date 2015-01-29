@@ -17,8 +17,6 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
 defined('RUN_CLI_MODE')
     || define('RUN_CLI_MODE', true);
 

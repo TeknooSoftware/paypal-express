@@ -17,8 +17,6 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
 namespace UniAlteri\Paypal\Express\Service;
 
 use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
@@ -54,7 +52,7 @@ class ExpressCheckout implements ServiceInterface
 
     /**
      * Check the value of the currency attempted by the paypal api
-     * @param string $currencyCode
+     * @param  string $currencyCode
      * @return string
      */
     protected function getValidCurrencyCode($currencyCode)
@@ -95,7 +93,7 @@ class ExpressCheckout implements ServiceInterface
 
     /**
      * Check the value of the payment action attempted by the paypal api
-     * @param string $paymentAction
+     * @param  string $paymentAction
      * @return string
      */
     protected function getValidPaymentAction($paymentAction)
@@ -113,7 +111,7 @@ class ExpressCheckout implements ServiceInterface
     }
 
     /**
-     * @param array|\ArrayAccess $result
+     * @param  array|\ArrayAccess         $result
      * @return TransactionResultInterface
      */
     protected function buildTransactionResultObject($result)
@@ -124,9 +122,9 @@ class ExpressCheckout implements ServiceInterface
     /**
      * Prepare a transaction via the Paypal API and get the token to identify
      * the transaction and the consumer on the paypal service
-     * @param PurchaseInterface $purchase
+     * @param  PurchaseInterface          $purchase
      * @return TransactionResultInterface
-     * @throws \RuntimeException if the purchase object is invalid
+     * @throws \RuntimeException          if the purchase object is invalid
      * @throws \Exception
      */
     public function generateToken(PurchaseInterface $purchase)
@@ -180,7 +178,7 @@ class ExpressCheckout implements ServiceInterface
     /**
      * Prepare a transaction via the Paypal API and get the url to redirect
      * the user to paypal service to process of the payment
-     * @param PurchaseInterface $purchase
+     * @param  PurchaseInterface $purchase
      * @return string
      */
     public function prepareTransaction(PurchaseInterface $purchase)
@@ -190,21 +188,22 @@ class ExpressCheckout implements ServiceInterface
 
     /**
      * Get the transaction result from the Paypal API
-     * @param string $token
+     * @param  string                     $token
      * @return TransactionResultInterface
      */
     public function getTransactionResult($token)
     {
         $arguments = new ArgumentBag();
         $arguments->set('TOKEN', $token);
+
         return $this->buildTransactionResultObject($this->transport->call('GetExpressCheckoutDetails', $arguments));
     }
 
     /**
      * To confirm an active transaction on the Paypal API and unblock amounts
-     * @param string $token
-     * @param string $payerId
-     * @param PurchaseInterface $purchase
+     * @param  string                     $token
+     * @param  string                     $payerId
+     * @param  PurchaseInterface          $purchase
      * @return TransactionResultInterface
      */
     public function confirmTransaction($token, $payerId, PurchaseInterface $purchase)

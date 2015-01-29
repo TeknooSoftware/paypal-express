@@ -17,9 +17,7 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
-namespace UniAlteri\Tests\Paypal\Entity;
+namespace UniAlteri\tests\Paypal\Entity;
 
 use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
 use UniAlteri\Paypal\Express\Entity\PurchaseInterface;
@@ -168,9 +166,9 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|PurchaseInterface
      */
-    protected function setPurchase($currency='EUR', $operation='SALE')
+    protected function setPurchase($currency = 'EUR', $operation = 'SALE')
     {
-        $purchase =$this->buildPurchaseInterfaceMock();
+        $purchase = $this->buildPurchaseInterfaceMock();
 
         $purchase->expects($this->any())
             ->method('getAmount')
@@ -194,7 +192,6 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
         return $purchase;
     }
-
 
     /**
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::__construct()
@@ -221,7 +218,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
             'RETURNURL' => 'http://teknoo.it',
-            'CANCELURL' => 'http://teknoo.it/cancel'
+            'CANCELURL' => 'http://teknoo.it/cancel',
         );
 
         $this->builTransportInterfaceMock()
@@ -231,9 +228,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 function ($name, $args) use (&$exceptedBody) {
                     $this->assertEquals('SetExpressCheckout', $name);
                     $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+
                     return array(
                         'ACK' => 'SUCCESS',
-                        'TOKEN' => 'tokenFake'
+                        'TOKEN' => 'tokenFake',
                     );
                 }
             );
@@ -270,7 +268,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
             'RETURNURL' => 'http://teknoo.it',
             'CANCELURL' => 'http://teknoo.it/cancel',
-            'PAYMENTREQUEST_0_SHIPTOSTREET2' => null
+            'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
         );
 
         $this->builTransportInterfaceMock()
@@ -280,9 +278,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 function ($name, $args) use (&$exceptedBody) {
                     $this->assertEquals('SetExpressCheckout', $name);
                     $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+
                     return array(
                         'ACK' => 'SUCCESS',
-                        'TOKEN' => 'tokenFake'
+                        'TOKEN' => 'tokenFake',
                     );
                 }
             );
@@ -325,7 +324,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
                 'RETURNURL' => 'http://teknoo.it',
                 'CANCELURL' => 'http://teknoo.it/cancel',
-                'PAYMENTREQUEST_0_SHIPTOSTREET2' => null
+                'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
             );
 
             $this->builTransportInterfaceMock()
@@ -335,9 +334,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                     function ($name, $args) use (&$exceptedBody) {
                         $this->assertEquals('SetExpressCheckout', $name);
                         $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+
                         return array(
                             'ACK' => 'SUCCESS',
-                            'TOKEN' => 'tokenFake'
+                            'TOKEN' => 'tokenFake',
                         );
                     }
                 );
@@ -405,7 +405,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
                 'RETURNURL' => 'http://teknoo.it',
                 'CANCELURL' => 'http://teknoo.it/cancel',
-                'PAYMENTREQUEST_0_SHIPTOSTREET2' => null
+                'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
             );
 
             $this->builTransportInterfaceMock()
@@ -415,9 +415,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                     function ($name, $args) use (&$exceptedBody) {
                         $this->assertEquals('SetExpressCheckout', $name);
                         $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+
                         return array(
                             'ACK' => 'SUCCESS',
-                            'TOKEN' => 'tokenFake'
+                            'TOKEN' => 'tokenFake',
                         );
                     }
                 );
@@ -470,7 +471,6 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         } catch (\RuntimeException $e) {
             return;
         } catch (\Exception $e) {
-
         }
 
         $this->fail('Error, If no consumer object are provided by the purchase object, the service must throw an exception');
@@ -498,7 +498,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
             'RETURNURL' => 'http://teknoo.it',
             'CANCELURL' => 'http://teknoo.it/cancel',
-            'PAYMENTREQUEST_0_SHIPTOSTREET2' => null
+            'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
         );
 
         $this->builTransportInterfaceMock()
@@ -508,12 +508,13 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 function ($name, $args) use (&$exceptedBody) {
                     $this->assertEquals('SetExpressCheckout', $name);
                     $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+
                     return array(
                         'ACK' => 'FAILURE',
                         'L_ERRORCODE0' => 'err1',
                         'L_SHORTMESSAGE0' => 'shortMessage',
                         'L_LONGMESSAGE0' => 'longMessage',
-                        'L_SEVERITYCODE0' => 'severity'
+                        'L_SEVERITYCODE0' => 'severity',
                     );
                 }
             );
@@ -523,6 +524,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             $this->buildService()->generateToken($this->setPurchase());
         } catch (\Exception $e) {
             $this->assertEquals('shortMessage : longMessage', $e->getMessage());
+
             return;
         }
 
@@ -536,7 +538,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     public function testGetTransactionResult()
     {
         $exceptedBody = array(
-            'TOKEN' => 'fakeToken'
+            'TOKEN' => 'fakeToken',
         );
 
         $this->builTransportInterfaceMock()
@@ -546,9 +548,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 function ($name, $args) use (&$exceptedBody) {
                     $this->assertEquals('GetExpressCheckoutDetails', $name);
                     $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+
                     return array(
                         'ACK' => 'SUCCESS',
-                        'PAYERID' => 'idFake'
+                        'PAYERID' => 'idFake',
                     );
                 }
             );
@@ -583,6 +586,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 function ($name, $args) use (&$exceptedBody) {
                     $this->assertEquals('DoExpressCheckoutPayment', $name);
                     $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+
                     return array(
                         'ACK' => 'SUCCESS',
                     );
@@ -617,7 +621,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
             'RETURNURL' => 'http://teknoo.it',
             'CANCELURL' => 'http://teknoo.it/cancel',
-            'PAYMENTREQUEST_0_SHIPTOSTREET2' => null
+            'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
         );
 
         $this->builTransportInterfaceMock()
@@ -627,9 +631,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 function ($name, $args) use (&$exceptedBody) {
                     $this->assertEquals('SetExpressCheckout', $name);
                     $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+
                     return array(
                         'ACK' => 'SUCCESS',
-                        'TOKEN' => 'tokenFake'
+                        'TOKEN' => 'tokenFake',
                     );
                 }
             );

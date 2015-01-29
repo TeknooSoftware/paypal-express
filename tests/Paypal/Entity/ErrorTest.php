@@ -17,9 +17,7 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
-namespace UniAlteri\Tests\Paypal\Entity;
+namespace UniAlteri\tests\Paypal\Entity;
 
 use UniAlteri\Paypal\Express\Service\Error;
 
@@ -36,13 +34,13 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Build the object to test
-     * @param string|null $code
-     * @param string|null $shortMessage
-     * @param string|null $longMessage
-     * @param string|null $severity
+     * @param  string|null $code
+     * @param  string|null $shortMessage
+     * @param  string|null $longMessage
+     * @param  string|null $severity
      * @return Error
      */
-    protected function generateError($code=null, $shortMessage=null, $longMessage=null, $severity=null)
+    protected function generateError($code = null, $shortMessage = null, $longMessage = null, $severity = null)
     {
         return new Error($code, $shortMessage, $longMessage, $severity);
     }

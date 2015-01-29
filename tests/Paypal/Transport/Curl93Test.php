@@ -17,9 +17,7 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
-namespace UniAlteri\Tests\Paypal\Transport;
+namespace UniAlteri\tests\Paypal\Transport;
 
 use UniAlteri\Paypal\Express\Transport\ArgumentBag;
 use UniAlteri\Paypal\Express\Transport\Curl93;
@@ -60,27 +58,27 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string|null $userId
-     * @param string|null $password
-     * @param string|null $signature
-     * @param string|null $apiEndPoint
-     * @param string|null $paypalUrl
-     * @param int|null $paypalVersion
-     * @param string|null $bNCode
-     * @param int|null $apiTimeout
-     * @param RequestGenerator|null $requestGenerator
+     * @param  string|null           $userId
+     * @param  string|null           $password
+     * @param  string|null           $signature
+     * @param  string|null           $apiEndPoint
+     * @param  string|null           $paypalUrl
+     * @param  int|null              $paypalVersion
+     * @param  string|null           $bNCode
+     * @param  int|null              $apiTimeout
+     * @param  RequestGenerator|null $requestGenerator
      * @return Curl93
      */
     public function buildService(
-        $userId=null,
-        $password=null,
-        $signature=null,
-        $apiEndPoint=null,
-        $paypalUrl=null,
-        $paypalVersion=93,
-        $bNCode='PP-ECWizard',
-        $apiTimeout=60,
-        $requestGenerator=null
+        $userId = null,
+        $password = null,
+        $signature = null,
+        $apiEndPoint = null,
+        $paypalUrl = null,
+        $paypalVersion = 93,
+        $bNCode = 'PP-ECWizard',
+        $apiTimeout = 60,
+        $requestGenerator = null
     ) {
         return new Curl93($userId, $password, $signature, $apiEndPoint, $paypalUrl, $paypalVersion, $bNCode, $apiTimeout, $requestGenerator);
     }
@@ -247,22 +245,22 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
                 'PWD' => 'pwd',
                 'USER' => 'uId',
                 'SIGNATURE' => 'sgnt',
-                'BUTTONSOURCE' => 'bnc'
+                'BUTTONSOURCE' => 'bnc',
             )
         );
 
         $requestMock->expects($this->any())
             ->method('setOption')
             ->withConsecutive(
-                [CURLOPT_URL,'https://teknoo.it'],
-                [CURLOPT_VERBOSE,true],
-                [CURLOPT_SSL_VERIFYPEER,false],
-                [CURLOPT_SSL_VERIFYHOST,0],
-                [CURLOPT_RETURNTRANSFER,true],
-                [CURLOPT_POST,true],
-                [CURLOPT_TIMEOUT,1200],
-                [CURLOPT_CONNECTTIMEOUT,120],
-                [CURLOPT_POSTFIELDS,$exceptedBody]
+                [CURLOPT_URL, 'https://teknoo.it'],
+                [CURLOPT_VERBOSE, true],
+                [CURLOPT_SSL_VERIFYPEER, false],
+                [CURLOPT_SSL_VERIFYHOST, 0],
+                [CURLOPT_RETURNTRANSFER, true],
+                [CURLOPT_POST, true],
+                [CURLOPT_TIMEOUT, 1200],
+                [CURLOPT_CONNECTTIMEOUT, 120],
+                [CURLOPT_POSTFIELDS, $exceptedBody]
             );
 
         $requestMock->expects($this->once())
@@ -272,7 +270,7 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
                     http_build_query(
                         array(
                             'foo' => 'bar',
-                            'hello' => 'world'
+                            'hello' => 'world',
                         )
                     )
                 )

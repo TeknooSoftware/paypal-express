@@ -17,8 +17,6 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
 namespace UniAlteri\Paypal\Express\Transport;
 
 use Zeroem\CurlBundle\Curl\RequestGenerator;
@@ -89,26 +87,26 @@ class Curl93 implements TransportInterface
     protected $requestGenerator;
 
     /**
-     * @param string|null $userId
-     * @param string|null $password
-     * @param string|null $signature
-     * @param string|null $apiEndPoint
-     * @param string|null $paypalUrl
-     * @param int|null $paypalVersion
-     * @param string|null $bNCode
-     * @param int|null $apiTimeout
+     * @param string|null           $userId
+     * @param string|null           $password
+     * @param string|null           $signature
+     * @param string|null           $apiEndPoint
+     * @param string|null           $paypalUrl
+     * @param int|null              $paypalVersion
+     * @param string|null           $bNCode
+     * @param int|null              $apiTimeout
      * @param RequestGenerator|null $requestGenerator
      */
     public function __construct(
-        $userId=null,
-        $password=null,
-        $signature=null,
-        $apiEndPoint=null,
-        $paypalUrl=null,
-        $paypalVersion=93,
-        $bNCode='PP-ECWizard',
-        $apiTimeout=60,
-        $requestGenerator=null
+        $userId = null,
+        $password = null,
+        $signature = null,
+        $apiEndPoint = null,
+        $paypalUrl = null,
+        $paypalVersion = 93,
+        $bNCode = 'PP-ECWizard',
+        $apiTimeout = 60,
+        $requestGenerator = null
     ) {
         $this->userId = $userId;
         $this->password = $password;
@@ -123,7 +121,7 @@ class Curl93 implements TransportInterface
 
     /**
      * Setter to define the user identifier to use with the api to get an access
-     * @param string $userId
+     * @param  string $userId
      * @return $this
      */
     public function setUserId($userId)
@@ -144,7 +142,7 @@ class Curl93 implements TransportInterface
 
     /**
      * Setter to define the password to use with the api to get an access
-     * @param string $password
+     * @param  string $password
      * @return $this
      */
     public function setPassword($password)
@@ -165,7 +163,7 @@ class Curl93 implements TransportInterface
 
     /**
      * Setter to define the user's signature to usee with the api to get an access
-     * @param string $signature
+     * @param  string $signature
      * @return $this
      */
     public function setSignature($signature)
@@ -186,7 +184,7 @@ class Curl93 implements TransportInterface
 
     /**
      * Setter to define the API End point to use for next transactions
-     * @param string $apiEndPoint
+     * @param  string $apiEndPoint
      * @return $this
      */
     public function setApiEndPoint($apiEndPoint)
@@ -207,7 +205,7 @@ class Curl93 implements TransportInterface
 
     /**
      * Setter to define the url to contact the Paypal api
-     * @param string $url
+     * @param  string $url
      * @return $this
      */
     public function setPaypalUrl($url)
@@ -238,7 +236,7 @@ class Curl93 implements TransportInterface
     /**
      * Setter to define the timeout accepted by the transport to close the transaction when the api
      * could not respond
-     * @param int $second
+     * @param  int   $second
      * @return $this
      */
     public function setApiTimeout($second)
@@ -258,8 +256,8 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * @param string $methodName
-     * @param ArgumentBagInterface $arguments
+     * @param  string               $methodName
+     * @param  ArgumentBagInterface $arguments
      * @return \ArrayAccess
      */
     public function call($methodName, $arguments)
@@ -281,7 +279,7 @@ class Curl93 implements TransportInterface
         $request->setOption(CURLOPT_CONNECTTIMEOUT, $this->apiTimeout);
 
         $argumentsArray = [];
-        foreach ($arguments->toArray() as $key=>$value) {
+        foreach ($arguments->toArray() as $key => $value) {
             $argumentsArray[$key] = $value;
         }
 

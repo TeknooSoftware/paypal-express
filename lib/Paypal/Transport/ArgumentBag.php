@@ -17,8 +17,6 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-
 namespace UniAlteri\Paypal\Express\Transport;
 
 /**
@@ -41,7 +39,7 @@ class ArgumentBag implements ArgumentBagInterface
     /**
      * To initialize this bag
      */
-    public function __construct($parameters=null)
+    public function __construct($parameters = null)
     {
         $this->reset();
         if (!empty($parameters)) {
@@ -64,8 +62,8 @@ class ArgumentBag implements ArgumentBagInterface
     /**
      * Define an argument in the bag
      *
-     * @param string $name
-     * @param mixed $value
+     * @param  string                    $name
+     * @param  mixed                     $value
      * @return $this
      * @throws \InvalidArgumentException when $name is not a string
      */
@@ -82,7 +80,7 @@ class ArgumentBag implements ArgumentBagInterface
 
     /**
      * Return an argument defined in the bag
-     * @param string $name
+     * @param  string                    $name
      * @return mixed
      * @throws \InvalidArgumentException when $name is not a string
      */

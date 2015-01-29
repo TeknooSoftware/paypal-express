@@ -17,8 +17,7 @@
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  * @version     1.0.0
  */
-
-namespace Acme\Demo;
+namespace Acme\demo;
 
 use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
 
