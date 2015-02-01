@@ -2,7 +2,7 @@
 
 ##Presentation
 
-This library is build arround two components :
+This library is built around two components :
 
 *   a transport, implementing `UniAlteri\Paypal\Express\Transport\TransportInterface` to  execute request to the Paypal API
 *   a service, implementing `UniAlteri\Paypal\Express\Service\ServiceInterface` to prepare and perform call to the Paypal API.
@@ -14,22 +14,30 @@ Two defaults implementations are provided :
 
 All Paypal returns are encapsulated in an object implementing `UniAlteri\Paypal\Express\Service\TransactionResultInterface`.
 
+To use this library, your business entities must implements two interfaces :
+
+*   `UniAlteri\Paypal\Express\Entity\ConsumerInterface` to describe yours consumers/users and extract theirs addresses.
+*   `UniAlteri\Paypal\Express\Entity\PurchaseInterface` to describe their purchases / orders.
+
+This library does not include an implementation of this interface. They must be provided by your application.
+
 ##Quick Startup
 
 ###Get Paypal credentials
 
-Before you must create a Seller account on Paypal : https://www.paypal.com/webapps/mpp/merchant
+Before you must create a Seller account on Paypal : [https://www.paypal.com/webapps/mpp/merchant](https://www.paypal.com/webapps/mpp/merchant)
 
-To get sandbox credentials, go to https://developer.paypal.com/ then in the dashboard and "Sandbox account" 
-( or directly, click here https://developer.paypal.com/webapps/developer/applications/accounts )
+To do this, you can follow this tutorial : [https://developer.paypal.com/docs/classic/lifecycle/sb_credentials/](https://developer.paypal.com/docs/classic/lifecycle/sb_credentials/)
 
-Paypal's credentials are available in your profile, tab "API Credentials"
-
-https://developer.paypal.com/docs/classic/lifecycle/sb_credentials/
+To get sandbox credentials,
+ 
+*   go to [https://developer.paypal.com/](https://developer.paypal.com/) 
+*   then in the dashboard and "Sandbox account" : [https://developer.paypal.com/webapps/developer/applications/accounts](https://developer.paypal.com/webapps/developer/applications/accounts)
+*   Paypal's credentials are available in your profile, tab "API Credentials"
 
 ###Configuration
 
-You must instantiate the transport object like this :
+To start, you must instantiate the transport object like this :
 
     use UniAlteri\Paypal\Express\Transport\Curl93;
     use Zeroem\CurlBundle\Curl\RequestGenerator;
@@ -62,8 +70,10 @@ Objects passed to the service to perform the paypal checkout must implement some
 *   The consumer object must implement the interface `UniAlteri\Paypal\Express\Entity\ConsumerInterface` to extract 
 user's address and identity
 *   The order/purchase object must implement the interface `UniAlteri\Paypal\Express\Entity\PurchaseInterface` to extract
-amount of the invoice and its currency. This object must  also return URLs to use to redirect the consumer after Paypal 
-operations.
+amount of the invoice and its currency. 
+
+This object must  also return URLs to use to redirect the consumer after Paypal operations. These URL can be differ for 
+each purchase or checkout attempt.
 
 ###Process to checkout
 
@@ -92,7 +102,7 @@ If the payment has been processed by Paypal, the method `isSuccessful` of the re
 
 ###Confirm checkout
 
-The last step is the confirmation of the transaction. You must before get the payer id from the paypal's return :
+The last step is the confirmation of the transaction. You must before getting the payer id from the paypal's return :
 
     $payerId = $result->getPayerIdValue();
     
