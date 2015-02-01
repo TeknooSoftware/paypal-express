@@ -69,26 +69,25 @@ try {
             <p>Checkout canceled by the consumer</p>
         <?php else:
             $result = $service->getTransactionResult($_GET['token']);
-    if ($result->isSuccessful()) {
-        $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
-        if ($confirmationResult->isSuccessful()) {
-            echo '<p>Checkout successful</p>';
-        } else {
-            $errors = $confirmationResult->getErrors();
-            foreach ($errors as $error) {
-                echo '<p>'.$error->getShortMessage().' : '.$error->getLongMessage().'</p>';
+            if ($result->isSuccessful()) {
+                $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
+                if ($confirmationResult->isSuccessful()) {
+                    echo '<p>Checkout successful</p>';
+                } else {
+                    $errors = $confirmationResult->getErrors();
+                    foreach ($errors as $error) {
+                        echo '<p>'.$error->getShortMessage().' : '.$error->getLongMessage().'</p>';
+                    }
+                }
+            } else {
+                echo '<p>Error from Paypal</p>';
             }
-        }
-    } else {
-        echo '<p>Error from Paypal</p>';
-    }
-    endif; else: ?>
+            endif;
+        else: ?>
         <p>
-            <a href="<?php echo $service->prepareTransaction($purchase);
-    ?>">Process to checkout to paypal</a>
+            <a href="<?php echo $service->prepareTransaction($purchase); ?>">Process to checkout to paypal</a>
         </p>
-    <?php endif;
-    ?>
+    <?php endif;?>
     </body>
     </html>
 <?php
