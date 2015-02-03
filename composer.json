@@ -1,6 +1,5 @@
 {
     "name": "unialteri/paypal-exprss",
-    "version": "0.1-beta",
     "type": "library",
     "description": "Small library to perform quickly sales with the service Paypal Express Checkout",
     "keywords": ["paypal","express"],
