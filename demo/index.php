@@ -21,7 +21,7 @@ namespace Acme\Demo;
 
 use UniAlteri\Paypal\Express\Service\ExpressCheckout;
 use UniAlteri\Paypal\Express\Transport\Curl93;
-use Zeroem\CurlBundle\Curl\RequestGenerator;
+use UniAlteri\Curl\RequestGenerator;
 
 //Initialize composer
 require_once '../vendor/autoload.php';

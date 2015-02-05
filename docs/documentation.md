@@ -40,7 +40,7 @@ To get sandbox credentials,
 To start, you must instantiate the transport object like this :
 
     use UniAlteri\Paypal\Express\Transport\Curl93;
-    use Zeroem\CurlBundle\Curl\RequestGenerator;
+    use UniAlteri\Curl\RequestGenerator;
     
     //Request generator to communicate with paypal via curl
     $requestGenerator = new RequestGenerator();
