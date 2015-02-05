@@ -19,7 +19,7 @@
  */
 namespace UniAlteri\Paypal\Express\Transport;
 
-use Zeroem\CurlBundle\Curl\RequestGenerator;
+use UniAlteri\Curl\RequestGenerator;
 
 /**
  * Class Curl93

@@ -21,7 +21,7 @@ namespace UniAlteri\tests\Paypal\Transport;
 
 use UniAlteri\Paypal\Express\Transport\ArgumentBag;
 use UniAlteri\Paypal\Express\Transport\Curl93;
-use Zeroem\CurlBundle\Curl\RequestGenerator;
+use UniAlteri\Curl\RequestGenerator;
 
 /**
  * Class Curl93Test
@@ -46,7 +46,7 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
     {
         if (!$this->requestGeneratorService instanceof \PHPUnit_Framework_MockObject_MockObject) {
             $this->requestGeneratorService = $this->getMock(
-                '\Zeroem\CurlBundle\Curl\RequestGenerator',
+                'UniAlteri\Curl\RequestGenerator',
                 array(),
                 array(),
                 '',
@@ -220,7 +220,7 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
     public function testCall()
     {
         $requestMock = $this->getMock(
-            '\Zeroem\CurlBundle\Curl\Request',
+            'UniAlteri\Curl\Request',
             array(),
             array(),
             '',
