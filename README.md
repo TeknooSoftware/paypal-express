@@ -18,3 +18,8 @@ Documentation and quick-startup
 -------------------------------
 Documentation to explain how this library works and how use it : [Behavior](docs/documentation.md).
 
+Contribute :)
+-------------
+You are welcome to contribute to this project. [Fork it on Github](CONTRIBUTING.md)
+
+
