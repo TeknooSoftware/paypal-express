@@ -15,7 +15,7 @@
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
- * @version     1.0.0
+ * @version     0.8.2
  */
 namespace UniAlteri\tests\Paypal\Entity;
 
