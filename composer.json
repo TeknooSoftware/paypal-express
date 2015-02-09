@@ -31,7 +31,7 @@
     "minimum-stability": "beta",
     "autoload": {
         "psr-4": {
-            "UniAlteri\\Paypal\\Express\\": ["lib/Paypal/"],
+            "UniAlteri\\Paypal\\Express\\": ["src/Paypal/"],
             "UniAlteri\\Tests\\Paypal\\": ["tests/Paypal"]
         }
     },
