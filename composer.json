@@ -1,9 +1,8 @@
 {
     "name": "unialteri/paypal-exprss",
     "type": "library",
-    "description": "Small library to perform quickly sales with the service Paypal Express Checkout",
+    "description": "Library to perform quickly sales with the service Paypal Express Checkout",
     "keywords": ["paypal","express"],
-    "time": "2014-08-27",
     "homepage": "http://teknoo.it/p",
     "license": ["MIT","GPL-3.0+"],
     "authors": [
