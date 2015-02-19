@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,20 +11,26 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace UniAlteri\Paypal\Express\Service;
 
 /**
  * Class TransactionResult
- * Class to manipulate result
- * @package UniAlteri\Paypal\Express\Service
+ * Class to manipulate result.
+ *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
@@ -32,13 +38,15 @@ namespace UniAlteri\Paypal\Express\Service;
 class TransactionResult implements TransactionResultInterface
 {
     /**
-     * Return of the api
+     * Return of the api.
+     *
      * @var array
      */
     protected $values;
 
     /**
-     * Constructor to initialize the result object
+     * Constructor to initialize the result object.
+     *
      * @param array|\ArrayAccess $values
      */
     public function __construct($values)
@@ -47,7 +55,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return the raw value of the ACK field from the paypal API for this transaction
+     * Return the raw value of the ACK field from the paypal API for this transaction.
+     *
      * @return string
      */
     public function getAckValue()
@@ -60,7 +69,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return a boolean to test if the operation via the api is successful
+     * Return a boolean to test if the operation via the api is successful.
+     *
      * @return boolean
      */
     public function isSuccessful()
@@ -74,7 +84,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return the raw value of the Token field from the paypal API for this transaction
+     * Return the raw value of the Token field from the paypal API for this transaction.
+     *
      * @return string
      */
     public function getTokenValue()
@@ -87,7 +98,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return the raw value of the PayerId field from the paypal API for this transaction
+     * Return the raw value of the PayerId field from the paypal API for this transaction.
+     *
      * @return string
      */
     public function getPayerIdValue()
@@ -100,7 +112,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return the raw value of the Timestamp field from the paypal API for this transaction
+     * Return the raw value of the Timestamp field from the paypal API for this transaction.
+     *
      * @return string
      */
     public function getTimestampValue()
@@ -113,7 +126,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return the raw value of the CorrelationId field from the paypal API for this transaction
+     * Return the raw value of the CorrelationId field from the paypal API for this transaction.
+     *
      * @return string
      */
     public function getCorrelationIdValue()
@@ -126,7 +140,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return the raw value of the Version field from the paypal API for this transaction
+     * Return the raw value of the Version field from the paypal API for this transaction.
+     *
      * @return string
      */
     public function getVersionValue()
@@ -139,7 +154,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return the raw value of the Build field from the paypal API for this transaction
+     * Return the raw value of the Build field from the paypal API for this transaction.
+     *
      * @return string
      */
     public function getBuildValue()
@@ -152,7 +168,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return errors from paypal
+     * Return errors from paypal.
+     *
      * @return ErrorInterface[]
      */
     public function getErrors()
@@ -175,7 +192,8 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return raw value from the request
+     * Return raw value from the request.
+     *
      * @return mixed
      */
     public function getRawValues()

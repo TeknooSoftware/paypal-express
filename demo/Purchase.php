@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,12 +11,16 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace Acme\demo;
 
 use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
@@ -24,10 +28,12 @@ use UniAlteri\Paypal\Express\Entity\PurchaseInterface;
 
 /**
  * Class Purchase
- * Demo business class representing a purchase
- * @package Acme\Demo
+ * Demo business class representing a purchase.
+ *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
@@ -48,7 +54,8 @@ class Purchase implements PurchaseInterface
     }
 
     /**
-     * Get the amount of the purchase, feet included, in float representation
+     * Get the amount of the purchase, feet included, in float representation.
+     *
      * @return float
      */
     public function getAmount()
@@ -57,7 +64,8 @@ class Purchase implements PurchaseInterface
     }
 
     /**
-     * Get the payment action to use in the transaction (sale, ..)
+     * Get the payment action to use in the transaction (sale, ..).
+     *
      * @return string
      */
     public function getPaymentAction()
@@ -66,7 +74,8 @@ class Purchase implements PurchaseInterface
     }
 
     /**
-     * Get the url to redirect the consumer after the payment operation
+     * Get the url to redirect the consumer after the payment operation.
+     *
      * @return string
      */
     public function getReturnUrl()
@@ -75,7 +84,8 @@ class Purchase implements PurchaseInterface
     }
 
     /**
-     * Get the url to redirect the consumer when it cancel the transaction in paypal
+     * Get the url to redirect the consumer when it cancel the transaction in paypal.
+     *
      * @return string
      */
     public function getCancelUrl()
@@ -84,7 +94,8 @@ class Purchase implements PurchaseInterface
     }
 
     /**
-     * Get the currency used for this transaction
+     * Get the currency used for this transaction.
+     *
      * @return string
      */
     public function getCurrencyCode()
@@ -93,7 +104,8 @@ class Purchase implements PurchaseInterface
     }
 
     /**
-     * Get the consumer of this transaction
+     * Get the consumer of this transaction.
+     *
      * @return ConsumerInterface
      */
     public function getConsumer()

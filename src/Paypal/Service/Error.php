@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,20 +11,26 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace UniAlteri\Paypal\Express\Service;
 
 /**
  * Class Error
- * To manipulate errors from paypal
- * @package UniAlteri\Paypal\Express\Service
+ * To manipulate errors from paypal.
+ *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
@@ -32,31 +38,36 @@ namespace UniAlteri\Paypal\Express\Service;
 class Error implements ErrorInterface
 {
     /**
-     * Code of the error
+     * Code of the error.
+     *
      * @var string
      */
     protected $code;
 
     /**
-     * Short message of the error
+     * Short message of the error.
+     *
      * @var string
      */
     protected $shortMessage;
 
     /**
-     * Long message of the error
+     * Long message of the error.
+     *
      * @var string
      */
     protected $longMessage;
 
     /**
-     * Severity of the error
+     * Severity of the error.
+     *
      * @var string
      */
     protected $severity;
 
     /**
-     * Initialize object error
+     * Initialize object error.
+     *
      * @param string $code
      * @param string $shortMessage
      * @param string $longMessage
@@ -71,7 +82,8 @@ class Error implements ErrorInterface
     }
 
     /**
-     * Get the code of the error
+     * Get the code of the error.
+     *
      * @return string
      */
     public function getCode()
@@ -80,7 +92,8 @@ class Error implements ErrorInterface
     }
 
     /**
-     * Return the short message of the error
+     * Return the short message of the error.
+     *
      * @return string
      */
     public function getShortMessage()
@@ -89,7 +102,8 @@ class Error implements ErrorInterface
     }
 
     /**
-     * Return the long message of the error
+     * Return the long message of the error.
+     *
      * @return string
      */
     public function getLongMessage()
@@ -98,7 +112,8 @@ class Error implements ErrorInterface
     }
 
     /**
-     * Return the severity of the error
+     * Return the severity of the error.
+     *
      * @return string
      */
     public function getSeverity()

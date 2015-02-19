@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,10 +11,13 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
 defined('RUN_CLI_MODE')

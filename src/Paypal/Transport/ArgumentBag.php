@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,20 +11,26 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace UniAlteri\Paypal\Express\Transport;
 
 /**
  * Class ArgumentBag
- * Class to allow developer to pass arguments for request
- * @package UniAlteri\Paypal\Express\Transport
+ * Class to allow developer to pass arguments for request.
+ *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
@@ -37,7 +43,7 @@ class ArgumentBag implements ArgumentBagInterface
     protected $parameters;
 
     /**
-     * To initialize this bag
+     * To initialize this bag.
      */
     public function __construct($parameters = null)
     {
@@ -48,7 +54,7 @@ class ArgumentBag implements ArgumentBagInterface
     }
 
     /**
-     * Reset this bag
+     * Reset this bag.
      *
      * @return $this
      */
@@ -60,11 +66,13 @@ class ArgumentBag implements ArgumentBagInterface
     }
 
     /**
-     * Define an argument in the bag
+     * Define an argument in the bag.
      *
-     * @param  string                    $name
-     * @param  mixed                     $value
+     * @param string $name
+     * @param mixed  $value
+     *
      * @return $this
+     *
      * @throws \InvalidArgumentException when $name is not a string
      */
     public function set($name, $value)
@@ -79,9 +87,12 @@ class ArgumentBag implements ArgumentBagInterface
     }
 
     /**
-     * Return an argument defined in the bag
-     * @param  string                    $name
+     * Return an argument defined in the bag.
+     *
+     * @param string $name
+     *
      * @return mixed
+     *
      * @throws \InvalidArgumentException when $name is not a string
      */
     public function get($name)
@@ -98,7 +109,8 @@ class ArgumentBag implements ArgumentBagInterface
     }
 
     /**
-     * Return the list of argument as an array object
+     * Return the list of argument as an array object.
+     *
      * @return \ArrayAccess|\Countable
      */
     public function toArray()

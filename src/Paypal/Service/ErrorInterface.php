@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,20 +11,26 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace UniAlteri\Paypal\Express\Service;
 
 /**
  * Interface ErrorInterface
- * Interface to define errors returned by paypal
- * @package UniAlteri\Paypal\Express\Service
+ * Interface to define errors returned by paypal.
+ *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
@@ -32,25 +38,29 @@ namespace UniAlteri\Paypal\Express\Service;
 interface ErrorInterface
 {
     /**
-     * Get the code of the error
+     * Get the code of the error.
+     *
      * @return string
      */
     public function getCode();
 
     /**
-     * Return the short message of the error
+     * Return the short message of the error.
+     *
      * @return string
      */
     public function getShortMessage();
 
     /**
-     * Return the long message of the error
+     * Return the long message of the error.
+     *
      * @return string
      */
     public function getLongMessage();
 
     /**
-     * Return the severity of the error
+     * Return the severity of the error.
+     *
      * @return string
      */
     public function getSeverity();

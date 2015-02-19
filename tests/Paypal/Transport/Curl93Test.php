@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,12 +11,16 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace UniAlteri\tests\Paypal\Transport;
 
 use UniAlteri\Paypal\Express\Transport\ArgumentBag;
@@ -24,10 +28,12 @@ use UniAlteri\Paypal\Express\Transport\Curl93;
 use UniAlteri\Curl\RequestGenerator;
 
 /**
- * Class Curl93Test
- * @package UniAlteri\Tests\Paypal\Transport
+ * Class Curl93Test.
+ *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
@@ -58,15 +64,16 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  string|null           $userId
-     * @param  string|null           $password
-     * @param  string|null           $signature
-     * @param  string|null           $apiEndPoint
-     * @param  string|null           $paypalUrl
-     * @param  int|null              $paypalVersion
-     * @param  string|null           $bNCode
-     * @param  int|null              $apiTimeout
-     * @param  RequestGenerator|null $requestGenerator
+     * @param string|null           $userId
+     * @param string|null           $password
+     * @param string|null           $signature
+     * @param string|null           $apiEndPoint
+     * @param string|null           $paypalUrl
+     * @param int|null              $paypalVersion
+     * @param string|null           $bNCode
+     * @param int|null              $apiTimeout
+     * @param RequestGenerator|null $requestGenerator
+     *
      * @return Curl93
      */
     public function buildService(

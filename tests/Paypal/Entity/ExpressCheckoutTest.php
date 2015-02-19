@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,12 +11,16 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace UniAlteri\tests\Paypal\Entity;
 
 use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
@@ -26,10 +30,12 @@ use UniAlteri\Paypal\Express\Transport\ArgumentBag;
 use UniAlteri\Paypal\Express\Transport\TransportInterface;
 
 /**
- * Class ExpressCheckoutTest
- * @package UniAlteri\Tests\Paypal\Entity
+ * Class ExpressCheckoutTest.
+ *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
@@ -206,6 +212,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     *
      * @throws \Exception
      */
     public function testGenerateTokenWithoutAddress()
@@ -250,6 +257,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     *
      * @throws \Exception
      */
     public function testGenerateTokenAddress()
@@ -300,6 +308,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     *
      * @throws \Exception
      */
     public function testGenerateTokenAddressCurrency()
@@ -357,6 +366,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     *
      * @throws \Exception
      */
     public function testGenerateTokenAddressBadCurrency()
@@ -381,6 +391,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     *
      * @throws \Exception
      */
     public function testGenerateTokenAddressOperation()
@@ -438,6 +449,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
      * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     *
      * @throws \Exception
      */
     public function testGenerateTokenAddressBadOperation()

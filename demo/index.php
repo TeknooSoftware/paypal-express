@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,12 +11,16 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace Acme\Demo;
 
 use UniAlteri\Paypal\Express\Service\ExpressCheckout;
@@ -69,25 +73,26 @@ try {
             <p>Checkout canceled by the consumer</p>
         <?php else:
             $result = $service->getTransactionResult($_GET['token']);
-            if ($result->isSuccessful()) {
-                $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
-                if ($confirmationResult->isSuccessful()) {
-                    echo '<p>Checkout successful</p>';
-                } else {
-                    $errors = $confirmationResult->getErrors();
-                    foreach ($errors as $error) {
-                        echo '<p>'.$error->getShortMessage().' : '.$error->getLongMessage().'</p>';
-                    }
-                }
-            } else {
-                echo '<p>Error from Paypal</p>';
+    if ($result->isSuccessful()) {
+        $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
+        if ($confirmationResult->isSuccessful()) {
+            echo '<p>Checkout successful</p>';
+        } else {
+            $errors = $confirmationResult->getErrors();
+            foreach ($errors as $error) {
+                echo '<p>'.$error->getShortMessage().' : '.$error->getLongMessage().'</p>';
             }
-            endif;
-        else: ?>
+        }
+    } else {
+        echo '<p>Error from Paypal</p>';
+    }
+    endif; else: ?>
         <p>
-            <a href="<?php echo $service->prepareTransaction($purchase); ?>">Process to checkout to paypal</a>
+            <a href="<?php echo $service->prepareTransaction($purchase);
+    ?>">Process to checkout to paypal</a>
         </p>
-    <?php endif;?>
+    <?php endif;
+    ?>
     </body>
     </html>
 <?php

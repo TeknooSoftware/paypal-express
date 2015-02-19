@@ -1,6 +1,6 @@
 <?php
 /**
- * Paypal Express
+ * Paypal Express.
  *
  * LICENSE
  *
@@ -11,22 +11,28 @@
  * to contact@uni-alteri.com so we can send you a copy immediately.
  *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
+ *
  * @version     0.8.2
  */
+
 namespace UniAlteri\Paypal\Express\Transport;
 
 use UniAlteri\Curl\RequestGenerator;
 
 /**
  * Class Curl93
- * Implementation of TransportInterface with Curl library to use the paypal api
- * @package UniAlteri\Paypal\Express\Transport
+ * Implementation of TransportInterface with Curl library to use the paypal api.
+ *
  * @copyright   Copyright (c) 2009-2015 Uni Alteri (http://agence.net.ua)
+ *
  * @link        http://teknoo.it/paypal Project website
+ *
  * @license     http://teknoo.it/paypal/license/mit         MIT License
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
@@ -34,49 +40,57 @@ use UniAlteri\Curl\RequestGenerator;
 class Curl93 implements TransportInterface
 {
     /**
-     * User id in paypal
+     * User id in paypal.
+     *
      * @var string
      */
     private $userId;
 
     /**
-     * Password in paypal
+     * Password in paypal.
+     *
      * @var string
      */
     private $password;
 
     /**
-     * Signature in paypal
+     * Signature in paypal.
+     *
      * @var string
      */
     private $signature;
 
     /**
-     * API End point to communicate with paypal
+     * API End point to communicate with paypal.
+     *
      * @var string
      */
     protected $apiEndPoint;
 
     /**
-     * URL to redirect the user
+     * URL to redirect the user.
+     *
      * @var string
      */
     protected $paypalUrl;
 
     /**
-     * Paypal API Version used
+     * Paypal API Version used.
+     *
      * @var int
      */
     protected $paypalVersion = 93;
 
     /**
-     * BN Code 	is only applicable for partners
+     * BN Code 	is only applicable for partners.
+     *
      * @var string
      */
     protected $bNCode = 'PP-ECWizard';
 
     /**
-     * Curl Timeout
+     * Curl Timeout.
+     *
      * @var int
      */
     protected $apiTimeout = 60;
@@ -120,8 +134,10 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Setter to define the user identifier to use with the api to get an access
-     * @param  string $userId
+     * Setter to define the user identifier to use with the api to get an access.
+     *
+     * @param string $userId
+     *
      * @return $this
      */
     public function setUserId($userId)
@@ -132,7 +148,8 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Return the user identifier to use with the api to get an access
+     * Return the user identifier to use with the api to get an access.
+     *
      * @return string
      */
     public function getUserId()
@@ -141,8 +158,10 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Setter to define the password to use with the api to get an access
-     * @param  string $password
+     * Setter to define the password to use with the api to get an access.
+     *
+     * @param string $password
+     *
      * @return $this
      */
     public function setPassword($password)
@@ -153,7 +172,8 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Return the password to use with the api to get an access
+     * Return the password to use with the api to get an access.
+     *
      * @return string
      */
     public function getPassword()
@@ -162,8 +182,10 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Setter to define the user's signature to usee with the api to get an access
-     * @param  string $signature
+     * Setter to define the user's signature to usee with the api to get an access.
+     *
+     * @param string $signature
+     *
      * @return $this
      */
     public function setSignature($signature)
@@ -174,7 +196,8 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Return the user's signature to usee with the api to get an access
+     * Return the user's signature to usee with the api to get an access.
+     *
      * @return string
      */
     public function getSignature()
@@ -183,8 +206,10 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Setter to define the API End point to use for next transactions
-     * @param  string $apiEndPoint
+     * Setter to define the API End point to use for next transactions.
+     *
+     * @param string $apiEndPoint
+     *
      * @return $this
      */
     public function setApiEndPoint($apiEndPoint)
@@ -195,7 +220,8 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Getter the get the API End point to use for next transactions
+     * Getter the get the API End point to use for next transactions.
+     *
      * @return string
      */
     public function getApiEndPoint()
@@ -204,8 +230,10 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Setter to define the url to contact the Paypal api
-     * @param  string $url
+     * Setter to define the url to contact the Paypal api.
+     *
+     * @param string $url
+     *
      * @return $this
      */
     public function setPaypalUrl($url)
@@ -216,7 +244,8 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Return the url used to contact the Paypal api
+     * Return the url used to contact the Paypal api.
+     *
      * @return string
      */
     public function getPaypalUrl()
@@ -225,7 +254,8 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Return the current version of the api managed by this transport
+     * Return the current version of the api managed by this transport.
+     *
      * @return string
      */
     public function getPaypalApiVersion()
@@ -235,8 +265,10 @@ class Curl93 implements TransportInterface
 
     /**
      * Setter to define the timeout accepted by the transport to close the transaction when the api
-     * could not respond
-     * @param  int   $second
+     * could not respond.
+     *
+     * @param int $second
+     *
      * @return $this
      */
     public function setApiTimeout($second)
@@ -247,7 +279,8 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * Return the max time accepted by the transport to get an answer of the api, in seconds
+     * Return the max time accepted by the transport to get an answer of the api, in seconds.
+     *
      * @return int
      */
     public function getApiTimeout()
@@ -256,8 +289,9 @@ class Curl93 implements TransportInterface
     }
 
     /**
-     * @param  string               $methodName
-     * @param  ArgumentBagInterface $arguments
+     * @param string               $methodName
+     * @param ArgumentBagInterface $arguments
+     *
      * @return \ArrayAccess
      */
     public function call($methodName, $arguments)
