@@ -18,7 +18,7 @@
  * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  *
- * @version     0.8.2
+ * @version     0.8.3
  */
 
 namespace UniAlteri\Paypal\Express\Transport;
