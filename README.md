@@ -3,8 +3,8 @@ Uni Alteri - Paypal Express library
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d4660df5-5183-4c84-9e39-bb55ca368acf/mini.png)](https://insight.sensiolabs.com/projects/d4660df5-5183-4c84-9e39-bb55ca368acf)
 
-Welcome and thank you to having downloaded this library. It allows you to quickly and easily offer,
-your users to pay for their orders via PayPal
+Welcome and thank you to having downloaded this library. It allows you to integrate quickly and easily 
+the service "Paypal Express Checkout" in your website.
 
 Installation
 ------------
