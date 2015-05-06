@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Paypal Express.
  *
@@ -71,7 +72,7 @@ class TransactionResult implements TransactionResultInterface
     /**
      * Return a boolean to test if the operation via the api is successful.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuccessful()
     {

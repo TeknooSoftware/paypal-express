@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Paypal Express.
  *
@@ -309,7 +310,7 @@ class Curl93 implements TransportInterface
 
         $request->setOption(CURLOPT_RETURNTRANSFER, true);
         $request->setOption(CURLOPT_POST, true);
-        $request->setOption(CURLOPT_TIMEOUT, $this->apiTimeout*10);
+        $request->setOption(CURLOPT_TIMEOUT, $this->apiTimeout * 10);
         $request->setOption(CURLOPT_CONNECTTIMEOUT, $this->apiTimeout);
 
         $argumentsArray = [];
