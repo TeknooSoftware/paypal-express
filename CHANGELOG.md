@@ -1,5 +1,9 @@
 #Uni Alteri - Paypal express library - Change Log
 
+##[1.0.0] - 2015-08-23
+###Fixed
+- Documentation
+
 ##[0.8.5-beta] - 2015-05-24
 ###Added
 - Add travis file to support IC outside Uni Alteri's server
