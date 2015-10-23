@@ -25,7 +25,7 @@ An example of using this library is available in the folder : [Demo](demo/index.
 
 API Documentation
 -----------------
-Generated documentation from the library with PhpDocumentor : [Open](https://cdn.rawgit.com/UniAlteri/paypal-express/master/docs/api/index.html).
+Generated documentation from the library with PhpDocumentor : [Open](https://cdn.rawgit.com/TeknooSoftware/paypal-express/master/docs/api/index.html).
 
 Documentation and quick-startup
 -------------------------------

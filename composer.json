@@ -13,8 +13,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/UniAlteri/paypal-express/issues",
-        "source": "https://github.com/UniAlteri/paypal-express"
+        "issues": "https://github.com/TeknooSoftware/paypal-express/issues",
+        "source": "https://github.com/TeknooSoftware/paypal-express"
     },
     "require":{
         "php": ">=5.4.0",
