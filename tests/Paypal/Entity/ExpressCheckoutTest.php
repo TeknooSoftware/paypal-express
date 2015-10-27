@@ -14,22 +14,22 @@
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  *
  * @version     0.8.3
  */
 
-namespace UniAlteri\tests\Paypal\Entity;
+namespace Teknoo\tests\Paypal\Entity;
 
-use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
-use UniAlteri\Paypal\Express\Entity\PurchaseInterface;
-use UniAlteri\Paypal\Express\Service\ExpressCheckout;
-use UniAlteri\Paypal\Express\Transport\ArgumentBag;
-use UniAlteri\Paypal\Express\Transport\TransportInterface;
+use Teknoo\Paypal\Express\Entity\ConsumerInterface;
+use Teknoo\Paypal\Express\Entity\PurchaseInterface;
+use Teknoo\Paypal\Express\Service\ExpressCheckout;
+use Teknoo\Paypal\Express\Transport\ArgumentBag;
+use Teknoo\Paypal\Express\Transport\TransportInterface;
 
 /**
  * Class ExpressCheckoutTest.
@@ -37,10 +37,10 @@ use UniAlteri\Paypal\Express\Transport\TransportInterface;
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  */
 class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
@@ -67,7 +67,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     {
         if (!$this->transport instanceof \PHPUnit_Framework_MockObject_MockObject) {
             $this->transport = $this->getMock(
-                'UniAlteri\Paypal\Express\Transport\TransportInterface',
+                'Teknoo\Paypal\Express\Transport\TransportInterface',
                 array(),
                 array(),
                 '',
@@ -89,7 +89,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     {
         if (!$this->consumer instanceof \PHPUnit_Framework_MockObject_MockObject) {
             $this->consumer = $this->getMock(
-                'UniAlteri\Paypal\Express\Entity\ConsumerInterface',
+                'Teknoo\Paypal\Express\Entity\ConsumerInterface',
                 array(),
                 array(),
                 '',
@@ -107,7 +107,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     {
         if (!$this->purchase instanceof \PHPUnit_Framework_MockObject_MockObject) {
             $this->purchase = $this->getMock(
-                'UniAlteri\Paypal\Express\Entity\PurchaseInterface',
+                'Teknoo\Paypal\Express\Entity\PurchaseInterface',
                 array(),
                 array(),
                 '',
@@ -189,11 +189,11 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
 
         $purchase->expects($this->any())
             ->method('getReturnUrl')
-            ->willReturn('http://teknoo.it');
+            ->willReturn('http://teknoo.software');
 
         $purchase->expects($this->any())
             ->method('getCancelUrl')
-            ->willReturn('http://teknoo.it/cancel');
+            ->willReturn('http://teknoo.software/cancel');
 
         $purchase->expects($this->any())
             ->method('getCurrencyCode')
@@ -203,18 +203,18 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::__construct()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::__construct()
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\ExpressCheckout', $this->buildService());
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\ExpressCheckout', $this->buildService());
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -227,8 +227,8 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             'ADDROVERRIDE' => 1,
             'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
-            'RETURNURL' => 'http://teknoo.it',
-            'CANCELURL' => 'http://teknoo.it/cancel',
+            'RETURNURL' => 'http://teknoo.software',
+            'CANCELURL' => 'http://teknoo.software/cancel',
         );
 
         $this->builTransportInterfaceMock()
@@ -250,16 +250,16 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->generateToken($this->setPurchase());
 
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
         $this->assertTrue($result->isSuccessful());
         $this->assertEquals('tokenFake', $result->getTokenValue());
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -277,8 +277,8 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             'PAYMENTREQUEST_0_SHIPTOSTATE' => '',
             'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'FR',
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
-            'RETURNURL' => 'http://teknoo.it',
-            'CANCELURL' => 'http://teknoo.it/cancel',
+            'RETURNURL' => 'http://teknoo.software',
+            'CANCELURL' => 'http://teknoo.software/cancel',
             'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
         );
 
@@ -301,16 +301,16 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->generateToken($this->setPurchase());
 
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
         $this->assertTrue($result->isSuccessful());
         $this->assertEquals('tokenFake', $result->getTokenValue());
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -334,8 +334,8 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 'PAYMENTREQUEST_0_SHIPTOSTATE' => '',
                 'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'FR',
                 'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
-                'RETURNURL' => 'http://teknoo.it',
-                'CANCELURL' => 'http://teknoo.it/cancel',
+                'RETURNURL' => 'http://teknoo.software',
+                'CANCELURL' => 'http://teknoo.software/cancel',
                 'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
             );
 
@@ -358,17 +358,17 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             $result = $this->buildService()
                 ->generateToken($this->setPurchase($currency));
 
-            $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+            $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
             $this->assertTrue($result->isSuccessful());
             $this->assertEquals('tokenFake', $result->getTokenValue());
         }
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -390,10 +390,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -417,8 +417,8 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 'PAYMENTREQUEST_0_SHIPTOSTATE' => '',
                 'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'FR',
                 'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
-                'RETURNURL' => 'http://teknoo.it',
-                'CANCELURL' => 'http://teknoo.it/cancel',
+                'RETURNURL' => 'http://teknoo.software',
+                'CANCELURL' => 'http://teknoo.software/cancel',
                 'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
             );
 
@@ -441,17 +441,17 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             $result = $this->buildService()
                 ->generateToken($this->setPurchase('EUR', $operation));
 
-            $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+            $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
             $this->assertTrue($result->isSuccessful());
             $this->assertEquals('tokenFake', $result->getTokenValue());
         }
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -473,7 +473,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
      */
     public function testGenerateTokenBadConsumer()
     {
@@ -492,10 +492,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      */
     public function testGenerateTokenAddressFailure()
     {
@@ -511,8 +511,8 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             'PAYMENTREQUEST_0_SHIPTOSTATE' => '',
             'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'FR',
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
-            'RETURNURL' => 'http://teknoo.it',
-            'CANCELURL' => 'http://teknoo.it/cancel',
+            'RETURNURL' => 'http://teknoo.software',
+            'CANCELURL' => 'http://teknoo.software/cancel',
             'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
         );
 
@@ -547,8 +547,8 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::getTransactionResult()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getTransactionResult()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testGetTransactionResult()
     {
@@ -575,14 +575,14 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->getTransactionResult('fakeToken');
 
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
         $this->assertTrue($result->isSuccessful());
         $this->assertEquals('idFake', $result->getPayerIdValue());
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::confirmTransaction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::confirmTransaction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testConfirmTransaction()
     {
@@ -612,13 +612,13 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->confirmTransaction('fakeToken', 'fakeId', $this->setPurchase());
 
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResultInterface', $result);
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
         $this->assertTrue($result->isSuccessful());
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::prepareTransaction()
-     * @covers UniAlteri\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::prepareTransaction()
+     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testPrepareTransaction()
     {
@@ -634,8 +634,8 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             'PAYMENTREQUEST_0_SHIPTOSTATE' => '',
             'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'FR',
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
-            'RETURNURL' => 'http://teknoo.it',
-            'CANCELURL' => 'http://teknoo.it/cancel',
+            'RETURNURL' => 'http://teknoo.software',
+            'CANCELURL' => 'http://teknoo.software/cancel',
             'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
         );
 

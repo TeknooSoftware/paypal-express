@@ -1,7 +1,7 @@
-Uni Alteri - Paypal Express library
+Teknoo Software - Paypal Express library
 ===================================
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d4660df5-5183-4c84-9e39-bb55ca368acf/mini.png)](https://insight.sensiolabs.com/projects/d4660df5-5183-4c84-9e39-bb55ca368acf) [![Build Status](https://travis-ci.org/UniAlteri/paypal-express.svg?branch=master)](https://travis-ci.org/UniAlteri/paypal-express)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d4660df5-5183-4c84-9e39-bb55ca368acf/mini.png)](https://insight.sensiolabs.com/projects/d4660df5-5183-4c84-9e39-bb55ca368acf) [![Build Status](https://travis-ci.org/Teknoo/paypal-express.svg?branch=master)](https://travis-ci.org/Teknoo/paypal-express)
 
 Welcome and thank you to having downloaded this library. It allows you to integrate quickly and easily 
 the service "Paypal Express Checkout" in your website.
@@ -10,14 +10,14 @@ Installation
 ------------
 To install this library with composer, run this command :
 
-    composer require unialteri/paypal-exprss
+    composer require teknoo/paypal-exprss
 
 Requirements
 ------------
 This library requires :
 
     * PHP 5.4+
-    * Uni Alteri Curl Request library
+    * Teknoo Software Curl Request library
 
 Example
 -------
@@ -34,7 +34,8 @@ Documentation to explain how this library works and how use it : [Behavior](docs
 Credits
 -------
 Richard Déloge - <r.deloge@uni-alteri.com> - Lead developer.
-Uni Alteri - <http://uni-alteri.com> - <http://teknoo.it>
+Teknoo Software - <http://teknoo.software>
+Uni Alteri - <http://uni-alteri.com>
 
 License
 -------

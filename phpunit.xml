@@ -10,7 +10,7 @@
         bootstrap="tests/bootstrap.php"
         colors="true">
     <testsuites>
-        <testsuite name="Uni Alteri/Paypal Express Test Suite">
+        <testsuite name="Teknoo Software/Paypal Express Test Suite">
             <directory>tests/Paypal</directory>
         </testsuite>
     </testsuites>

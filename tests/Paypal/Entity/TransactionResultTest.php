@@ -14,18 +14,18 @@
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  *
  * @version     0.8.3
  */
 
-namespace UniAlteri\tests\Paypal\Entity;
+namespace Teknoo\tests\Paypal\Entity;
 
-use UniAlteri\Paypal\Express\Service\TransactionResult;
+use Teknoo\Paypal\Express\Service\TransactionResult;
 
 /**
  * Class TransactionResultTest.
@@ -33,10 +33,10 @@ use UniAlteri\Paypal\Express\Service\TransactionResult;
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  */
 class TransactionResultTest extends \PHPUnit_Framework_TestCase
@@ -54,15 +54,15 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::__construct()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::__construct()
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\TransactionResult', $this->generateObject([]));
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResult', $this->generateObject([]));
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getAckValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
      */
     public function testGetAckValueFailure()
     {
@@ -76,7 +76,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getAckValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
      */
     public function testGetAckValue()
     {
@@ -84,7 +84,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::isSuccessful()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
      */
     public function testIsSuccessfulFailure()
     {
@@ -98,7 +98,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::isSuccessful()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
      */
     public function testIsSuccessful()
     {
@@ -108,7 +108,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getTokenValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
      */
     public function testGetTokenValueFailure()
     {
@@ -122,7 +122,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getTokenValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
      */
     public function testGetTokenValue()
     {
@@ -130,7 +130,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getPayerIdValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
      */
     public function testGetPayerIdValueFailure()
     {
@@ -144,7 +144,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getPayerIdValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
      */
     public function testGetPayerIdValue()
     {
@@ -152,7 +152,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getTimestampValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
      */
     public function testGetTimestampValueFailure()
     {
@@ -166,7 +166,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getTimestampValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
      */
     public function testGetTimestampValue()
     {
@@ -174,7 +174,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
      */
     public function testGetCorrelationIdValueFailure()
     {
@@ -188,7 +188,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
      */
     public function testGetCorrelationIdValue()
     {
@@ -196,7 +196,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getVersionValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
      */
     public function testGetVersionValueFailure()
     {
@@ -210,7 +210,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getVersionValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
      */
     public function testGetVersionValue()
     {
@@ -218,7 +218,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getBuildValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
      */
     public function testGetBuildValueFailure()
     {
@@ -232,7 +232,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getBuildValue()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
      */
     public function testGetBuildValue()
     {
@@ -240,7 +240,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getErrors()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
      */
     public function testGetErrorsEmpty()
     {
@@ -248,7 +248,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getErrors()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
      */
     public function testGetErrorsOne()
     {
@@ -262,7 +262,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
         )->getErrors();
 
         $this->assertEquals(1, count($errors));
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\Error', $errors[0]);
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $errors[0]);
         $this->assertEquals('err1', $errors[0]->getCode());
         $this->assertEquals('shortMess', $errors[0]->getShortMessage());
         $this->assertEquals('longMess', $errors[0]->getLongMessage());
@@ -270,7 +270,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getErrors()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
      */
     public function testGetErrorsTwo()
     {
@@ -288,12 +288,12 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
         )->getErrors();
 
         $this->assertEquals(2, count($errors));
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\Error', $errors[0]);
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $errors[0]);
         $this->assertEquals('err1', $errors[0]->getCode());
         $this->assertEquals('shortMess', $errors[0]->getShortMessage());
         $this->assertEquals('longMess', $errors[0]->getLongMessage());
         $this->assertEquals('warning', $errors[0]->getSeverity());
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\Error', $errors[1]);
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $errors[1]);
         $this->assertEquals('err2', $errors[1]->getCode());
         $this->assertEquals('shortMess2', $errors[1]->getShortMessage());
         $this->assertEquals('longMess2', $errors[1]->getLongMessage());
@@ -301,7 +301,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getErrors()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
      */
     public function testGetErrorsOneThree()
     {
@@ -319,7 +319,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
         )->getErrors();
 
         $this->assertEquals(1, count($errors));
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\Error', $errors[0]);
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $errors[0]);
         $this->assertEquals('err1', $errors[0]->getCode());
         $this->assertEquals('shortMess', $errors[0]->getShortMessage());
         $this->assertEquals('longMess', $errors[0]->getLongMessage());
@@ -327,7 +327,7 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\TransactionResult::getRawValues()
+     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getRawValues()
      */
     public function testGetRawValues()
     {

@@ -1,23 +1,23 @@
-#Uni Alteri - Paypal Express library - Documentation
+#Teknoo Software - Paypal Express library - Documentation
 
 ##Presentation
 
 This library is built around two components :
 
-*   a transport, implementing `UniAlteri\Paypal\Express\Transport\TransportInterface` to  execute request to the Paypal API
-*   a service, implementing `UniAlteri\Paypal\Express\Service\ServiceInterface` to prepare and perform call to the Paypal API.
+*   a transport, implementing `Teknoo\Paypal\Express\Transport\TransportInterface` to  execute request to the Paypal API
+*   a service, implementing `Teknoo\Paypal\Express\Service\ServiceInterface` to prepare and perform call to the Paypal API.
 
 Two defaults implementations are provided :
 
-*   `UniAlteri\Paypal\Express\Transport\Curl93` a transport, using curl via the library `zeroem/curl-bundle` and the Paypal API NVP under its version 93.
-*   `UniAlteri\Paypal\Express\Service\ExpressCheckout` a service to use Express Checkout Paypal service.
+*   `Teknoo\Paypal\Express\Transport\Curl93` a transport, using curl via the library `zeroem/curl-bundle` and the Paypal API NVP under its version 93.
+*   `Teknoo\Paypal\Express\Service\ExpressCheckout` a service to use Express Checkout Paypal service.
 
-All Paypal returns are encapsulated in an object implementing `UniAlteri\Paypal\Express\Service\TransactionResultInterface`.
+All Paypal returns are encapsulated in an object implementing `Teknoo\Paypal\Express\Service\TransactionResultInterface`.
 
 To use this library, your business entities must implements two interfaces :
 
-*   `UniAlteri\Paypal\Express\Entity\ConsumerInterface` to describe yours consumers/users and extract theirs addresses.
-*   `UniAlteri\Paypal\Express\Entity\PurchaseInterface` to describe their purchases / orders.
+*   `Teknoo\Paypal\Express\Entity\ConsumerInterface` to describe yours consumers/users and extract theirs addresses.
+*   `Teknoo\Paypal\Express\Entity\PurchaseInterface` to describe their purchases / orders.
 
 This library does not include an implementation of this interface. They must be provided by your application.
 
@@ -39,8 +39,8 @@ To get sandbox credentials,
 
 To start, you must instantiate the transport object like this :
 
-    use UniAlteri\Paypal\Express\Transport\Curl93;
-    use UniAlteri\Curl\RequestGenerator;
+    use Teknoo\Paypal\Express\Transport\Curl93;
+    use Teknoo\Curl\RequestGenerator;
     
     //Request generator to communicate with paypal via curl
     $requestGenerator = new RequestGenerator();
@@ -67,9 +67,9 @@ Now you must instantiate your service like this :
 
 Objects passed to the service to perform the paypal checkout must implement some interface :
 
-*   The consumer object must implement the interface `UniAlteri\Paypal\Express\Entity\ConsumerInterface` to extract 
+*   The consumer object must implement the interface `Teknoo\Paypal\Express\Entity\ConsumerInterface` to extract 
 user's address and identity
-*   The order/purchase object must implement the interface `UniAlteri\Paypal\Express\Entity\PurchaseInterface` to extract
+*   The order/purchase object must implement the interface `Teknoo\Paypal\Express\Entity\PurchaseInterface` to extract
 amount of the invoice and its currency. 
 
 This object must  also return URLs to use to redirect the consumer after Paypal operations. These URL can be differ for 
@@ -89,7 +89,7 @@ This parameter is mandatory to retrieve via the service the operation's result v
 
     $result = $service->getTransactionResult($_GET['token']);
     
-This method returns an object `UniAlteri\Paypal\Express\Service\TransactionResultInterface`
+This method returns an object `Teknoo\Paypal\Express\Service\TransactionResultInterface`
 
 If the payment has been processed by Paypal, the method `isSuccessful` of the result object returns true
 

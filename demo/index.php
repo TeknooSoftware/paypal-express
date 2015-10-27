@@ -13,10 +13,10 @@
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  *
  * @version     0.8.3
@@ -24,9 +24,9 @@
 
 namespace Acme\Demo;
 
-use UniAlteri\Paypal\Express\Service\ExpressCheckout;
-use UniAlteri\Paypal\Express\Transport\Curl93;
-use UniAlteri\Curl\RequestGenerator;
+use Teknoo\Paypal\Express\Service\ExpressCheckout;
+use Teknoo\Paypal\Express\Transport\Curl93;
+use Teknoo\Curl\RequestGenerator;
 
 //Initialize composer
 require_once '../vendor/autoload.php';
@@ -65,10 +65,10 @@ try {
     <!DOCTYPE html>
     <html lang="fr">
     <head>
-        <title>Uni Alteri - Paypal Express - Demo</title>
+        <title>Teknoo Software - Paypal Express - Demo</title>
     </head>
     <body>
-    <h1>Uni Alteri, Paypal Express library demo</h1>
+    <h1>Teknoo Software, Paypal Express library demo</h1>
     <?php if (isset($_GET['method'])):
         if ('cancel' == $_GET['method']): ?>
             <p>Checkout canceled by the consumer</p>

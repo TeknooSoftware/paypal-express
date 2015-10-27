@@ -14,18 +14,18 @@
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  *
  * @version     0.8.3
  */
 
-namespace UniAlteri\tests\Paypal\Transport;
+namespace Teknoo\tests\Paypal\Transport;
 
-use UniAlteri\Paypal\Express\Transport\ArgumentBag;
+use Teknoo\Paypal\Express\Transport\ArgumentBag;
 
 /**
  * Class ArgumentBagTest.
@@ -33,10 +33,10 @@ use UniAlteri\Paypal\Express\Transport\ArgumentBag;
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  */
 class ArgumentBagTest extends \PHPUnit_Framework_TestCase
@@ -52,17 +52,17 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Transport\ArgumentBag::__construct()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::__construct()
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Transport\ArgumentBag', $this->generateObject());
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Transport\ArgumentBag', $this->generateObject(['foo' => 'bar']));
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Transport\ArgumentBag', $this->generateObject(new \ArrayObject(['foo' => 'bar'])));
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Transport\ArgumentBag', $this->generateObject());
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Transport\ArgumentBag', $this->generateObject(['foo' => 'bar']));
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Transport\ArgumentBag', $this->generateObject(new \ArrayObject(['foo' => 'bar'])));
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Transport\ArgumentBag::reset()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::reset()
      */
     public function testReset()
     {
@@ -74,7 +74,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Transport\ArgumentBag::set()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::set()
      */
     public function testSetFailure()
     {
@@ -90,7 +90,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Transport\ArgumentBag::set()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::set()
      */
     public function testSet()
     {
@@ -102,7 +102,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Transport\ArgumentBag::get()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::get()
      */
     public function testGetFailure()
     {
@@ -118,7 +118,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Transport\ArgumentBag::get()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::get()
      */
     public function testGetFailureNotFound()
     {
@@ -134,7 +134,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Transport\ArgumentBag::get()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::get()
      */
     public function testGet()
     {
@@ -144,7 +144,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Transport\ArgumentBag::toArray()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::toArray()
      */
     public function testToArray()
     {

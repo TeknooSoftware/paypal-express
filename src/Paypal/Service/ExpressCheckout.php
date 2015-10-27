@@ -14,21 +14,21 @@
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  *
  * @version     0.8.3
  */
 
-namespace UniAlteri\Paypal\Express\Service;
+namespace Teknoo\Paypal\Express\Service;
 
-use UniAlteri\Paypal\Express\Entity\ConsumerInterface;
-use UniAlteri\Paypal\Express\Entity\PurchaseInterface;
-use UniAlteri\Paypal\Express\Transport\ArgumentBag;
-use UniAlteri\Paypal\Express\Transport\TransportInterface;
+use Teknoo\Paypal\Express\Entity\ConsumerInterface;
+use Teknoo\Paypal\Express\Entity\PurchaseInterface;
+use Teknoo\Paypal\Express\Transport\ArgumentBag;
+use Teknoo\Paypal\Express\Transport\TransportInterface;
 
 /**
  * Class ExpressCheckout
@@ -37,10 +37,10 @@ use UniAlteri\Paypal\Express\Transport\TransportInterface;
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  */
 class ExpressCheckout implements ServiceInterface

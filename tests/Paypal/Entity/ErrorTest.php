@@ -14,18 +14,18 @@
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  *
  * @version     0.8.3
  */
 
-namespace UniAlteri\tests\Paypal\Entity;
+namespace Teknoo\tests\Paypal\Entity;
 
-use UniAlteri\Paypal\Express\Service\Error;
+use Teknoo\Paypal\Express\Service\Error;
 
 /**
  * Class ErrorTest.
@@ -33,10 +33,10 @@ use UniAlteri\Paypal\Express\Service\Error;
  * @copyright   Copyright (c) 2009-2016 Uni Alteri (http://uni-alteri.com)
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)
  *
- * @link        http://teknoo.it/paypal Project website
+ * @link        http://teknoo.software/paypal Project website
  *
- * @license     http://teknoo.it/paypal/license/mit         MIT License
- * @license     http://teknoo.it/paypal/license/gpl-3.0     GPL v3 License
+ * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <r.deloge@uni-alteri.com>
  */
 class ErrorTest extends \PHPUnit_Framework_TestCase
@@ -57,7 +57,7 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\Error::getCode()
+     * @covers Teknoo\Paypal\Express\Service\Error::getCode()
      */
     public function testGetCode()
     {
@@ -66,7 +66,7 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\Error::getShortMessage()
+     * @covers Teknoo\Paypal\Express\Service\Error::getShortMessage()
      */
     public function testGetShortMessage()
     {
@@ -75,7 +75,7 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\Error::getLongMessage()
+     * @covers Teknoo\Paypal\Express\Service\Error::getLongMessage()
      */
     public function testGetLongMessage()
     {
@@ -84,7 +84,7 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\Error::getSeverity()
+     * @covers Teknoo\Paypal\Express\Service\Error::getSeverity()
      */
     public function testGetSeverity()
     {
@@ -93,10 +93,10 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers UniAlteri\Paypal\Express\Service\Error::__construct()
+     * @covers Teknoo\Paypal\Express\Service\Error::__construct()
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('UniAlteri\Paypal\Express\Service\Error', $this->generateError('code', 'sort', 'long', 'fooBar'));
+        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $this->generateError('code', 'sort', 'long', 'fooBar'));
     }
 }

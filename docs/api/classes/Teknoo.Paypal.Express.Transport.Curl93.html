@@ -21,54 +21,54 @@
     <script src="../js/jquery.smooth-scroll.js"></script>
     <script src="../js/prism.min.js"></script>
     <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-        <script type="text/javascript">
-        function loadExternalCodeSnippets() {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-                var src = pre.getAttribute('data-src');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
 
-                pre.textContent = '';
+            pre.textContent = '';
 
-                code.textContent = 'Loading…';
+            code.textContent = 'Loading…';
 
-                pre.appendChild(code);
+            pre.appendChild(code);
 
-                var xhr = new XMLHttpRequest();
+            var xhr = new XMLHttpRequest();
 
-                xhr.open('GET', src, true);
+            xhr.open('GET', src, true);
 
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
 
-                        if (xhr.status < 400 && xhr.responseText) {
-                            code.textContent = xhr.responseText;
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
 
-                            Prism.highlightElement(code);
-                        }
-                        else if (xhr.status >= 400) {
-                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                        }
-                        else {
-                            code.textContent = '✖ Error: File does not exist or is empty';
-                        }
+                        Prism.highlightElement(code);
                     }
-                };
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
 
-                xhr.send(null);
-            });
-        }
-
-        $(document).ready(function(){
-            loadExternalCodeSnippets();
+            xhr.send(null);
         });
-        $('#source-view').on('shown', function () {
-            loadExternalCodeSnippets();
-        })
-    </script>
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
 
     <link rel="shortcut icon" href="../images/favicon.ico"/>
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
@@ -92,7 +92,7 @@
                             API Documentation <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                                                        <li><a href="../namespaces/UniAlteri.html">\UniAlteri</a></li>
+                                                        <li><a href="../namespaces/Teknoo.html">\Teknoo</a></li>
                                                     </ul>
                     </li>
                                         <li class="dropdown" id="charts-menu">
@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">41</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">8</span>
                                 </a>
                             </li>
                             <li>
@@ -144,52 +144,52 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1009656748"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1376551001"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1009656748" class="accordion-body collapse in">
+            <div id="namespace-1376551001" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1898478668"></a>
-                                <a href="../namespaces/UniAlteri.html" style="margin-left: 30px; padding-left: 0">UniAlteri</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1102983390"></a>
+                                <a href="../namespaces/Teknoo.html" style="margin-left: 30px; padding-left: 0">Teknoo</a>
             </div>
-            <div id="namespace-1898478668" class="accordion-body collapse ">
+            <div id="namespace-1102983390" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1530293678"></a>
-                                <a href="../namespaces/UniAlteri.Paypal.html" style="margin-left: 30px; padding-left: 0">Paypal</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-997388020"></a>
+                                <a href="../namespaces/Teknoo.Paypal.html" style="margin-left: 30px; padding-left: 0">Paypal</a>
             </div>
-            <div id="namespace-1530293678" class="accordion-body collapse ">
+            <div id="namespace-997388020" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1236585193"></a>
-                                <a href="../namespaces/UniAlteri.Paypal.Express.html" style="margin-left: 30px; padding-left: 0">Express</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-547327649"></a>
+                                <a href="../namespaces/Teknoo.Paypal.Express.html" style="margin-left: 30px; padding-left: 0">Express</a>
             </div>
-            <div id="namespace-1236585193" class="accordion-body collapse ">
+            <div id="namespace-547327649" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-861297992"></a>
-                                <a href="../namespaces/UniAlteri.Paypal.Express.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1067287499"></a>
+                                <a href="../namespaces/Teknoo.Paypal.Express.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
             </div>
-            <div id="namespace-861297992" class="accordion-body collapse ">
+            <div id="namespace-1067287499" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                    <li class="interface"><a href="../classes/UniAlteri.Paypal.Express.Entity.ConsumerInterface.html">ConsumerInterface</a></li>
-                                                    <li class="interface"><a href="../classes/UniAlteri.Paypal.Express.Entity.PurchaseInterface.html">PurchaseInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Teknoo.Paypal.Express.Entity.ConsumerInterface.html">ConsumerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Teknoo.Paypal.Express.Entity.PurchaseInterface.html">PurchaseInterface</a></li>
                                                                                             </ul>
                 </div>
             </div>
@@ -199,20 +199,20 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-831625745"></a>
-                                <a href="../namespaces/UniAlteri.Paypal.Express.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1075455272"></a>
+                                <a href="../namespaces/Teknoo.Paypal.Express.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
             </div>
-            <div id="namespace-831625745" class="accordion-body collapse ">
+            <div id="namespace-1075455272" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                    <li class="interface"><a href="../classes/UniAlteri.Paypal.Express.Service.ErrorInterface.html">ErrorInterface</a></li>
-                                                    <li class="interface"><a href="../classes/UniAlteri.Paypal.Express.Service.ServiceInterface.html">ServiceInterface</a></li>
-                                                    <li class="interface"><a href="../classes/UniAlteri.Paypal.Express.Service.TransactionResultInterface.html">TransactionResultInterface</a></li>
-                                                                                                    <li class="class"><a href="../classes/UniAlteri.Paypal.Express.Service.Error.html">Error</a></li>
-                                                    <li class="class"><a href="../classes/UniAlteri.Paypal.Express.Service.ExpressCheckout.html">ExpressCheckout</a></li>
-                                                    <li class="class"><a href="../classes/UniAlteri.Paypal.Express.Service.TransactionResult.html">TransactionResult</a></li>
+                                                    <li class="interface"><a href="../classes/Teknoo.Paypal.Express.Service.ErrorInterface.html">ErrorInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Teknoo.Paypal.Express.Service.ServiceInterface.html">ServiceInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Teknoo.Paypal.Express.Service.TransactionResultInterface.html">TransactionResultInterface</a></li>
+                                                                                                    <li class="class"><a href="../classes/Teknoo.Paypal.Express.Service.Error.html">Error</a></li>
+                                                    <li class="class"><a href="../classes/Teknoo.Paypal.Express.Service.ExpressCheckout.html">ExpressCheckout</a></li>
+                                                    <li class="class"><a href="../classes/Teknoo.Paypal.Express.Service.TransactionResult.html">TransactionResult</a></li>
                                             </ul>
                 </div>
             </div>
@@ -222,18 +222,18 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1157674974"></a>
-                                <a href="../namespaces/UniAlteri.Paypal.Express.Transport.html" style="margin-left: 30px; padding-left: 0">Transport</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1599971573"></a>
+                                <a href="../namespaces/Teknoo.Paypal.Express.Transport.html" style="margin-left: 30px; padding-left: 0">Transport</a>
             </div>
-            <div id="namespace-1157674974" class="accordion-body collapse ">
+            <div id="namespace-1599971573" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                    <li class="interface"><a href="../classes/UniAlteri.Paypal.Express.Transport.ArgumentBagInterface.html">ArgumentBagInterface</a></li>
-                                                    <li class="interface"><a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html">TransportInterface</a></li>
-                                                                                                    <li class="class"><a href="../classes/UniAlteri.Paypal.Express.Transport.ArgumentBag.html">ArgumentBag</a></li>
-                                                    <li class="class"><a href="../classes/UniAlteri.Paypal.Express.Transport.Curl93.html">Curl93</a></li>
+                                                    <li class="interface"><a href="../classes/Teknoo.Paypal.Express.Transport.ArgumentBagInterface.html">ArgumentBagInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Teknoo.Paypal.Express.Transport.TransportInterface.html">TransportInterface</a></li>
+                                                                                                    <li class="class"><a href="../classes/Teknoo.Paypal.Express.Transport.ArgumentBag.html">ArgumentBag</a></li>
+                                                    <li class="class"><a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html">Curl93</a></li>
                                             </ul>
                 </div>
             </div>
@@ -279,93 +279,131 @@
             <div class="row-fluid">
                 <div class="span8 content class">
                     <nav>
-                                                <a href="../namespaces/UniAlteri.Paypal.Express.Transport.html">\UniAlteri\Paypal\Express\Transport</a>
+                                                <a href="../namespaces/Teknoo.Paypal.Express.Transport.html">\Teknoo\Paypal\Express\Transport</a> <i class="icon-level-up"></i>
                                             </nav>
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
-                    <h1><small>\UniAlteri\Paypal\Express\Transport</small>TransportInterface</h1>
-                    <p><em>Interface TransportInterface
-Interface to define transport to use to communicate with the Paypal API.</em></p>
+                    <h1><small>\Teknoo\Paypal\Express\Transport</small>Curl93</h1>
+                    <p><em>Class Curl93
+Implementation of TransportInterface with Curl library to use the paypal api.</em></p>
                     
-
+                    
+                                        
                     <section id="summary">
                         <h2>Summary</h2>
                         <section class="row-fluid heading">
-                            <section class="span6">
+                            <section class="span4">
                                 <a href="#methods">Methods</a>
                             </section>
-                            <section class="span6">
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
                                 <a href="#constants">Constants</a>
                             </section>
                         </section>
                         <section class="row-fluid public">
-                            <section class="span6">
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_setUserId">setUserId()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_getUserId">getUserId()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_setPassword">setPassword()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_getPassword">getPassword()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_setSignature">setSignature()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_getSignature">getSignature()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_setApiEndPoint">setApiEndPoint()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_getApiEndPoint">getApiEndPoint()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_setPaypalUrl">setPaypalUrl()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_getPaypalUrl">getPaypalUrl()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_getPaypalApiVersion">getPaypalApiVersion()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_setApiTimeout">setApiTimeout()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_getApiTimeout">getApiTimeout()</a><br />
-                                                                    <a href="../classes/UniAlteri.Paypal.Express.Transport.TransportInterface.html#method_call">call()</a><br />
+                            <section class="span4">
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_setUserId" class="">setUserId()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_getUserId" class="">getUserId()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_setPassword" class="">setPassword()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_getPassword" class="">getPassword()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_setSignature" class="">setSignature()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_getSignature" class="">getSignature()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_setApiEndPoint" class="">setApiEndPoint()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_getApiEndPoint" class="">getApiEndPoint()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_setPaypalUrl" class="">setPaypalUrl()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_getPaypalUrl" class="">getPaypalUrl()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_getPaypalApiVersion" class="">getPaypalApiVersion()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_setApiTimeout" class="">setApiTimeout()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_getApiTimeout" class="">getApiTimeout()</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#method_call" class="">call()</a><br />
                                                             </section>
-                            <section class="span6">
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
                                                                     <em>No constants found</em>
                                                             </section>
                         </section>
                         <section class="row-fluid protected">
-                            <section class="span6">
+                            <section class="span4">
                                                                     <em>No protected methods found</em>
                                                             </section>
-                            <section class="span6">
+                            <section class="span4">
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_apiEndPoint" class="">$apiEndPoint</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_paypalUrl" class="">$paypalUrl</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_paypalVersion" class="">$paypalVersion</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_bNCode" class="">$bNCode</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_apiTimeout" class="">$apiTimeout</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_requestGenerator" class="">$requestGenerator</a><br />
+                                                            </section>
+                            <section class="span4">
                                 <em>N/A</em>
                             </section>
                         </section>
                         <section class="row-fluid private">
-                            <section class="span6">
+                            <section class="span4">
                                                                     <em>No private methods found</em>
                                                             </section>
-                            <section class="span6">
+                            <section class="span4">
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_userId" class="">$userId</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_password" class="">$password</a><br />
+                                                                    <a href="../classes/Teknoo.Paypal.Express.Transport.Curl93.html#property_signature" class="">$signature</a><br />
+                                                            </section>
+                            <section class="span4">
                                 <em>N/A</em>
                             </section>
                         </section>
                     </section>
                 </div>
                 <aside class="span4 detailsbar">
-                                        <dl>
+                                        
+                    
+                    <dl>
                         <dt>File</dt>
-                            <dd>
-                                <a href="../files/Transport.TransportInterface.html"><div class="path-wrapper">Transport/TransportInterface.php</div></a>
-                            </dd>
+                            <dd><a href="../files/Transport.Curl93.html"><div class="path-wrapper">Transport/Curl93.php</div></a></dd>
                                                 <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">\Default</div></dd>
-                                                
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Teknoo\Paypal\Express\Transport\Curl93</div>
+                            </dd>
+
+                                                                            <dt>Implements</dt>
+                                                        <dd><a href="../classes/Teknoo.Paypal.Express.Transport.TransportInterface.html"><div class="namespace-wrapper">\Teknoo\Paypal\Express\Transport\TransportInterface</div></a></dd>
+                        
+                        
+                        
                                                                             <dt>See also</dt>
-                                                                                    <dd><a href="http://teknoo.it/paypal"><div class="namespace-wrapper">Project website</div></a></dd>
+                                                                                    <dd><a href="http://teknoo.software/paypal"><div class="namespace-wrapper">Project website</div></a></dd>
+                                                    
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
                                             <tr>
-                            <th>copyright</th>
+                            <th>
+                                copyright
+                            </th>
                             <td>
-                                                                    <p>Copyright (c) 2009-2015 Uni Alteri (<a href="http://uni-alteri.com">http://uni-alteri.com</a>)</p>
+                                                                    <p>Copyright (c) 2009-2016 Uni Alteri (<a href="http://uni-alteri.com">http://uni-alteri.com</a>)</p>
+                                                                    <p>Copyright (c) 2009-2016 Richard Déloge (r.deloge@uni-alteri.com)</p>
                                                             </td>
                         </tr>
                                             <tr>
-                            <th>license</th>
+                            <th>
+                                license
+                            </th>
                             <td>
-                                                                    <p><a href="http://teknoo.it/paypal/license/mit">http://teknoo.it/paypal/license/mit</a>         MIT License</p>
-                                                                    <p><a href="http://teknoo.it/paypal/license/gpl-3.0">http://teknoo.it/paypal/license/gpl-3.0</a>     GPL v3 License</p>
+                                                                    <p><a href="http://teknoo.software/paypal/license/mit">http://teknoo.software/paypal/license/mit</a>         MIT License</p>
+                                                                    <p><a href="http://teknoo.software/paypal/license/gpl-3.0">http://teknoo.software/paypal/license/gpl-3.0</a>     GPL v3 License</p>
                                                             </td>
                         </tr>
                                             <tr>
-                            <th>author</th>
+                            <th>
+                                author
+                            </th>
                             <td>
                                                                     <p>Richard Déloge <a href="mailto:r.deloge@uni-alteri.com">r.deloge@uni-alteri.com</a></p>
                                                             </td>
@@ -374,13 +412,311 @@ Interface to define transport to use to communicate with the Paypal API.</em></p
                 </aside>
             </div>
 
-            
-                        <div class="row-fluid">
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
                 <div class="span8 content class">
-                    <h2>Methods</h2>
+                    <h2>Properties</h2>
                 </div>
                 <aside class="span4 detailsbar"></aside>
             </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_apiEndPoint" name="property_apiEndPoint" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$apiEndPoint</h3>
+                <pre class="signature">$apiEndPoint : string</pre>
+                <p><em>API End point to communicate with paypal.</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_paypalUrl" name="property_paypalUrl" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$paypalUrl</h3>
+                <pre class="signature">$paypalUrl : string</pre>
+                <p><em>URL to redirect the user.</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_paypalVersion" name="property_paypalVersion" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$paypalVersion</h3>
+                <pre class="signature">$paypalVersion : integer</pre>
+                <p><em>Paypal API Version used.</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_bNCode" name="property_bNCode" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$bNCode</h3>
+                <pre class="signature">$bNCode : string</pre>
+                <p><em>BN Code 	is only applicable for partners.</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_apiTimeout" name="property_apiTimeout" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$apiTimeout</h3>
+                <pre class="signature">$apiTimeout : integer</pre>
+                <p><em>Curl Timeout.</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_requestGenerator" name="property_requestGenerator" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$requestGenerator</h3>
+                <pre class="signature">$requestGenerator : \Teknoo\Curl\RequestGenerator</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                \Teknoo\Curl\RequestGenerator
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_userId" name="property_userId" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$userId</h3>
+                <pre class="signature">$userId : string</pre>
+                <p><em>User id in paypal.</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_password" name="property_password" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$password</h3>
+                <pre class="signature">$password : string</pre>
+                <p><em>Password in paypal.</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_signature" name="property_signature" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$signature</h3>
+                <pre class="signature">$signature : string</pre>
+                <p><em>Signature in paypal.</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(string|null  <span class="argument">$userId = null</span>, string|null  <span class="argument">$password = null</span>, string|null  <span class="argument">$signature = null</span>, string|null  <span class="argument">$apiEndPoint = null</span>, string|null  <span class="argument">$paypalUrl = null</span>, integer|null  <span class="argument">$paypalVersion = 93</span>, string|null  <span class="argument">$bNCode = &#039;PP-ECWizard&#039;</span>, integer|null  <span class="argument">$apiTimeout = 60</span>, \Teknoo\Curl\RequestGenerator|null  <span class="argument">$requestGenerator = null</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string|null</td>
+                                <td>$userId </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string|null</td>
+                                <td>$password </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string|null</td>
+                                <td>$signature </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string|null</td>
+                                <td>$apiEndPoint </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string|null</td>
+                                <td>$paypalUrl </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer|null</td>
+                                <td>$paypalVersion </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string|null</td>
+                                <td>$bNCode </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer|null</td>
+                                <td>$apiTimeout </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Teknoo\Curl\RequestGenerator|null</td>
+                                <td>$requestGenerator </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
 
                                     <div class="row-fluid">
         <div class="span8 content class">
@@ -801,7 +1137,7 @@ could not respond.</em></p>
             <article class="method">
                 <h3 class="public ">call()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">call(string  <span class="argument">$methodName</span>, \UniAlteri\Paypal\Express\Transport\ArgumentBagInterface  <span class="argument">$arguments</span>) : \ArrayAccess</pre>
+                <pre class="signature" style="margin-right: 54px;">call(string  <span class="argument">$methodName</span>, \Teknoo\Paypal\Express\Transport\ArgumentBagInterface  <span class="argument">$arguments</span>) : \ArrayAccess</pre>
                 <p><em></em></p>
                 
 
@@ -813,7 +1149,7 @@ could not respond.</em></p>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td><a href="../classes/UniAlteri.Paypal.Express.Transport.ArgumentBagInterface.html">\UniAlteri\Paypal\Express\Transport\ArgumentBagInterface</a></td>
+                                <td><a href="../classes/Teknoo.Paypal.Express.Transport.ArgumentBagInterface.html">\Teknoo\Paypal\Express\Transport\ArgumentBagInterface</a></td>
                                 <td>$arguments </td>
                                 <td></td>
                             </tr>
@@ -842,10 +1178,10 @@ could not respond.</em></p>
     <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="source-view-label">TransportInterface.php</h3>
+            <h3 id="source-view-label">Curl93.php</h3>
         </div>
         <div class="modal-body">
-            <pre data-src="../files/Transport/TransportInterface.php.txt" class="language-php"></pre>
+            <pre data-src="../files/Transport/Curl93.php.txt" class="language-php line-numbers"></pre>
         </div>
     </div>
 
@@ -858,7 +1194,7 @@ could not respond.</em></p>
                                                         <h1><i class="icon-code"></i></h1>
                             <div>
                                 <ul>
-                                                                            <li><a href="../namespaces/UniAlteri.html">\UniAlteri</a></li>
+                                                                            <li><a href="../namespaces/Teknoo.html">\Teknoo</a></li>
                                                                     </ul>
                             </div>
                         </section>
@@ -886,7 +1222,7 @@ could not respond.</em></p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on February 20th, 2015 at 10:29.
+                    on October 27th, 2015 at 21:22.
                 </section>
             </section>
         </section>

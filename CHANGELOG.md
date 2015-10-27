@@ -1,4 +1,8 @@
-#Uni Alteri - Paypal express library - Change Log
+#Teknoo Software - Paypal express library - Change Log
+
+##[1.0.1] - 2015-10-27
+###Changed
+- Migrate library from Uni Alteri organization to Teknoo Software
 
 ##[1.0.0] - 2015-08-23
 ###Fixed
@@ -6,7 +10,7 @@
 
 ##[0.8.5-beta] - 2015-05-24
 ###Added
-- Add travis file to support IC outside Uni Alteri's server
+- Add travis file to support IC outside Teknoo Software's server
 
 ##[0.8.4-beta] - 2015-05-06
 ###Fixed
