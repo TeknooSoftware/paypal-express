@@ -1,7 +1,7 @@
 Teknoo Software - Paypal Express library
 ===================================
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d4660df5-5183-4c84-9e39-bb55ca368acf/mini.png)](https://insight.sensiolabs.com/projects/d4660df5-5183-4c84-9e39-bb55ca368acf) [![Build Status](https://travis-ci.org/Teknoo/paypal-express.svg?branch=master)](https://travis-ci.org/Teknoo/paypal-express)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ad93fc55-8404-417c-b2bc-87342262d8a3/mini.png)](https://insight.sensiolabs.com/projects/ad93fc55-8404-417c-b2bc-87342262d8a3) [![Build Status](https://travis-ci.org/TeknooSoftware/paypal-express.svg?branch=master)](https://travis-ci.org/TeknooSoftware/paypal-express)
 
 Welcome and thank you to having downloaded this library. It allows you to integrate quickly and easily 
 the service "Paypal Express Checkout" in your website.
