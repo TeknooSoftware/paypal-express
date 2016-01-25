@@ -263,7 +263,7 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
             ->method('setOption')
             ->withConsecutive(
                 [CURLOPT_URL, 'https://teknoo.software'],
-                [CURLOPT_VERBOSE, true],
+                [CURLOPT_VERBOSE, false],
                 [CURLOPT_SSL_VERIFYPEER, false],
                 [CURLOPT_SSL_VERIFYHOST, 0],
                 [CURLOPT_RETURNTRANSFER, true],

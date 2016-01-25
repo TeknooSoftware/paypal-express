@@ -1,5 +1,10 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[1.0.2] - 2016-01-25
+###Fixed
+- Disable curl verbos mode
+- .gitignore clean
+
 ##[1.0.1] - 2015-10-27
 ###Changed
 - Migrate library from Uni Alteri organization to Teknoo Software

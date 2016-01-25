@@ -304,7 +304,7 @@ class Curl93 implements TransportInterface
         //setting the curl parameters.
         $request->setMethod('POST');
         $request->setOption(CURLOPT_URL, $this->apiEndPoint);
-        $request->setOption(CURLOPT_VERBOSE, true);
+        $request->setOption(CURLOPT_VERBOSE, false);
 
         //turning off the server and peer verification(TrustManager Concept).
         $request->setOption(CURLOPT_SSL_VERIFYPEER, false);
