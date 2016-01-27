@@ -1,5 +1,10 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[1.1.0-beta1] - 2016-01-25
+###Added
+- allow purchase to configure the paypal request via configureArgumentBag
+- can add item to a request via argumentbad and purchase item interface
+
 ##[1.0.2] - 2016-01-25
 ###Fixed
 - Disable curl verbos mode
