@@ -27,7 +27,7 @@ namespace Teknoo\Paypal\Express\Entity;
 
 /**
  * Interface PurchaseItemInterface
- * Interface to represent an intem into a purchase in the vendor's informations system
+ * Interface to represent an intem into a purchase in the vendor's informations system.
  *
  *
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
@@ -41,31 +41,36 @@ namespace Teknoo\Paypal\Express\Entity;
 interface PurchaseItemInterface
 {
     /**
-     * Get the name about this item in the purchase
+     * Get the name about this item in the purchase.
+     *
      * @return string
      */
     public function getPaymentRequestName();
 
     /**
-     * Get the description about this item in the purchase
+     * Get the description about this item in the purchase.
+     *
      * @return string
      */
     public function getPaymentRequestDesc();
 
     /**
-     * Get the amount about this item in the purchase (required)
+     * Get the amount about this item in the purchase (required).
+     *
      * @return float
      */
     public function getPaymentRequestAmount();
 
     /**
-     * Get the reference about this item in the purchase
+     * Get the reference about this item in the purchase.
+     *
      * @return string
      */
     public function getPaymentRequestNumber();
 
     /**
-     * Get the url about this item in the purchase
+     * Get the url about this item in the purchase.
+     *
      * @return string
      */
     public function getPaymentRequestUrl();

@@ -81,6 +81,7 @@ interface ArgumentBagInterface
 
     /**
      * @param PurchaseItemInterface $purchaseItem
+     *
      * @return self
      */
     public function addItem(PurchaseItemInterface $purchaseItem);

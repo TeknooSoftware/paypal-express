@@ -48,10 +48,11 @@ class ArgumentBag implements ArgumentBagInterface
     protected $parameters;
 
     /**
-     * To count all purchase item added with addItem()
+     * To count all purchase item added with addItem().
+     *
      * @var int
      */
-    protected $purchaseItemCounter=0;
+    protected $purchaseItemCounter = 0;
 
     /**
      * To initialize this bag.
@@ -130,18 +131,20 @@ class ArgumentBag implements ArgumentBagInterface
     }
 
     /**
-     * To increase the purchase coutner for the next add
+     * To increase the purchase coutner for the next add.
+     *
      * @return self
      */
     private function increasePurchaseItemCounter()
     {
-        $this->purchaseItemCounter++;
+        ++$this->purchaseItemCounter;
 
         return $this;
     }
 
     /**
      * @param PurchaseItemInterface $purchaseItem
+     *
      * @return self
      */
     public function addItem(PurchaseItemInterface $purchaseItem)

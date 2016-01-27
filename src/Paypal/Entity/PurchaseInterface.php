@@ -87,6 +87,7 @@ interface PurchaseInterface
 
     /**
      * @param ArgumentBag $argumentBag
+     *
      * @return self
      */
     public function configureArgumentBag(ArgumentBag $argumentBag);

@@ -191,7 +191,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
                 'L_PAYMENTREQUEST_0_DESC1' => '',
                 'L_PAYMENTREQUEST_0_AMT1' => 456,
                 'L_PAYMENTREQUEST_0_NUMBER1' => '',
-                'L_PAYMENTREQUEST_0_ITEMURL1' => ''
+                'L_PAYMENTREQUEST_0_ITEMURL1' => '',
             ],
             $array->getArrayCopy()
         );
