@@ -154,4 +154,46 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $array->count());
         $this->assertEquals('bar', $array['foo']);
     }
+
+    /**
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::addItem()
+     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::increasePurchaseItemCounter()
+     */
+    public function testAddItem()
+    {
+        $item1 = $this->getMock('Teknoo\Paypal\Express\Entity\PurchaseItemInterface');
+        $item1->expects($this->any())->method('getPaymentRequestName')->willReturn('name 1');
+        $item1->expects($this->any())->method('getPaymentRequestDesc')->willReturn('desc 1');
+        $item1->expects($this->any())->method('getPaymentRequestAmount')->willReturn(123);
+        $item1->expects($this->any())->method('getPaymentRequestNumber')->willReturn('n1234');
+        $item1->expects($this->any())->method('getPaymentRequestUrl')->willReturn('https://foo.bar');
+
+        $item2 = $this->getMock('Teknoo\Paypal\Express\Entity\PurchaseItemInterface');
+        $item2->expects($this->any())->method('getPaymentRequestName')->willReturn('name 2');
+        $item2->expects($this->any())->method('getPaymentRequestDesc')->willReturn('');
+        $item2->expects($this->any())->method('getPaymentRequestAmount')->willReturn(456);
+        $item2->expects($this->any())->method('getPaymentRequestNumber')->willReturn('');
+        $item2->expects($this->any())->method('getPaymentRequestUrl')->willReturn('');
+
+        $object = $this->generateObject();
+        $this->assertEquals($object, $object->addItem($item1));
+        $this->assertEquals($object, $object->addItem($item2));
+
+        $array = $object->toArray();
+        $this->assertEquals(
+            [
+                'L_PAYMENTREQUEST_0_NAME0' => 'name 1',
+                'L_PAYMENTREQUEST_0_DESC0' => 'desc 1',
+                'L_PAYMENTREQUEST_0_AMT0' => 123,
+                'L_PAYMENTREQUEST_0_NUMBER0' => 'n1234',
+                'L_PAYMENTREQUEST_0_ITEMURL0' => 'https://foo.bar',
+                'L_PAYMENTREQUEST_0_NAME1' => 'name 2',
+                'L_PAYMENTREQUEST_0_DESC1' => '',
+                'L_PAYMENTREQUEST_0_AMT1' => 456,
+                'L_PAYMENTREQUEST_0_NUMBER1' => '',
+                'L_PAYMENTREQUEST_0_ITEMURL1' => ''
+            ],
+            $array->getArrayCopy()
+        );
+    }
 }

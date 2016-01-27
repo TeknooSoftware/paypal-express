@@ -24,6 +24,7 @@
  */
 
 namespace Teknoo\Paypal\Express\Transport;
+
 use Teknoo\Paypal\Express\Entity\PurchaseItemInterface;
 
 /**
