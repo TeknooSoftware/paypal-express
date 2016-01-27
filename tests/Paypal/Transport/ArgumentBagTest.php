@@ -167,6 +167,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
         $item1->expects($this->any())->method('getPaymentRequestAmount')->willReturn(123);
         $item1->expects($this->any())->method('getPaymentRequestNumber')->willReturn('n1234');
         $item1->expects($this->any())->method('getPaymentRequestUrl')->willReturn('https://foo.bar');
+        $item1->expects($this->any())->method('getPaymentRequestItemCategory')->willReturn('Digital');
 
         $item2 = $this->getMock('Teknoo\Paypal\Express\Entity\PurchaseItemInterface');
         $item2->expects($this->any())->method('getPaymentRequestName')->willReturn('name 2');
@@ -174,6 +175,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
         $item2->expects($this->any())->method('getPaymentRequestAmount')->willReturn(456);
         $item2->expects($this->any())->method('getPaymentRequestNumber')->willReturn('');
         $item2->expects($this->any())->method('getPaymentRequestUrl')->willReturn('');
+        $item2->expects($this->any())->method('getPaymentRequestItemCategory')->willReturn('Physical');
 
         $object = $this->generateObject();
         $this->assertEquals($object, $object->addItem($item1));
@@ -187,11 +189,13 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
                 'L_PAYMENTREQUEST_0_AMT0' => 123,
                 'L_PAYMENTREQUEST_0_NUMBER0' => 'n1234',
                 'L_PAYMENTREQUEST_0_ITEMURL0' => 'https://foo.bar',
+                'L_PAYMENTREQUEST_0_ITEMCATEGORY0' => 'Digital',
                 'L_PAYMENTREQUEST_0_NAME1' => 'name 2',
                 'L_PAYMENTREQUEST_0_DESC1' => '',
                 'L_PAYMENTREQUEST_0_AMT1' => 456,
                 'L_PAYMENTREQUEST_0_NUMBER1' => '',
                 'L_PAYMENTREQUEST_0_ITEMURL1' => '',
+                'L_PAYMENTREQUEST_0_ITEMCATEGORY1' => 'Physical',
             ],
             $array->getArrayCopy()
         );

@@ -156,6 +156,7 @@ class ArgumentBag implements ArgumentBagInterface
         $this->set('L_PAYMENTREQUEST_0_AMT'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestAmount());
         $this->set('L_PAYMENTREQUEST_0_NUMBER'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestNumber());
         $this->set('L_PAYMENTREQUEST_0_ITEMURL'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestUrl());
+        $this->set('L_PAYMENTREQUEST_0_ITEMCATEGORY'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestItemCategory());
 
         $this->increasePurchaseItemCounter();
 

@@ -74,4 +74,11 @@ interface PurchaseItemInterface
      * @return string
      */
     public function getPaymentRequestUrl();
+
+    /**
+     * Get the item category (Digital or Physical)
+     *
+     * @return string
+     */
+    public function getPaymentRequestItemCategory();
 }
