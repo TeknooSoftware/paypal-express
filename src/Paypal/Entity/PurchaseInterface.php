@@ -24,6 +24,7 @@
  */
 
 namespace Teknoo\Paypal\Express\Entity;
+
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 
 /**

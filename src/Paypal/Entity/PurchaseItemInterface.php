@@ -23,13 +23,11 @@
  * @version     0.8.3
  */
 
-namespace Teknoo\Paypal\Express\Transport;
-
-use Teknoo\Paypal\Express\Entity\PurchaseItemInterface;
+namespace Teknoo\Paypal\Express\Entity;
 
 /**
- * Interface ArgumentBagInterface
- * Interface to define arguments container for all request to the api.
+ * Interface PurchaseItemInterface
+ * Interface to represent an intem into a purchase in the vendor's informations system
  *
  *
  * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
@@ -40,48 +38,35 @@ use Teknoo\Paypal\Express\Entity\PurchaseItemInterface;
  * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-interface ArgumentBagInterface
+interface PurchaseItemInterface
 {
     /**
-     * Reset this bag.
-     *
-     * @return $this
+     * Get the name about this item in the purchase
+     * @return string
      */
-    public function reset();
+    public function getPaymentRequestName();
 
     /**
-     * Define an argument in the bag.
-     *
-     * @param string $name
-     * @param mixed  $value
-     *
-     * @return $this
-     *
-     * @throws \InvalidArgumentException when $name is not a string
+     * Get the description about this item in the purchase
+     * @return string
      */
-    public function set($name, $value);
+    public function getPaymentRequestDesc();
 
     /**
-     * Return an argument defined in the bag.
-     *
-     * @param string $name
-     *
-     * @return mixed
-     *
-     * @throws \InvalidArgumentException when $name is not a string
+     * Get the amount about this item in the purchase (required)
+     * @return float
      */
-    public function get($name);
+    public function getPaymentRequestAmount();
 
     /**
-     * Return the list of argument as an array object.
-     *
-     * @return \ArrayAccess|\Countable
+     * Get the reference about this item in the purchase
+     * @return string
      */
-    public function toArray();
+    public function getPaymentRequestNumber();
 
     /**
-     * @param PurchaseItemInterface $purchaseItem
-     * @return self
+     * Get the url about this item in the purchase
+     * @return string
      */
-    public function addItem(PurchaseItemInterface $purchaseItem);
+    public function getPaymentRequestUrl();
 }

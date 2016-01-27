@@ -24,6 +24,7 @@
  */
 
 namespace Teknoo\Paypal\Express\Transport;
+use Teknoo\Paypal\Express\Entity\PurchaseItemInterface;
 
 /**
  * Class ArgumentBag
@@ -44,6 +45,12 @@ class ArgumentBag implements ArgumentBagInterface
      * @var \ArrayObject
      */
     protected $parameters;
+
+    /**
+     * To count all purchase item added with addItem()
+     * @var int
+     */
+    protected $purchaseItemCounter=0;
 
     /**
      * To initialize this bag.
@@ -119,5 +126,35 @@ class ArgumentBag implements ArgumentBagInterface
     public function toArray()
     {
         return $this->parameters;
+    }
+
+    /**
+     * To increase the purchase coutner for the next add
+     * @return self
+     */
+    private function increasePurchaseItemCounter()
+    {
+        $this->purchaseItemCounter++;
+
+        return $this;
+    }
+
+    /**
+     * @param PurchaseItemInterface $purchaseItem
+     * @return self
+     */
+    public function addItem(PurchaseItemInterface $purchaseItem)
+    {
+        $purchaseItemCounterValue = $this->purchaseItemCounter;
+
+        $this->set('L_PAYMENTREQUEST_0_NAME'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestName());
+        $this->set('L_PAYMENTREQUEST_0_DESC'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestDesc());
+        $this->set('L_PAYMENTREQUEST_0_AMT'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestAmount());
+        $this->set('L_PAYMENTREQUEST_0_NUMBER'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestNumber());
+        $this->set('L_PAYMENTREQUEST_0_ITEMURL'.$purchaseItemCounterValue, $purchaseItem->getPaymentRequestUrl());
+
+        $this->increasePurchaseItemCounter();
+
+        return $this;
     }
 }
