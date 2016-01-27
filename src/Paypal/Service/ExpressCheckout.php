@@ -182,6 +182,8 @@ class ExpressCheckout implements ServiceInterface
 
         $requestParams->set('PAYMENTREQUEST_0_SHIPTOPHONENUM', $user->getPhone());
 
+        $purchase->configureArgumentBag($requestParams);
+
         $result = $this->buildTransactionResultObject($this->transport->call('SetExpressCheckout', $requestParams));
 
         if (!$result->isSuccessful()) {

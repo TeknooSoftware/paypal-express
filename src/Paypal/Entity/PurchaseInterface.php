@@ -24,6 +24,7 @@
  */
 
 namespace Teknoo\Paypal\Express\Entity;
+use Teknoo\Paypal\Express\Transport\ArgumentBag;
 
 /**
  * Interface PurchaseInterface
@@ -82,4 +83,10 @@ interface PurchaseInterface
      * @return ConsumerInterface
      */
     public function getConsumer();
+
+    /**
+     * @param ArgumentBag $argumentBag
+     * @return self
+     */
+    public function configureArgumentBag(ArgumentBag $argumentBag);
 }

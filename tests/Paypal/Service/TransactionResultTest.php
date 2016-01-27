@@ -23,7 +23,7 @@
  * @version     0.8.3
  */
 
-namespace Teknoo\tests\Paypal\Entity;
+namespace Teknoo\tests\Paypal\Service;
 
 use Teknoo\Paypal\Express\Service\TransactionResult;
 

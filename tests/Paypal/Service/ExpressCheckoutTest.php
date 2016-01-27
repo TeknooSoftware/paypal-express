@@ -23,7 +23,7 @@
  * @version     0.8.3
  */
 
-namespace Teknoo\tests\Paypal\Entity;
+namespace Teknoo\tests\Paypal\Service;
 
 use Teknoo\Paypal\Express\Entity\ConsumerInterface;
 use Teknoo\Paypal\Express\Entity\PurchaseInterface;
@@ -247,8 +247,15 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->setIdentityToConsumer();
+
+        $purchase = $this->setPurchase();
+        $purchase->expects($this->once())
+            ->method('configureArgumentBag')
+            ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
+            ->willReturnSelf();
+
         $result = $this->buildService()
-            ->generateToken($this->setPurchase());
+            ->generateToken($purchase);
 
         $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
         $this->assertTrue($result->isSuccessful());
@@ -298,8 +305,15 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->setAddressToConsumer();
+
+        $purchase = $this->setPurchase();
+        $purchase->expects($this->once())
+            ->method('configureArgumentBag')
+            ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
+            ->willReturnSelf();
+
         $result = $this->buildService()
-            ->generateToken($this->setPurchase());
+            ->generateToken($purchase);
 
         $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
         $this->assertTrue($result->isSuccessful());
@@ -355,8 +369,15 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 );
 
             $this->setAddressToConsumer();
+
+            $purchase = $this->setPurchase($currency);
+            $purchase->expects($this->once())
+                ->method('configureArgumentBag')
+                ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
+                ->willReturnSelf();
+
             $result = $this->buildService()
-                ->generateToken($this->setPurchase($currency));
+                ->generateToken($purchase);
 
             $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
             $this->assertTrue($result->isSuccessful());
@@ -438,8 +459,15 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
                 );
 
             $this->setAddressToConsumer();
+
+            $purchase = $this->setPurchase('EUR', $operation);
+            $purchase->expects($this->once())
+                ->method('configureArgumentBag')
+                ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
+                ->willReturnSelf();
+
             $result = $this->buildService()
-                ->generateToken($this->setPurchase('EUR', $operation));
+                ->generateToken($purchase);
 
             $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
             $this->assertTrue($result->isSuccessful());
@@ -535,8 +563,15 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->setAddressToConsumer();
+
+        $purchase = $this->setPurchase();
+        $purchase->expects($this->once())
+            ->method('configureArgumentBag')
+            ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
+            ->willReturnSelf();
+
         try {
-            $this->buildService()->generateToken($this->setPurchase());
+            $this->buildService()->generateToken($purchase);
         } catch (\Exception $e) {
             $this->assertEquals('shortMessage : longMessage', $e->getMessage());
 
