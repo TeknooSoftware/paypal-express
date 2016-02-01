@@ -1,5 +1,11 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[1.1.0-beta3] - 2016-02-01
+###Removed
+- Pimple dependencies
+
+###Fixed
+- Minimum requirements
 
 ##[1.1.0-beta2] - 2016-01-27
 ###Added
