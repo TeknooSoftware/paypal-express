@@ -62,6 +62,13 @@ interface PurchaseItemInterface
     public function getPaymentRequestAmount();
 
     /**
+     * Get the quantity about this item in the purchase (required).
+     *
+     * @return int
+     */
+    public function getPaymentRequestQantity();
+
+    /**
      * Get the reference about this item in the purchase.
      *
      * @return string

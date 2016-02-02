@@ -1,5 +1,9 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[1.1.0-beta4] - 2016-02-02
+###Fixed
+- Fix possible error in Purchase item, missing quantity
+
 ##[1.1.0-beta3] - 2016-02-01
 ###Removed
 - Pimple dependencies
