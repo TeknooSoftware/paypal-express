@@ -1,5 +1,9 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[1.1.1] - 2016-04-9
+###Fixed
+- fix code style with cs-fixer
+
 ##[1.1.0] - 2016-02-11
 ###Fixed
 - Stable release
