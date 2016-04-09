@@ -22,7 +22,6 @@
  *
  * @version     0.8.3
  */
-
 namespace Teknoo\Paypal\Express\Entity;
 
 /**
@@ -83,7 +82,7 @@ interface PurchaseItemInterface
     public function getPaymentRequestUrl();
 
     /**
-     * Get the item category (Digital or Physical)
+     * Get the item category (Digital or Physical).
      *
      * @return string
      */

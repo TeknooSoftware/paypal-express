@@ -22,7 +22,6 @@
  *
  * @version     0.8.3
  */
-
 namespace Teknoo\Paypal\Express\Entity;
 
 use Teknoo\Paypal\Express\Transport\ArgumentBag;

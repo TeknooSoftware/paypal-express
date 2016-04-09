@@ -22,7 +22,6 @@
  *
  * @version     0.8.3
  */
-
 namespace Teknoo\Paypal\Express\Service;
 
 use Teknoo\Paypal\Express\Entity\ConsumerInterface;

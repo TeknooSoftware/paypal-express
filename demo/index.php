@@ -21,7 +21,6 @@
  *
  * @version     0.8.3
  */
-
 namespace Acme\Demo;
 
 use Teknoo\Paypal\Express\Service\ExpressCheckout;
