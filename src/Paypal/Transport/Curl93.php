@@ -328,14 +328,14 @@ class Curl93 implements TransportInterface
         $argumentsArray['BUTTONSOURCE'] = $this->bNCode;
 
         //setting the nvpreq as POST FIELD to curl
-        $request->setOption(CURLOPT_POSTFIELDS, http_build_query($argumentsArray));
+        $request->setOption(CURLOPT_POSTFIELDS, \http_build_query($argumentsArray));
 
         //getting response from server
         $response = $request->execute();
 
         //converting request response to an Associative Array
         $resultArray = array();
-        parse_str(urldecode($response), $resultArray);
+        \parse_str(\urldecode($response), $resultArray);
 
         return new \ArrayObject($resultArray);
     }

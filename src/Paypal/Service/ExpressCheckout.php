@@ -68,7 +68,7 @@ class ExpressCheckout implements ServiceInterface
      */
     protected function getValidCurrencyCode($currencyCode)
     {
-        switch (strtoupper($currencyCode)) {
+        switch (\strtoupper($currencyCode)) {
             case 'AUD':
             case 'BRL':
             case 'CAD':
@@ -94,7 +94,7 @@ class ExpressCheckout implements ServiceInterface
             case 'THB':
             case 'TRY':
             case 'USD':
-                return strtoupper($currencyCode);
+                return \strtoupper($currencyCode);
                 break;
             default:
                 throw new \DomainException('Error, the payment action is not valid');
@@ -111,11 +111,11 @@ class ExpressCheckout implements ServiceInterface
      */
     protected function getValidPaymentAction($paymentAction)
     {
-        switch (strtoupper($paymentAction)) {
+        switch (\strtoupper($paymentAction)) {
             case 'SALE':
             case 'AUTHORIZATION':
             case 'ORDER':
-                return strtoupper($paymentAction);
+                return \strtoupper($paymentAction);
                 break;
             default:
                 throw new \DomainException('Error, the payment action is not valid');
@@ -204,7 +204,7 @@ class ExpressCheckout implements ServiceInterface
      */
     public function prepareTransaction(PurchaseInterface $purchase)
     {
-        return str_replace('{token}', $this->generateToken($purchase)->getTokenValue(), $this->transport->getPaypalUrl());
+        return \str_replace('{token}', $this->generateToken($purchase)->getTokenValue(), $this->transport->getPaypalUrl());
     }
 
     /**

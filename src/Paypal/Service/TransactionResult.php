@@ -77,7 +77,7 @@ class TransactionResult implements TransactionResultInterface
      */
     public function isSuccessful()
     {
-        $ack = strtoupper($this->getAckValue());
+        $ack = \strtoupper($this->getAckValue());
         if ('SUCCESS' == $ack || 'SUCCESSWITHWARNING' == $ack) {
             return true;
         }
