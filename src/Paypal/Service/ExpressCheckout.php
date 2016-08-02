@@ -17,7 +17,7 @@
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
- * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
+ *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  *
  * @version     0.8.3
@@ -39,7 +39,7 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
- * @license     http://teknoo.software/paypal/license/gpl-3.0     GPL v3 License
+ *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
 class ExpressCheckout implements ServiceInterface
