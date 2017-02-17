@@ -27,6 +27,7 @@ namespace Teknoo\tests\Paypal\Service;
 use Teknoo\Paypal\Express\Entity\ConsumerInterface;
 use Teknoo\Paypal\Express\Entity\PurchaseInterface;
 use Teknoo\Paypal\Express\Service\ExpressCheckout;
+use Teknoo\Paypal\Express\Service\TransactionResultInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\TransportInterface;
 
@@ -65,15 +66,9 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     protected function builTransportInterfaceMock()
     {
         if (!$this->transport instanceof \PHPUnit_Framework_MockObject_MockObject) {
-            $this->transport = $this->getMock(
-                'Teknoo\Paypal\Express\Transport\TransportInterface',
-                array(),
-                array(),
-                '',
-                false
-            );
+            $this->transport = $this->createMock(TransportInterface::class);
 
-            $this->transport->expects($this->any())
+            $this->transport->expects(self::any())
                 ->method('getPaypalUrl')
                 ->willReturn('http://paypalUrl/{token}');
         }
@@ -87,13 +82,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     protected function buildConsumerInterfaceMock()
     {
         if (!$this->consumer instanceof \PHPUnit_Framework_MockObject_MockObject) {
-            $this->consumer = $this->getMock(
-                'Teknoo\Paypal\Express\Entity\ConsumerInterface',
-                array(),
-                array(),
-                '',
-                false
-            );
+            $this->consumer = $this->createMock(ConsumerInterface::class);
         }
 
         return $this->consumer;
@@ -105,13 +94,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     protected function buildPurchaseInterfaceMock()
     {
         if (!$this->purchase instanceof \PHPUnit_Framework_MockObject_MockObject) {
-            $this->purchase = $this->getMock(
-                'Teknoo\Paypal\Express\Entity\PurchaseInterface',
-                array(),
-                array(),
-                '',
-                false
-            );
+            $this->purchase = $this->createMock(PurchaseInterface::class);
         }
 
         return $this->purchase;
@@ -134,15 +117,15 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     {
         $consumer = $this->buildConsumerInterfaceMock();
 
-        $this->buildPurchaseInterfaceMock()->expects($this->any())
+        $this->buildPurchaseInterfaceMock()->expects(self::any())
             ->method('getConsumer')
             ->willReturn($consumer);
 
-        $consumer->expects($this->any())
+        $consumer->expects(self::any())
             ->method('getConsumerName')
             ->willReturn('Roger Rabbit');
 
-        $consumer->expects($this->any())
+        $consumer->expects(self::any())
             ->method('getPhone')
             ->willReturn('789456123');
 
@@ -156,15 +139,15 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     {
         $consumer = $this->setIdentityToConsumer();
 
-        $consumer->expects($this->any())
+        $consumer->expects(self::any())
             ->method('getShippingAddress')
             ->willReturn('adr1');
 
-        $consumer->expects($this->any())
+        $consumer->expects(self::any())
             ->method('getShippingZip')
             ->willReturn(14000);
 
-        $consumer->expects($this->any())
+        $consumer->expects(self::any())
             ->method('getShippingCity')
             ->willReturn('Caen');
 
@@ -172,29 +155,31 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $currency
+     * @param string $operation
      * @return \PHPUnit_Framework_MockObject_MockObject|PurchaseInterface
      */
     protected function setPurchase($currency = 'EUR', $operation = 'SALE')
     {
         $purchase = $this->buildPurchaseInterfaceMock();
 
-        $purchase->expects($this->any())
+        $purchase->expects(self::any())
             ->method('getAmount')
             ->willReturn(150.12);
 
-        $purchase->expects($this->any())
+        $purchase->expects(self::any())
             ->method('getPaymentAction')
             ->willReturn($operation);
 
-        $purchase->expects($this->any())
+        $purchase->expects(self::any())
             ->method('getReturnUrl')
             ->willReturn('http://teknoo.software');
 
-        $purchase->expects($this->any())
+        $purchase->expects(self::any())
             ->method('getCancelUrl')
             ->willReturn('http://teknoo.software/cancel');
 
-        $purchase->expects($this->any())
+        $purchase->expects(self::any())
             ->method('getCurrencyCode')
             ->willReturn($currency);
 
@@ -202,18 +187,18 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::__construct()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::__construct()
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\ExpressCheckout', $this->buildService());
+        self::assertInstanceOf(ExpressCheckout::class, $this->buildService());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -231,12 +216,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->builTransportInterfaceMock()
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
-                    $this->assertEquals('SetExpressCheckout', $name);
-                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    self::assertEquals('SetExpressCheckout', $name);
+                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
 
                     return array(
                         'ACK' => 'SUCCESS',
@@ -248,7 +233,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $this->setIdentityToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects($this->once())
+        $purchase->expects(self::once())
             ->method('configureArgumentBag')
             ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
             ->willReturnSelf();
@@ -256,16 +241,16 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->generateToken($purchase);
 
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
-        $this->assertTrue($result->isSuccessful());
-        $this->assertEquals('tokenFake', $result->getTokenValue());
+        self::assertInstanceOf(TransactionResultInterface::class, $result);
+        self::assertTrue($result->isSuccessful());
+        self::assertEquals('tokenFake', $result->getTokenValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -289,12 +274,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->builTransportInterfaceMock()
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
-                    $this->assertEquals('SetExpressCheckout', $name);
-                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    self::assertEquals('SetExpressCheckout', $name);
+                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
 
                     return array(
                         'ACK' => 'SUCCESS',
@@ -306,7 +291,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $this->setAddressToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects($this->once())
+        $purchase->expects(self::once())
             ->method('configureArgumentBag')
             ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
             ->willReturnSelf();
@@ -314,16 +299,16 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->generateToken($purchase);
 
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
-        $this->assertTrue($result->isSuccessful());
-        $this->assertEquals('tokenFake', $result->getTokenValue());
+        self::assertInstanceOf(TransactionResultInterface::class, $result);
+        self::assertTrue($result->isSuccessful());
+        self::assertEquals('tokenFake', $result->getTokenValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -353,12 +338,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             );
 
             $this->builTransportInterfaceMock()
-                ->expects($this->any())
+                ->expects(self::any())
                 ->method('call')
                 ->willReturnCallback(
                     function ($name, $args) use (&$exceptedBody) {
-                        $this->assertEquals('SetExpressCheckout', $name);
-                        $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                        self::assertEquals('SetExpressCheckout', $name);
+                        self::assertEquals(new ArgumentBag($exceptedBody), $args);
 
                         return array(
                             'ACK' => 'SUCCESS',
@@ -370,7 +355,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             $this->setAddressToConsumer();
 
             $purchase = $this->setPurchase($currency);
-            $purchase->expects($this->once())
+            $purchase->expects(self::once())
                 ->method('configureArgumentBag')
                 ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
                 ->willReturnSelf();
@@ -378,24 +363,24 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             $result = $this->buildService()
                 ->generateToken($purchase);
 
-            $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
-            $this->assertTrue($result->isSuccessful());
-            $this->assertEquals('tokenFake', $result->getTokenValue());
+            self::assertInstanceOf(TransactionResultInterface::class, $result);
+            self::assertTrue($result->isSuccessful());
+            self::assertEquals('tokenFake', $result->getTokenValue());
         }
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
     public function testGenerateTokenAddressBadCurrency()
     {
         $this->builTransportInterfaceMock()
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('call');
 
         $this->setAddressToConsumer();
@@ -410,10 +395,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
@@ -443,12 +428,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             );
 
             $this->builTransportInterfaceMock()
-                ->expects($this->any())
+                ->expects(self::any())
                 ->method('call')
                 ->willReturnCallback(
                     function ($name, $args) use (&$exceptedBody) {
-                        $this->assertEquals('SetExpressCheckout', $name);
-                        $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                        self::assertEquals('SetExpressCheckout', $name);
+                        self::assertEquals(new ArgumentBag($exceptedBody), $args);
 
                         return array(
                             'ACK' => 'SUCCESS',
@@ -460,7 +445,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             $this->setAddressToConsumer();
 
             $purchase = $this->setPurchase('EUR', $operation);
-            $purchase->expects($this->once())
+            $purchase->expects(self::once())
                 ->method('configureArgumentBag')
                 ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
                 ->willReturnSelf();
@@ -468,24 +453,24 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             $result = $this->buildService()
                 ->generateToken($purchase);
 
-            $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
-            $this->assertTrue($result->isSuccessful());
-            $this->assertEquals('tokenFake', $result->getTokenValue());
+            self::assertInstanceOf(TransactionResultInterface::class, $result);
+            self::assertTrue($result->isSuccessful());
+            self::assertEquals('tokenFake', $result->getTokenValue());
         }
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      *
      * @throws \Exception
      */
     public function testGenerateTokenAddressBadOperation()
     {
         $this->builTransportInterfaceMock()
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('call');
 
         $this->setAddressToConsumer();
@@ -500,12 +485,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
      */
     public function testGenerateTokenBadConsumer()
     {
         $this->builTransportInterfaceMock()
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('call');
 
         try {
@@ -519,10 +504,10 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::generateToken()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidPaymentAction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getValidCurrencyCode()
      */
     public function testGenerateTokenAddressFailure()
     {
@@ -544,12 +529,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->builTransportInterfaceMock()
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
-                    $this->assertEquals('SetExpressCheckout', $name);
-                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    self::assertEquals('SetExpressCheckout', $name);
+                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
 
                     return array(
                         'ACK' => 'FAILURE',
@@ -564,7 +549,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $this->setAddressToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects($this->once())
+        $purchase->expects(self::once())
             ->method('configureArgumentBag')
             ->with($this->callback(function ($arg) {return $arg instanceof ArgumentBag; }))
             ->willReturnSelf();
@@ -572,7 +557,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         try {
             $this->buildService()->generateToken($purchase);
         } catch (\Exception $e) {
-            $this->assertEquals('shortMessage : longMessage', $e->getMessage());
+            self::assertEquals('shortMessage : longMessage', $e->getMessage());
 
             return;
         }
@@ -581,8 +566,8 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::getTransactionResult()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::getTransactionResult()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testGetTransactionResult()
     {
@@ -591,12 +576,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->builTransportInterfaceMock()
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
-                    $this->assertEquals('GetExpressCheckoutDetails', $name);
-                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    self::assertEquals('GetExpressCheckoutDetails', $name);
+                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
 
                     return array(
                         'ACK' => 'SUCCESS',
@@ -609,14 +594,14 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->getTransactionResult('fakeToken');
 
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
-        $this->assertTrue($result->isSuccessful());
-        $this->assertEquals('idFake', $result->getPayerIdValue());
+        self::assertInstanceOf(TransactionResultInterface::class, $result);
+        self::assertTrue($result->isSuccessful());
+        self::assertEquals('idFake', $result->getPayerIdValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::confirmTransaction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::confirmTransaction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testConfirmTransaction()
     {
@@ -629,12 +614,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->builTransportInterfaceMock()
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
-                    $this->assertEquals('DoExpressCheckoutPayment', $name);
-                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    self::assertEquals('DoExpressCheckoutPayment', $name);
+                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
 
                     return array(
                         'ACK' => 'SUCCESS',
@@ -646,13 +631,13 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         $result = $this->buildService()
             ->confirmTransaction('fakeToken', 'fakeId', $this->setPurchase());
 
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResultInterface', $result);
-        $this->assertTrue($result->isSuccessful());
+        self::assertInstanceOf(TransactionResultInterface::class, $result);
+        self::assertTrue($result->isSuccessful());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::prepareTransaction()
-     * @covers Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::prepareTransaction()
+     * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout::buildTransactionResultObject()
      */
     public function testPrepareTransaction()
     {
@@ -674,12 +659,12 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->builTransportInterfaceMock()
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
-                    $this->assertEquals('SetExpressCheckout', $name);
-                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
+                    self::assertEquals('SetExpressCheckout', $name);
+                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
 
                     return array(
                         'ACK' => 'SUCCESS',
@@ -689,7 +674,7 @@ class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->setAddressToConsumer();
-        $this->assertEquals(
+        self::assertEquals(
             'http://paypalUrl/tokenFake',
             $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'http://paypalUrl/{token}/aaa')
                 ->prepareTransaction($this->setPurchase())

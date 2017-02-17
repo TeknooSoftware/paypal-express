@@ -24,6 +24,7 @@
  */
 namespace Teknoo\tests\Paypal\Service;
 
+use Teknoo\Paypal\Express\Service\Error;
 use Teknoo\Paypal\Express\Service\TransactionResult;
 
 /**
@@ -53,15 +54,15 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::__construct()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::__construct()
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResult', $this->generateObject([]));
+        self::assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResult', $this->generateObject([]));
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
      */
     public function testGetAckValueFailure()
     {
@@ -75,15 +76,15 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
      */
     public function testGetAckValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['ACK' => 'fooBar'])->getAckValue());
+        self::assertEquals('fooBar', $this->generateObject(['ACK' => 'fooBar'])->getAckValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
      */
     public function testIsSuccessfulFailure()
     {
@@ -97,17 +98,17 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
      */
     public function testIsSuccessful()
     {
-        $this->assertFalse($this->generateObject(['ACK' => 'fooBar'])->isSuccessful());
-        $this->assertTrue($this->generateObject(['ACK' => 'SUCCESS'])->isSuccessful());
-        $this->assertTrue($this->generateObject(['ACK' => 'SUCCESSWITHWARNING'])->isSuccessful());
+        self::assertFalse($this->generateObject(['ACK' => 'fooBar'])->isSuccessful());
+        self::assertTrue($this->generateObject(['ACK' => 'SUCCESS'])->isSuccessful());
+        self::assertTrue($this->generateObject(['ACK' => 'SUCCESSWITHWARNING'])->isSuccessful());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
      */
     public function testGetTokenValueFailure()
     {
@@ -121,15 +122,15 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
      */
     public function testGetTokenValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['TOKEN' => 'fooBar'])->getTokenValue());
+        self::assertEquals('fooBar', $this->generateObject(['TOKEN' => 'fooBar'])->getTokenValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
      */
     public function testGetPayerIdValueFailure()
     {
@@ -143,15 +144,15 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
      */
     public function testGetPayerIdValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['PAYERID' => 'fooBar'])->getPayerIdValue());
+        self::assertEquals('fooBar', $this->generateObject(['PAYERID' => 'fooBar'])->getPayerIdValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
      */
     public function testGetTimestampValueFailure()
     {
@@ -165,15 +166,15 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
      */
     public function testGetTimestampValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['TIMESTAMP' => 'fooBar'])->getTimestampValue());
+        self::assertEquals('fooBar', $this->generateObject(['TIMESTAMP' => 'fooBar'])->getTimestampValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
      */
     public function testGetCorrelationIdValueFailure()
     {
@@ -187,15 +188,15 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
      */
     public function testGetCorrelationIdValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['CORRELATIONID' => 'fooBar'])->getCorrelationIdValue());
+        self::assertEquals('fooBar', $this->generateObject(['CORRELATIONID' => 'fooBar'])->getCorrelationIdValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
      */
     public function testGetVersionValueFailure()
     {
@@ -209,15 +210,15 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
      */
     public function testGetVersionValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['VERSION' => 'fooBar'])->getVersionValue());
+        self::assertEquals('fooBar', $this->generateObject(['VERSION' => 'fooBar'])->getVersionValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
      */
     public function testGetBuildValueFailure()
     {
@@ -231,23 +232,23 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
      */
     public function testGetBuildValue()
     {
-        $this->assertEquals('fooBar', $this->generateObject(['BUILD' => 'fooBar'])->getBuildValue());
+        self::assertEquals('fooBar', $this->generateObject(['BUILD' => 'fooBar'])->getBuildValue());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
      */
     public function testGetErrorsEmpty()
     {
-        $this->assertEmpty($this->generateObject([])->getErrors());
+        self::assertEmpty($this->generateObject([])->getErrors());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
      */
     public function testGetErrorsOne()
     {
@@ -260,16 +261,16 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
             ]
         )->getErrors();
 
-        $this->assertEquals(1, count($errors));
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $errors[0]);
-        $this->assertEquals('err1', $errors[0]->getCode());
-        $this->assertEquals('shortMess', $errors[0]->getShortMessage());
-        $this->assertEquals('longMess', $errors[0]->getLongMessage());
-        $this->assertEquals('warning', $errors[0]->getSeverity());
+        self::assertEquals(1, count($errors));
+        self::assertInstanceOf(Error::class, $errors[0]);
+        self::assertEquals('err1', $errors[0]->getCode());
+        self::assertEquals('shortMess', $errors[0]->getShortMessage());
+        self::assertEquals('longMess', $errors[0]->getLongMessage());
+        self::assertEquals('warning', $errors[0]->getSeverity());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
      */
     public function testGetErrorsTwo()
     {
@@ -286,21 +287,21 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
             ]
         )->getErrors();
 
-        $this->assertEquals(2, count($errors));
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $errors[0]);
-        $this->assertEquals('err1', $errors[0]->getCode());
-        $this->assertEquals('shortMess', $errors[0]->getShortMessage());
-        $this->assertEquals('longMess', $errors[0]->getLongMessage());
-        $this->assertEquals('warning', $errors[0]->getSeverity());
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $errors[1]);
-        $this->assertEquals('err2', $errors[1]->getCode());
-        $this->assertEquals('shortMess2', $errors[1]->getShortMessage());
-        $this->assertEquals('longMess2', $errors[1]->getLongMessage());
-        $this->assertEquals('warning2', $errors[1]->getSeverity());
+        self::assertEquals(2, count($errors));
+        self::assertInstanceOf(Error::class, $errors[0]);
+        self::assertEquals('err1', $errors[0]->getCode());
+        self::assertEquals('shortMess', $errors[0]->getShortMessage());
+        self::assertEquals('longMess', $errors[0]->getLongMessage());
+        self::assertEquals('warning', $errors[0]->getSeverity());
+        self::assertInstanceOf(Error::class, $errors[1]);
+        self::assertEquals('err2', $errors[1]->getCode());
+        self::assertEquals('shortMess2', $errors[1]->getShortMessage());
+        self::assertEquals('longMess2', $errors[1]->getLongMessage());
+        self::assertEquals('warning2', $errors[1]->getSeverity());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
      */
     public function testGetErrorsOneThree()
     {
@@ -317,20 +318,20 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
             ]
         )->getErrors();
 
-        $this->assertEquals(1, count($errors));
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $errors[0]);
-        $this->assertEquals('err1', $errors[0]->getCode());
-        $this->assertEquals('shortMess', $errors[0]->getShortMessage());
-        $this->assertEquals('longMess', $errors[0]->getLongMessage());
-        $this->assertEquals('warning', $errors[0]->getSeverity());
+        self::assertEquals(1, count($errors));
+        self::assertInstanceOf(Error::class, $errors[0]);
+        self::assertEquals('err1', $errors[0]->getCode());
+        self::assertEquals('shortMess', $errors[0]->getShortMessage());
+        self::assertEquals('longMess', $errors[0]->getLongMessage());
+        self::assertEquals('warning', $errors[0]->getSeverity());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\TransactionResult::getRawValues()
+     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getRawValues()
      */
     public function testGetRawValues()
     {
         $array = $this->generateObject(['foo' => 'bar', 'hello' => 'world'])->getRawValues();
-        $this->assertEquals(['foo' => 'bar', 'hello' => 'world'], $array);
+        self::assertEquals(['foo' => 'bar', 'hello' => 'world'], $array);
     }
 }

@@ -55,6 +55,7 @@ class ArgumentBag implements ArgumentBagInterface
 
     /**
      * To initialize this bag.
+     * @param array|null $parameters
      */
     public function __construct($parameters = null)
     {

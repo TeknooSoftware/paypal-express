@@ -24,6 +24,7 @@
  */
 namespace Teknoo\tests\Paypal\Transport;
 
+use Teknoo\Curl\Request;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\Curl93;
 use Teknoo\Curl\RequestGenerator;
@@ -53,13 +54,7 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
     protected function buildRequestGeneratorMock()
     {
         if (!$this->requestGeneratorService instanceof \PHPUnit_Framework_MockObject_MockObject) {
-            $this->requestGeneratorService = $this->getMock(
-                'Teknoo\Curl\RequestGenerator',
-                array(),
-                array(),
-                '',
-                false
-            );
+            $this->requestGeneratorService = $this->createMock(RequestGenerator::class);
         }
 
         return $this->requestGeneratorService;
@@ -93,155 +88,149 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::__construct()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::__construct()
      */
     public function testConstructor()
     {
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Transport\Curl93', $this->buildService());
+        self::assertInstanceOf(Curl93::class, $this->buildService());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::getUserId()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::getUserId()
      */
     public function testGetUserId()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
-        $this->assertEquals('uId', $service->getUserId());
+        self::assertEquals('uId', $service->getUserId());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::setUserId()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::setUserId()
      */
     public function testSetUserId()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
         $service->setUserId('newUID');
-        $this->assertEquals('newUID', $service->getUserId());
+        self::assertEquals('newUID', $service->getUserId());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::getPassword()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::getPassword()
      */
     public function testGetPassword()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
-        $this->assertEquals('pwd', $service->getPassword());
+        self::assertEquals('pwd', $service->getPassword());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::setPassword()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::setPassword()
      */
     public function testSetPassword()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
         $service->setPassword('newPwd');
-        $this->assertEquals('newPwd', $service->getPassword());
+        self::assertEquals('newPwd', $service->getPassword());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::getSignature()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::getSignature()
      */
     public function testGetSignature()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
-        $this->assertEquals('sgnt', $service->getSignature());
+        self::assertEquals('sgnt', $service->getSignature());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::setSignature()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::setSignature()
      */
     public function testSetSignature()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
         $service->setSignature('newSgnt');
-        $this->assertEquals('newSgnt', $service->getSignature());
+        self::assertEquals('newSgnt', $service->getSignature());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::getApiEndPoint()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::getApiEndPoint()
      */
     public function testGetApiEndPoint()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
-        $this->assertEquals('https://teknoo.software', $service->getApiEndPoint());
+        self::assertEquals('https://teknoo.software', $service->getApiEndPoint());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::setApiEndPoint()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::setApiEndPoint()
      */
     public function testSetApiEndPoint()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
         $service->setApiEndPoint('https://teknoo.software/new');
-        $this->assertEquals('https://teknoo.software/new', $service->getApiEndPoint());
+        self::assertEquals('https://teknoo.software/new', $service->getApiEndPoint());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::getPaypalUrl()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::getPaypalUrl()
      */
     public function testGetPaypalUrl()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
-        $this->assertEquals('https://paypal.com', $service->getPaypalUrl());
+        self::assertEquals('https://paypal.com', $service->getPaypalUrl());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::setPaypalUrl()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::setPaypalUrl()
      */
     public function testSetPaypalUrl()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
         $service->setPaypalUrl('https://paypal.com/new');
-        $this->assertEquals('https://paypal.com/new', $service->getPaypalUrl());
+        self::assertEquals('https://paypal.com/new', $service->getPaypalUrl());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::getPaypalApiVersion()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::getPaypalApiVersion()
      */
     public function testGetPaypalApiVersion()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
-        $this->assertEquals(93, $service->getPaypalApiVersion());
+        self::assertEquals(93, $service->getPaypalApiVersion());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::getApiTimeout()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::getApiTimeout()
      */
     public function testGetApiTimeout()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
-        $this->assertEquals(120, $service->getApiTimeout());
+        self::assertEquals(120, $service->getApiTimeout());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::setApiTimeout()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::setApiTimeout()
      */
     public function testSetApiTimeout()
     {
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
         $service->setApiTimeout(230);
-        $this->assertEquals(230, $service->getApiTimeout());
+        self::assertEquals(230, $service->getApiTimeout());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\Curl93::call()
+     * @covers \Teknoo\Paypal\Express\Transport\Curl93::call()
      */
     public function testCall()
     {
-        $requestMock = $this->getMock(
-            'Teknoo\Curl\Request',
-            array(),
-            array(),
-            '',
-            false
-        );
+        $requestMock = $this->createMock(Request::class);
 
         $curlMock = $this->buildRequestGeneratorMock();
-        $curlMock->expects($this->any())
+        $curlMock->expects(self::any())
             ->method('getRequest')
             ->willReturn($requestMock);
 
-        $requestMock->expects($this->any())
+        $requestMock->expects(self::any())
             ->method('setMethod')
             ->with('POST');
 
@@ -258,7 +247,7 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $requestMock->expects($this->any())
+        $requestMock->expects(self::any())
             ->method('setOption')
             ->withConsecutive(
                 [CURLOPT_URL, 'https://teknoo.software'],
@@ -272,7 +261,7 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
                 [CURLOPT_POSTFIELDS, $exceptedBody]
             );
 
-        $requestMock->expects($this->once())
+        $requestMock->expects(self::once())
             ->method('execute')
             ->willReturn(
                 urlencode(
@@ -290,7 +279,7 @@ class Curl93Test extends \PHPUnit_Framework_TestCase
         $service = $this->buildService('uId', 'pwd', 'sgnt', 'https://teknoo.software', 'https://paypal.com', 93, 'bnc', 120, $this->buildRequestGeneratorMock());
         $result = $service->call('methodToCall', $arguments);
 
-        $this->assertInstanceOf('\ArrayObject', $result);
-        $this->assertEquals(['foo' => 'bar', 'hello' => 'world'], $result->getArrayCopy());
+        self::assertInstanceOf('\ArrayObject', $result);
+        self::assertEquals(['foo' => 'bar', 'hello' => 'world'], $result->getArrayCopy());
     }
 }

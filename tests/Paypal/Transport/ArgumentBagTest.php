@@ -24,6 +24,7 @@
  */
 namespace Teknoo\tests\Paypal\Transport;
 
+use Teknoo\Paypal\Express\Entity\PurchaseItemInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 
 /**
@@ -51,17 +52,17 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::__construct()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::__construct()
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Transport\ArgumentBag', $this->generateObject());
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Transport\ArgumentBag', $this->generateObject(['foo' => 'bar']));
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Transport\ArgumentBag', $this->generateObject(new \ArrayObject(['foo' => 'bar'])));
+        self::assertInstanceOf(ArgumentBag::class, $this->generateObject());
+        self::assertInstanceOf(ArgumentBag::class, $this->generateObject(['foo' => 'bar']));
+        self::assertInstanceOf(ArgumentBag::class, $this->generateObject(new \ArrayObject(['foo' => 'bar'])));
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::reset()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::reset()
      */
     public function testReset()
     {
@@ -69,11 +70,11 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
         $object->set('foo', 'bar');
         $object->reset();
         $array = $object->toArray();
-        $this->assertEquals(0, $array->count());
+        self::assertEquals(0, $array->count());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::set()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::set()
      */
     public function testSetFailure()
     {
@@ -89,19 +90,19 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::set()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::set()
      */
     public function testSet()
     {
         $object = $this->generateObject();
         $object->set('foo', 'bar');
         $array = $object->toArray();
-        $this->assertEquals(1, $array->count());
-        $this->assertEquals('bar', $array['foo']);
+        self::assertEquals(1, $array->count());
+        self::assertEquals('bar', $array['foo']);
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::get()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::get()
      */
     public function testGetFailure()
     {
@@ -117,7 +118,7 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::get()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::get()
      */
     public function testGetFailureNotFound()
     {
@@ -133,57 +134,57 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::get()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::get()
      */
     public function testGet()
     {
         $object = $this->generateObject();
         $object->set('foo', 'bar');
-        $this->assertEquals('bar', $object->get('foo'));
+        self::assertEquals('bar', $object->get('foo'));
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::toArray()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::toArray()
      */
     public function testToArray()
     {
         $object = $this->generateObject();
         $object->set('foo', 'bar');
         $array = $object->toArray();
-        $this->assertEquals(1, $array->count());
-        $this->assertEquals('bar', $array['foo']);
+        self::assertEquals(1, $array->count());
+        self::assertEquals('bar', $array['foo']);
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::addItem()
-     * @covers Teknoo\Paypal\Express\Transport\ArgumentBag::increasePurchaseItemCounter()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::addItem()
+     * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::increasePurchaseItemCounter()
      */
     public function testAddItem()
     {
-        $item1 = $this->getMock('Teknoo\Paypal\Express\Entity\PurchaseItemInterface');
-        $item1->expects($this->any())->method('getPaymentRequestName')->willReturn('name 1');
-        $item1->expects($this->any())->method('getPaymentRequestDesc')->willReturn('desc 1');
-        $item1->expects($this->any())->method('getPaymentRequestAmount')->willReturn(123);
-        $item1->expects($this->any())->method('getPaymentRequestQantity')->willReturn(1);
-        $item1->expects($this->any())->method('getPaymentRequestNumber')->willReturn('n1234');
-        $item1->expects($this->any())->method('getPaymentRequestUrl')->willReturn('https://foo.bar');
-        $item1->expects($this->any())->method('getPaymentRequestItemCategory')->willReturn('Digital');
+        $item1 = $this->createMock(PurchaseItemInterface::class);
+        $item1->expects(self::any())->method('getPaymentRequestName')->willReturn('name 1');
+        $item1->expects(self::any())->method('getPaymentRequestDesc')->willReturn('desc 1');
+        $item1->expects(self::any())->method('getPaymentRequestAmount')->willReturn(123);
+        $item1->expects(self::any())->method('getPaymentRequestQantity')->willReturn(1);
+        $item1->expects(self::any())->method('getPaymentRequestNumber')->willReturn('n1234');
+        $item1->expects(self::any())->method('getPaymentRequestUrl')->willReturn('https://foo.bar');
+        $item1->expects(self::any())->method('getPaymentRequestItemCategory')->willReturn('Digital');
 
-        $item2 = $this->getMock('Teknoo\Paypal\Express\Entity\PurchaseItemInterface');
-        $item2->expects($this->any())->method('getPaymentRequestName')->willReturn('name 2');
-        $item2->expects($this->any())->method('getPaymentRequestDesc')->willReturn('');
-        $item2->expects($this->any())->method('getPaymentRequestAmount')->willReturn(456);
-        $item2->expects($this->any())->method('getPaymentRequestQantity')->willReturn(3);
-        $item2->expects($this->any())->method('getPaymentRequestNumber')->willReturn('');
-        $item2->expects($this->any())->method('getPaymentRequestUrl')->willReturn('');
-        $item2->expects($this->any())->method('getPaymentRequestItemCategory')->willReturn('Physical');
+        $item2 = $this->createMock(PurchaseItemInterface::class);
+        $item2->expects(self::any())->method('getPaymentRequestName')->willReturn('name 2');
+        $item2->expects(self::any())->method('getPaymentRequestDesc')->willReturn('');
+        $item2->expects(self::any())->method('getPaymentRequestAmount')->willReturn(456);
+        $item2->expects(self::any())->method('getPaymentRequestQantity')->willReturn(3);
+        $item2->expects(self::any())->method('getPaymentRequestNumber')->willReturn('');
+        $item2->expects(self::any())->method('getPaymentRequestUrl')->willReturn('');
+        $item2->expects(self::any())->method('getPaymentRequestItemCategory')->willReturn('Physical');
 
         $object = $this->generateObject();
-        $this->assertEquals($object, $object->addItem($item1));
-        $this->assertEquals($object, $object->addItem($item2));
+        self::assertEquals($object, $object->addItem($item1));
+        self::assertEquals($object, $object->addItem($item2));
 
         $array = $object->toArray();
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'L_PAYMENTREQUEST_0_NAME0' => 'name 1',
                 'L_PAYMENTREQUEST_0_DESC0' => 'desc 1',

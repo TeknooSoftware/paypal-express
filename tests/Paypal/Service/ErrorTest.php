@@ -56,46 +56,46 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\Error::getCode()
+     * @covers \Teknoo\Paypal\Express\Service\Error::getCode()
      */
     public function testGetCode()
     {
-        $this->assertNull($this->generateError()->getCode());
-        $this->assertEquals('fooBar', $this->generateError('fooBar')->getCode());
+        self::assertNull($this->generateError()->getCode());
+        self::assertEquals('fooBar', $this->generateError('fooBar')->getCode());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\Error::getShortMessage()
+     * @covers \Teknoo\Paypal\Express\Service\Error::getShortMessage()
      */
     public function testGetShortMessage()
     {
-        $this->assertNull($this->generateError()->getShortMessage());
-        $this->assertEquals('fooBar', $this->generateError(null, 'fooBar')->getShortMessage());
+        self::assertNull($this->generateError()->getShortMessage());
+        self::assertEquals('fooBar', $this->generateError(null, 'fooBar')->getShortMessage());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\Error::getLongMessage()
+     * @covers \Teknoo\Paypal\Express\Service\Error::getLongMessage()
      */
     public function testGetLongMessage()
     {
-        $this->assertNull($this->generateError()->getLongMessage());
-        $this->assertEquals('fooBar', $this->generateError(null, null, 'fooBar')->getLongMessage());
+        self::assertNull($this->generateError()->getLongMessage());
+        self::assertEquals('fooBar', $this->generateError(null, null, 'fooBar')->getLongMessage());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\Error::getSeverity()
+     * @covers \Teknoo\Paypal\Express\Service\Error::getSeverity()
      */
     public function testGetSeverity()
     {
-        $this->assertNull($this->generateError()->getSeverity());
-        $this->assertEquals('fooBar', $this->generateError(null, null, null, 'fooBar')->getSeverity());
+        self::assertNull($this->generateError()->getSeverity());
+        self::assertEquals('fooBar', $this->generateError(null, null, null, 'fooBar')->getSeverity());
     }
 
     /**
-     * @covers Teknoo\Paypal\Express\Service\Error::__construct()
+     * @covers \Teknoo\Paypal\Express\Service\Error::__construct()
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('Teknoo\Paypal\Express\Service\Error', $this->generateError('code', 'sort', 'long', 'fooBar'));
+        self::assertInstanceOf(Error::class, $this->generateError('code', 'sort', 'long', 'fooBar'));
     }
 }
