@@ -65,6 +65,8 @@ class ExpressCheckout implements ServiceInterface
      * @param string $currencyCode
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD)
      */
     protected function getValidCurrencyCode($currencyCode)
     {
@@ -156,10 +158,16 @@ class ExpressCheckout implements ServiceInterface
 
         // Construct the parameter string that describes the SetExpressCheckout API call in the shortcut implementation
         $requestParams->set('PAYMENTREQUEST_0_AMT', $purchase->getAmount());
-        $requestParams->set('PAYMENTREQUEST_0_PAYMENTACTION', $this->getValidPaymentAction($purchase->getPaymentAction())); //Sale, Authorization, Order
+        $requestParams->set(
+            'PAYMENTREQUEST_0_PAYMENTACTION',
+            $this->getValidPaymentAction($purchase->getPaymentAction())
+        ); //Sale, Authorization, Order
         $requestParams->set('RETURNURL', $purchase->getReturnUrl());
         $requestParams->set('CANCELURL', $purchase->getCancelUrl());
-        $requestParams->set('PAYMENTREQUEST_0_CURRENCYCODE', $this->getValidCurrencyCode($purchase->getCurrencyCode())); //EUR, USD, ...
+        $requestParams->set(
+            'PAYMENTREQUEST_0_CURRENCYCODE',
+            $this->getValidCurrencyCode($purchase->getCurrencyCode())
+        ); //EUR, USD, ...
         $requestParams->set('ADDROVERRIDE', 1);
 
         $name = $user->getConsumerName();
@@ -204,7 +212,11 @@ class ExpressCheckout implements ServiceInterface
      */
     public function prepareTransaction(PurchaseInterface $purchase)
     {
-        return \str_replace('{token}', $this->generateToken($purchase)->getTokenValue(), $this->transport->getPaypalUrl());
+        return \str_replace(
+            '{token}',
+            $this->generateToken($purchase)->getTokenValue(),
+            $this->transport->getPaypalUrl()
+        );
     }
 
     /**

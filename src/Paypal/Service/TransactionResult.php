@@ -178,16 +178,16 @@ class TransactionResult implements TransactionResultInterface
     {
         $errorList = [];
 
-        $i = 0;
-        while (isset($this->values['L_ERRORCODE'.$i])) {
+        $lineIndex = 0;
+        while (isset($this->values['L_ERRORCODE'.$lineIndex])) {
             $errorList[] = new Error(
-                $this->values['L_ERRORCODE'.$i],
-                $this->values['L_SHORTMESSAGE'.$i],
-                $this->values['L_LONGMESSAGE'.$i],
-                $this->values['L_SEVERITYCODE'.$i]
+                $this->values['L_ERRORCODE'.$lineIndex],
+                $this->values['L_SHORTMESSAGE'.$lineIndex],
+                $this->values['L_LONGMESSAGE'.$lineIndex],
+                $this->values['L_SEVERITYCODE'.$lineIndex]
             );
 
-            ++$i;
+            ++$lineIndex;
         }
 
         return $errorList;

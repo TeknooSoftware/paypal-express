@@ -84,7 +84,7 @@ class Curl93 implements TransportInterface
     protected $paypalVersion = 93;
 
     /**
-     * BN Code 	is only applicable for partners.
+     * BN Code is only applicable for partners.
      *
      * @var string
      */
