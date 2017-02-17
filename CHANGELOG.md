@@ -1,6 +1,6 @@
 #Teknoo Software - Paypal express library - Change Log
 
-###[1.14] - 2017-02-17
+###[1.1.4] - 2017-02-17
 ###Fix
 - Code style fix
 - License file follow Github specs
