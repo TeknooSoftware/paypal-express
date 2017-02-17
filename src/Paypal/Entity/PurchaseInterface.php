@@ -17,11 +17,11 @@
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
- *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  *
  * @version     0.8.3
  */
+
 namespace Teknoo\Paypal\Express\Entity;
 
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
@@ -37,7 +37,6 @@ use Teknoo\Paypal\Express\Transport\ArgumentBag;
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
- *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
 interface PurchaseInterface

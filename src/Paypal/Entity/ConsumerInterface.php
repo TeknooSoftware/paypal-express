@@ -17,11 +17,11 @@
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
- *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  *
  * @version     0.8.3
  */
+
 namespace Teknoo\Paypal\Express\Entity;
 
 /**
@@ -35,7 +35,6 @@ namespace Teknoo\Paypal\Express\Entity;
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
- *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
 interface ConsumerInterface
