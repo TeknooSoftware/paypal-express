@@ -39,7 +39,7 @@ use Teknoo\Paypal\Express\Service\TransactionResult;
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-class TransactionResultTest extends \PHPUnit_Framework_TestCase
+class TransactionResultTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Generate testable object.
@@ -63,16 +63,11 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
+     * @expectedException \Exception
      */
     public function testGetAckValueFailure()
     {
-        try {
-            $this->generateObject([])->getAckValue();
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, the object must throw an exception when the required value is not defined');
+        $this->generateObject([])->getAckValue();
     }
 
     /**
@@ -85,16 +80,11 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
+     * @expectedException \Exception
      */
     public function testIsSuccessfulFailure()
     {
-        try {
-            $this->generateObject([])->isSuccessful();
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, the object must throw an exception when the required value is not defined');
+        $this->generateObject([])->isSuccessful();
     }
 
     /**
@@ -109,16 +99,11 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
+     * @expectedException \Exception
      */
     public function testGetTokenValueFailure()
     {
-        try {
-            $this->generateObject([])->getTokenValue();
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, the object must throw an exception when the required value is not defined');
+        $this->generateObject([])->getTokenValue();
     }
 
     /**
@@ -131,16 +116,11 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
+     * @expectedException \Exception
      */
     public function testGetPayerIdValueFailure()
     {
-        try {
-            $this->generateObject([])->getPayerIdValue();
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, the object must throw an exception when the required value is not defined');
+        $this->generateObject([])->getPayerIdValue();
     }
 
     /**
@@ -153,16 +133,11 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
+     * @expectedException \Exception
      */
     public function testGetTimestampValueFailure()
     {
-        try {
-            $this->generateObject([])->getTimestampValue();
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, the object must throw an exception when the required value is not defined');
+        $this->generateObject([])->getTimestampValue();
     }
 
     /**
@@ -175,16 +150,11 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
+     * @expectedException \Exception
      */
     public function testGetCorrelationIdValueFailure()
     {
-        try {
-            $this->generateObject([])->getCorrelationIdValue();
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, the object must throw an exception when the required value is not defined');
+        $this->generateObject([])->getCorrelationIdValue();
     }
 
     /**
@@ -197,16 +167,11 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
+     * @expectedException \Exception
      */
     public function testGetVersionValueFailure()
     {
-        try {
-            $this->generateObject([])->getVersionValue();
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, the object must throw an exception when the required value is not defined');
+        $this->generateObject([])->getVersionValue();
     }
 
     /**
@@ -219,16 +184,11 @@ class TransactionResultTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
+     * @expectedException \Exception
      */
     public function testGetBuildValueFailure()
     {
-        try {
-            $this->generateObject([])->getBuildValue();
-        } catch (\Exception $e) {
-            return;
-        }
-
-        $this->fail('Error, the object must throw an exception when the required value is not defined');
+        $this->generateObject([])->getBuildValue();
     }
 
     /**

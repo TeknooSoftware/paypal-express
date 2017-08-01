@@ -38,7 +38,7 @@ use Teknoo\Paypal\Express\Service\Error;
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-class ErrorTest extends \PHPUnit_Framework_TestCase
+class ErrorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Build the object to test.

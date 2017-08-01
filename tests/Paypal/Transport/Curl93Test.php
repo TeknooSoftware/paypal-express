@@ -41,7 +41,7 @@ use Teknoo\Curl\RequestGenerator;
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-class Curl93Test extends \PHPUnit_Framework_TestCase
+class Curl93Test extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var RequestGenerator

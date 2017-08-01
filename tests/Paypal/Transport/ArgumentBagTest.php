@@ -39,7 +39,7 @@ use Teknoo\Paypal\Express\Transport\ArgumentBag;
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-class ArgumentBagTest extends \PHPUnit_Framework_TestCase
+class ArgumentBagTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Generate testable object.
@@ -75,18 +75,12 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::set()
+     * @expectedException \InvalidArgumentException
      */
     public function testSetFailure()
     {
         $object = $this->generateObject();
-        try {
-            $object->set(new \stdClass(), 'bar');
-        } catch (\InvalidArgumentException $e) {
-            return;
-        } catch (\Exception $e) {
-        }
-
-        $this->fail('Error, if the key name is not a string, the object must throws an exception');
+        $object->set(new \stdClass(), 'bar');
     }
 
     /**
@@ -103,34 +97,22 @@ class ArgumentBagTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::get()
+     * @expectedException \InvalidArgumentException
      */
     public function testGetFailure()
     {
         $object = $this->generateObject();
-        try {
-            $object->get(new \stdClass());
-        } catch (\InvalidArgumentException $e) {
-            return;
-        } catch (\Exception $e) {
-        }
-
-        $this->fail('Error, if the key name is not a string, the object must throws an exception');
+        $object->get(new \stdClass());
     }
 
     /**
      * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::get()
+     * @expectedException \RuntimeException
      */
     public function testGetFailureNotFound()
     {
         $object = $this->generateObject();
-        try {
-            $object->get('notFound');
-        } catch (\RuntimeException $e) {
-            return;
-        } catch (\Exception $e) {
-        }
-
-        $this->fail('Error, if the key name does not exist the object must throws an exception');
+        $object->get('notFound');
     }
 
     /**

@@ -43,7 +43,7 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-class ExpressCheckoutTest extends \PHPUnit_Framework_TestCase
+class ExpressCheckoutTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var TransportInterface
