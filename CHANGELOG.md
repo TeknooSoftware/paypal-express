@@ -1,10 +1,13 @@
 #Teknoo Software - Paypal express library - Change Log
 
-###[1.1.5] - 2017-08-01
+##[1.1.5] - 2017-08-01
 ###Updated
 - Update dev libraries used for this project and use now PHPUnit 6.2 for tests.
 
-###[1.1.4] - 2017-02-17
+###Removed
+- Support of PHP 5.6
+
+##[1.1.4] - 2017-02-17
 ###Fix
 - Code style fix
 - License file follow Github specs
