@@ -57,10 +57,6 @@ Example
 -------
 An example of using this library is available in the folder : [Demo](demo/index.php).
 
-API Documentation
------------------
-Generated documentation from the library with PhpDocumentor : [Open](https://cdn.rawgit.com/TeknooSoftware/paypal-express/master/docs/api/index.html).
-
 Documentation and how-to
 ------------------------
 Documentation to explain how this library works and how use it : [Behavior](docs/documentation.md).
