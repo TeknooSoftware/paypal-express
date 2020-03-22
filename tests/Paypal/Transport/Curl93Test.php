@@ -24,6 +24,7 @@
  */
 namespace Teknoo\tests\Paypal\Transport;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Teknoo\Curl\Request;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\Curl93;
@@ -49,11 +50,11 @@ class Curl93Test extends \PHPUnit\Framework\TestCase
     protected $requestGeneratorService;
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|RequestGenerator
+     * @return MockObject|RequestGenerator
      */
     protected function buildRequestGeneratorMock()
     {
-        if (!$this->requestGeneratorService instanceof \PHPUnit_Framework_MockObject_MockObject) {
+        if (!$this->requestGeneratorService instanceof MockObject) {
             $this->requestGeneratorService = $this->createMock(RequestGenerator::class);
         }
 

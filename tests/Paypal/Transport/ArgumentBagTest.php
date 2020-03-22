@@ -75,10 +75,10 @@ class ArgumentBagTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::set()
-     * @expectedException \InvalidArgumentException
      */
     public function testSetFailure()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $object = $this->generateObject();
         $object->set(new \stdClass(), 'bar');
     }
@@ -97,20 +97,20 @@ class ArgumentBagTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::get()
-     * @expectedException \InvalidArgumentException
      */
     public function testGetFailure()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $object = $this->generateObject();
         $object->get(new \stdClass());
     }
 
     /**
      * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag::get()
-     * @expectedException \RuntimeException
      */
     public function testGetFailureNotFound()
     {
+        $this->expectException(\RuntimeException::class);
         $object = $this->generateObject();
         $object->get('notFound');
     }

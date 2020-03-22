@@ -63,10 +63,10 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
-     * @expectedException \Exception
      */
     public function testGetAckValueFailure()
     {
+        $this->expectException(\Exception::class);
         $this->generateObject([])->getAckValue();
     }
 
@@ -80,10 +80,10 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
-     * @expectedException \Exception
      */
     public function testIsSuccessfulFailure()
     {
+        $this->expectException(\Exception::class);
         $this->generateObject([])->isSuccessful();
     }
 
@@ -99,10 +99,10 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
-     * @expectedException \Exception
      */
     public function testGetTokenValueFailure()
     {
+        $this->expectException(\Exception::class);
         $this->generateObject([])->getTokenValue();
     }
 
@@ -116,10 +116,10 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
-     * @expectedException \Exception
      */
     public function testGetPayerIdValueFailure()
     {
+        $this->expectException(\Exception::class);
         $this->generateObject([])->getPayerIdValue();
     }
 
@@ -133,10 +133,10 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
-     * @expectedException \Exception
      */
     public function testGetTimestampValueFailure()
     {
+        $this->expectException(\Exception::class);
         $this->generateObject([])->getTimestampValue();
     }
 
@@ -150,10 +150,10 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
-     * @expectedException \Exception
      */
     public function testGetCorrelationIdValueFailure()
     {
+        $this->expectException(\Exception::class);
         $this->generateObject([])->getCorrelationIdValue();
     }
 
@@ -167,10 +167,10 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
-     * @expectedException \Exception
      */
     public function testGetVersionValueFailure()
     {
+        $this->expectException(\Exception::class);
         $this->generateObject([])->getVersionValue();
     }
 
@@ -184,10 +184,10 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
-     * @expectedException \Exception
      */
     public function testGetBuildValueFailure()
     {
+        $this->expectException(\Exception::class);
         $this->generateObject([])->getBuildValue();
     }
 

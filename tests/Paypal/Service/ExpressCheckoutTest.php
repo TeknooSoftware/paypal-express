@@ -24,6 +24,7 @@
  */
 namespace Teknoo\tests\Paypal\Service;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Teknoo\Paypal\Express\Entity\ConsumerInterface;
 use Teknoo\Paypal\Express\Entity\PurchaseInterface;
 use Teknoo\Paypal\Express\Service\ExpressCheckout;
@@ -61,11 +62,11 @@ class ExpressCheckoutTest extends \PHPUnit\Framework\TestCase
     protected $purchase;
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|TransportInterface
+     * @return MockObject|TransportInterface
      */
     protected function builTransportInterfaceMock()
     {
-        if (!$this->transport instanceof \PHPUnit_Framework_MockObject_MockObject) {
+        if (!$this->transport instanceof MockObject) {
             $this->transport = $this->createMock(TransportInterface::class);
 
             $this->transport->expects(self::any())
@@ -77,11 +78,11 @@ class ExpressCheckoutTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ConsumerInterface
+     * @return MockObject|ConsumerInterface
      */
     protected function buildConsumerInterfaceMock()
     {
-        if (!$this->consumer instanceof \PHPUnit_Framework_MockObject_MockObject) {
+        if (!$this->consumer instanceof MockObject) {
             $this->consumer = $this->createMock(ConsumerInterface::class);
         }
 
@@ -89,11 +90,11 @@ class ExpressCheckoutTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PurchaseInterface
+     * @return MockObject|PurchaseInterface
      */
     protected function buildPurchaseInterfaceMock()
     {
-        if (!$this->purchase instanceof \PHPUnit_Framework_MockObject_MockObject) {
+        if (!$this->purchase instanceof MockObject) {
             $this->purchase = $this->createMock(PurchaseInterface::class);
         }
 
@@ -111,7 +112,7 @@ class ExpressCheckoutTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ConsumerInterface
+     * @return MockObject|ConsumerInterface
      */
     protected function setIdentityToConsumer()
     {
@@ -133,7 +134,7 @@ class ExpressCheckoutTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ConsumerInterface
+     * @return MockObject|ConsumerInterface
      */
     protected function setAddressToConsumer()
     {
@@ -157,7 +158,7 @@ class ExpressCheckoutTest extends \PHPUnit\Framework\TestCase
     /**
      * @param string $currency
      * @param string $operation
-     * @return \PHPUnit_Framework_MockObject_MockObject|PurchaseInterface
+     * @return MockObject|PurchaseInterface
      */
     protected function setPurchase($currency = 'EUR', $operation = 'SALE')
     {
