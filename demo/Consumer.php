@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,26 +12,24 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
 namespace Acme\demo;
 
-use Teknoo\Paypal\Express\Entity\ConsumerInterface;
+use Teknoo\Paypal\Express\Contract\ConsumerInterface;
 
 /**
  * Class Consumer
  * Demo business class to represent a consumer.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -41,84 +39,42 @@ use Teknoo\Paypal\Express\Entity\ConsumerInterface;
  */
 class Consumer implements ConsumerInterface
 {
-    /**
-     * Return the consumer name from the vendor'si nformation system.
-     *
-     * @return string
-     */
-    public function getConsumerName()
+    public function getConsumerName(): string
     {
         return 'Richard Deloge';
     }
 
-    /**
-     * Return the consumer address from the vendor's information system.
-     *
-     * @return string
-     */
-    public function getShippingAddress()
+    public function getShippingAddress(): string
     {
-        return '1 rue de Bruxelles';
+        return '161 rue d\'Auge';
     }
 
-    /**
-     * Return the consumer extra address from the vendor's information system
-     * to allow consumer to input additional inforlations.
-     *
-     * @return string
-     */
-    public function getShippingExtraAddress()
+    public function getShippingExtraAddress(): string
     {
-        return 'Le Colisee';
+        return 'Teknoo Software';
     }
 
-    /**
-     * Return the consumer zip from the vendor'sinformation system.
-     *
-     * @return string
-     */
-    public function getShippingZip()
+    public function getShippingZip(): string
     {
-        return 14120;
+        return '14000';
     }
 
-    /**
-     * Return the consumer city from the vendor'sinformation system.
-     *
-     * @return string
-     */
-    public function getShippingCity()
+    public function getShippingCity(): string
     {
-        return 'Mondeville';
+        return 'Caen';
     }
 
-    /**
-     * Return the consumer state from the vendor'sinformation system
-     * (for United State only).
-     *
-     * @return string
-     */
-    public function getShippingState()
+    public function getShippingState(): string
     {
         return 'Normandy';
     }
 
-    /**
-     * Return the consumer country code from the vendor'sinformation system.
-     *
-     * @return string
-     */
-    public function getShippingCountryCode()
+    public function getShippingCountryCode(): string
     {
         return 'France';
     }
 
-    /**     *
-     * Return the consumer phone from the vendor'sinformation system.
-     *
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): string
     {
         return '0033123456789';
     }

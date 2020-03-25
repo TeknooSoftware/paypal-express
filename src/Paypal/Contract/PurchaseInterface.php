@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,27 +12,27 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
 
-namespace Teknoo\Paypal\Express\Entity;
+declare(strict_types=1);
+
+namespace Teknoo\Paypal\Express\Contract;
 
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
+use Teknoo\Paypal\Express\Transport\ArgumentBagInterface;
 
 /**
- * Interface PurchaseInterface
  * Interface to represent a purchase in the vendor's informations system
  * to communicate data to Paypal API.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -41,52 +41,29 @@ use Teknoo\Paypal\Express\Transport\ArgumentBag;
  */
 interface PurchaseInterface
 {
-    /**
-     * Get the amount of the purchase, feet included, in float representation.
-     *
-     * @return float
-     */
-    public function getAmount();
+    public function getAmount(): float;
 
     /**
      * Get the payment action to use in the transaction (sale, ..).
-     *
-     * @return string
      */
-    public function getPaymentAction();
+    public function getPaymentAction(): string;
 
     /**
      * Get the url to redirect the consumer after the payment operation.
-     *
-     * @return string
      */
-    public function getReturnUrl();
+    public function getReturnUrl(): string;
 
     /**
      * Get the url to redirect the consumer when it cancel the transaction in paypal.
-     *
-     * @return string
      */
-    public function getCancelUrl();
+    public function getCancelUrl(): string;
 
     /**
      * Get the currency used for this transaction.
-     *
-     * @return string
      */
-    public function getCurrencyCode();
+    public function getCurrencyCode(): string;
 
-    /**
-     * Get the consumer of this transaction.
-     *
-     * @return ConsumerInterface
-     */
-    public function getConsumer();
+    public function getConsumer(): ConsumerInterface;
 
-    /**
-     * @param ArgumentBag $argumentBag
-     *
-     * @return self
-     */
-    public function configureArgumentBag(ArgumentBag $argumentBag);
+    public function configureArgumentBag(ArgumentBagInterface $argumentBag): self;
 }

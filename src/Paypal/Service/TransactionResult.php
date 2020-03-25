@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -9,58 +9,47 @@
  * license that are bundled with this package in the folder licences
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to richarddeloge@gmail.com so we can send you a copy immediately.
+ * to richarddeloge@gmail . com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
- * @link        http://teknoo.software/paypal Project website
+ * @link        http://teknoo . software/paypal Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
- * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
+ * @license     http://teknoo . software/paypal/license/mit         MIT License
+ * @author      Richard Déloge <richarddeloge@gmail . com>
  */
+
+declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
 /**
- * Class TransactionResult
  * Class to manipulate result.
  *
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail . com)
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @link        http://teknoo . software/paypal Project website
  *
- * @link        http://teknoo.software/paypal Project website
- *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
- * @author      Richard Déloge <richarddeloge@gmail.com>
+ * @license     http://teknoo . software/paypal/license/mit         MIT License
+ * @author      Richard Déloge <richarddeloge@gmail . com>
  */
 class TransactionResult implements TransactionResultInterface
 {
     /**
-     * Return of the api.
-     *
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $values;
+    private array $values;
 
     /**
-     * Constructor to initialize the result object.
-     *
-     * @param array|\ArrayAccess $values
+     * @param array<string, mixed> $values
      */
-    public function __construct($values)
+    public function __construct(array $values)
     {
         $this->values = $values;
     }
 
-    /**
-     * Return the raw value of the ACK field from the paypal API for this transaction.
-     *
-     * @return string
-     */
-    public function getAckValue()
+    public function getAckValue(): string
     {
         if (isset($this->values['ACK'])) {
             return $this->values['ACK'];
@@ -69,41 +58,22 @@ class TransactionResult implements TransactionResultInterface
         throw new \RuntimeException('Error, the ACK value is not available in the response');
     }
 
-    /**
-     * Return a boolean to test if the operation via the api is successful.
-     *
-     * @return bool
-     */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         $ack = \strtoupper($this->getAckValue());
-        if ('SUCCESS' == $ack || 'SUCCESSWITHWARNING' == $ack) {
-            return true;
-        }
-
-        return false;
+        return ('SUCCESS' === $ack || 'SUCCESSWITHWARNING' === $ack);
     }
 
-    /**
-     * Return the raw value of the Token field from the paypal API for this transaction.
-     *
-     * @return string
-     */
-    public function getTokenValue()
+    public function getTokenValue(): string
     {
         if (isset($this->values['TOKEN'])) {
             return $this->values['TOKEN'];
         }
 
-        throw new \RuntimeException('Error, the TOCKEN value is not available in the response');
+        throw new \RuntimeException('Error, the TOKEN value is not available in the response');
     }
 
-    /**
-     * Return the raw value of the PayerId field from the paypal API for this transaction.
-     *
-     * @return string
-     */
-    public function getPayerIdValue()
+    public function getPayerIdValue(): string
     {
         if (isset($this->values['PAYERID'])) {
             return $this->values['PAYERID'];
@@ -112,12 +82,7 @@ class TransactionResult implements TransactionResultInterface
         throw new \RuntimeException('Error, the PAYERID value is not available in the response');
     }
 
-    /**
-     * Return the raw value of the Timestamp field from the paypal API for this transaction.
-     *
-     * @return string
-     */
-    public function getTimestampValue()
+    public function getTimestampValue(): string
     {
         if (isset($this->values['TIMESTAMP'])) {
             return $this->values['TIMESTAMP'];
@@ -126,12 +91,7 @@ class TransactionResult implements TransactionResultInterface
         throw new \RuntimeException('Error, the TIMESTAMP value is not available in the response');
     }
 
-    /**
-     * Return the raw value of the CorrelationId field from the paypal API for this transaction.
-     *
-     * @return string
-     */
-    public function getCorrelationIdValue()
+    public function getCorrelationIdValue(): string
     {
         if (isset($this->values['CORRELATIONID'])) {
             return $this->values['CORRELATIONID'];
@@ -140,12 +100,7 @@ class TransactionResult implements TransactionResultInterface
         throw new \RuntimeException('Error, the CORRELATIONID value is not available in the response');
     }
 
-    /**
-     * Return the raw value of the Version field from the paypal API for this transaction.
-     *
-     * @return string
-     */
-    public function getVersionValue()
+    public function getVersionValue(): string
     {
         if (isset($this->values['VERSION'])) {
             return $this->values['VERSION'];
@@ -154,12 +109,7 @@ class TransactionResult implements TransactionResultInterface
         throw new \RuntimeException('Error, the VERSION value is not available in the response');
     }
 
-    /**
-     * Return the raw value of the Build field from the paypal API for this transaction.
-     *
-     * @return string
-     */
-    public function getBuildValue()
+    public function getBuildValue(): string
     {
         if (isset($this->values['BUILD'])) {
             return $this->values['BUILD'];
@@ -169,21 +119,19 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return errors from paypal.
-     *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         $errorList = [];
 
         $lineIndex = 0;
-        while (isset($this->values['L_ERRORCODE'.$lineIndex])) {
+        while (isset($this->values['L_ERRORCODE' . $lineIndex])) {
             $errorList[] = new Error(
-                $this->values['L_ERRORCODE'.$lineIndex],
-                $this->values['L_SHORTMESSAGE'.$lineIndex],
-                $this->values['L_LONGMESSAGE'.$lineIndex],
-                $this->values['L_SEVERITYCODE'.$lineIndex]
+                (int) $this->values['L_ERRORCODE' . $lineIndex],
+                $this->values['L_SHORTMESSAGE' . $lineIndex],
+                $this->values['L_LONGMESSAGE' . $lineIndex],
+                $this->values['L_SEVERITYCODE' . $lineIndex]
             );
 
             ++$lineIndex;
@@ -193,11 +141,11 @@ class TransactionResult implements TransactionResultInterface
     }
 
     /**
-     * Return raw value from the request.
+     * Return raw value from the request .
      *
-     * @return mixed
+     * @return array<string, mixed>
      */
-    public function getRawValues()
+    public function getRawValues(): array
     {
         return $this->values;
     }

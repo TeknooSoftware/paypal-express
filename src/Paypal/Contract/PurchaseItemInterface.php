@@ -22,10 +22,11 @@
 
 declare(strict_types=1);
 
-namespace Teknoo\Paypal\Express\Transport;
+namespace Teknoo\Paypal\Express\Contract;
 
 /**
- * Interface to define transport to use to communicate with the Paypal API.
+ * Interface to represent an intem into a purchase in the vendor's informations system.
+ *
  *
  * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
@@ -34,10 +35,25 @@ namespace Teknoo\Paypal\Express\Transport;
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-interface TransportInterface
+interface PurchaseItemInterface
 {
+    public function getName(): string;
+
+    public function getDescription(): string;
+
+    public function getAmount(): float;
+
+    public function getQantity(): int;
+
+    public function getReference(): string;
+
     /**
-     * @return array<string, mixed>
+     * Get the url about this item in the purchase.
      */
-    public function call(string $methodName, ArgumentBagInterface $arguments): array;
+    public function getRequestUrl(): string;
+
+    /**
+     * Get the item category (Digital or Physical).
+     */
+    public function getItemCategory(): string;
 }

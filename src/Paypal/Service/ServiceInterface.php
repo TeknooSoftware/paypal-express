@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,26 +12,25 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
+
+declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
-use Teknoo\Paypal\Express\Entity\PurchaseInterface;
+use Teknoo\Paypal\Express\Contract\PurchaseInterface;
 
 /**
- * Interface ServiceInterface
  * Interface to define available service to use paypal express checkout in php platform.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -44,42 +43,28 @@ interface ServiceInterface
      * Prepare a transaction via the Paypal API and get the token to identify
      * the transaction and the consumer on the paypal service.
      *
-     * @param PurchaseInterface $purchase
-     *
-     * @return TransactionResultInterface
-     *
      * @throws \RuntimeException if the purchase object is invalid
      * @throws \Exception
      */
-    public function generateToken(PurchaseInterface $purchase);
+    public function generateToken(PurchaseInterface $purchase): TransactionResultInterface;
 
     /**
      * Prepare a transaction via the Paypal API and get the url to redirect
      * the user to paypal service to process of the payment.
-     *
-     * @param PurchaseInterface $purchase
-     *
-     * @return string
      */
-    public function prepareTransaction(PurchaseInterface $purchase);
+    public function prepareTransaction(PurchaseInterface $purchase): string;
 
     /**
      * Get the transaction result from the Paypal API.
-     *
-     * @param string $token
-     *
-     * @return TransactionResultInterface
      */
-    public function getTransactionResult($token);
+    public function getTransactionResult(string $token): TransactionResultInterface;
 
     /**
      * To confirm an active transaction on the Paypal API and unblock amounts.
-     *
-     * @param string            $token
-     * @param string            $payerId
-     * @param PurchaseInterface $purchase
-     *
-     * @return TransactionResultInterface
      */
-    public function confirmTransaction($token, $payerId, PurchaseInterface $purchase);
+    public function confirmTransaction(
+        string $token,
+        string $payerId,
+        PurchaseInterface $purchase
+    ): TransactionResultInterface;
 }

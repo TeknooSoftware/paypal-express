@@ -12,7 +12,7 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -20,10 +20,11 @@
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  *
- * @version     0.8.3
+ *
  */
 namespace Teknoo\tests\Paypal\Service;
 
+use PHPUnit\Framework\TestCase;
 use Teknoo\Paypal\Express\Service\Error;
 use Teknoo\Paypal\Express\Service\TransactionResult;
 
@@ -31,65 +32,45 @@ use Teknoo\Paypal\Express\Service\TransactionResult;
  * Class TransactionResultTest.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
+ *
+ * @covers \Teknoo\Paypal\Express\Service\TransactionResult
  */
-class TransactionResultTest extends \PHPUnit\Framework\TestCase
+class TransactionResultTest extends TestCase
 {
-    /**
-     * Generate testable object.
-     *
-     * @param array $param
-     *
-     * @return TransactionResult
-     */
-    protected function generateObject($param)
+    private function generateObject(array $param): TransactionResult
     {
         return new TransactionResult($param);
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::__construct()
-     */
     public function testConstruct()
     {
-        self::assertInstanceOf('Teknoo\Paypal\Express\Service\TransactionResult', $this->generateObject([]));
+        self::assertInstanceOf(TransactionResult::class, $this->generateObject([]));
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
-     */
     public function testGetAckValueFailure()
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getAckValue();
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getAckValue()
-     */
     public function testGetAckValue()
     {
         self::assertEquals('fooBar', $this->generateObject(['ACK' => 'fooBar'])->getAckValue());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
-     */
     public function testIsSuccessfulFailure()
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->isSuccessful();
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::isSuccessful()
-     */
     public function testIsSuccessful()
     {
         self::assertFalse($this->generateObject(['ACK' => 'fooBar'])->isSuccessful());
@@ -97,124 +78,82 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
         self::assertTrue($this->generateObject(['ACK' => 'SUCCESSWITHWARNING'])->isSuccessful());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
-     */
     public function testGetTokenValueFailure()
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getTokenValue();
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTokenValue()
-     */
     public function testGetTokenValue()
     {
         self::assertEquals('fooBar', $this->generateObject(['TOKEN' => 'fooBar'])->getTokenValue());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
-     */
     public function testGetPayerIdValueFailure()
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getPayerIdValue();
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getPayerIdValue()
-     */
     public function testGetPayerIdValue()
     {
         self::assertEquals('fooBar', $this->generateObject(['PAYERID' => 'fooBar'])->getPayerIdValue());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
-     */
     public function testGetTimestampValueFailure()
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getTimestampValue();
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getTimestampValue()
-     */
     public function testGetTimestampValue()
     {
         self::assertEquals('fooBar', $this->generateObject(['TIMESTAMP' => 'fooBar'])->getTimestampValue());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
-     */
     public function testGetCorrelationIdValueFailure()
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getCorrelationIdValue();
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getCorrelationIdValue()
-     */
     public function testGetCorrelationIdValue()
     {
         self::assertEquals('fooBar', $this->generateObject(['CORRELATIONID' => 'fooBar'])->getCorrelationIdValue());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
-     */
     public function testGetVersionValueFailure()
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getVersionValue();
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getVersionValue()
-     */
     public function testGetVersionValue()
     {
         self::assertEquals('fooBar', $this->generateObject(['VERSION' => 'fooBar'])->getVersionValue());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
-     */
     public function testGetBuildValueFailure()
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getBuildValue();
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getBuildValue()
-     */
     public function testGetBuildValue()
     {
         self::assertEquals('fooBar', $this->generateObject(['BUILD' => 'fooBar'])->getBuildValue());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
-     */
     public function testGetErrorsEmpty()
     {
         self::assertEmpty($this->generateObject([])->getErrors());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
-     */
     public function testGetErrorsOne()
     {
         $errors = $this->generateObject(
             [
-                'L_ERRORCODE0' => 'err1',
+                'L_ERRORCODE0' => 123,
                 'L_SHORTMESSAGE0' => 'shortMess',
                 'L_LONGMESSAGE0' => 'longMess',
                 'L_SEVERITYCODE0' => 'warning',
@@ -223,21 +162,18 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(1, count($errors));
         self::assertInstanceOf(Error::class, $errors[0]);
-        self::assertEquals('err1', $errors[0]->getCode());
+        self::assertEquals(123, $errors[0]->getCode());
         self::assertEquals('shortMess', $errors[0]->getShortMessage());
         self::assertEquals('longMess', $errors[0]->getLongMessage());
         self::assertEquals('warning', $errors[0]->getSeverity());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
-     */
     public function testGetErrorsTwo()
     {
         $errors = $this->generateObject(
             [
-                'L_ERRORCODE0' => 'err1',
-                'L_ERRORCODE1' => 'err2',
+                'L_ERRORCODE0' => 123,
+                'L_ERRORCODE1' => 456,
                 'L_SHORTMESSAGE0' => 'shortMess',
                 'L_SHORTMESSAGE1' => 'shortMess2',
                 'L_LONGMESSAGE0' => 'longMess',
@@ -249,26 +185,23 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(2, count($errors));
         self::assertInstanceOf(Error::class, $errors[0]);
-        self::assertEquals('err1', $errors[0]->getCode());
+        self::assertEquals(123, $errors[0]->getCode());
         self::assertEquals('shortMess', $errors[0]->getShortMessage());
         self::assertEquals('longMess', $errors[0]->getLongMessage());
         self::assertEquals('warning', $errors[0]->getSeverity());
         self::assertInstanceOf(Error::class, $errors[1]);
-        self::assertEquals('err2', $errors[1]->getCode());
+        self::assertEquals(456, $errors[1]->getCode());
         self::assertEquals('shortMess2', $errors[1]->getShortMessage());
         self::assertEquals('longMess2', $errors[1]->getLongMessage());
         self::assertEquals('warning2', $errors[1]->getSeverity());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getErrors()
-     */
     public function testGetErrorsOneThree()
     {
         $errors = $this->generateObject(
             [
-                'L_ERRORCODE0' => 'err1',
-                'L_ERRORCODE3' => 'err2',
+                'L_ERRORCODE0' => 123,
+                'L_ERRORCODE3' => 456,
                 'L_SHORTMESSAGE0' => 'shortMess',
                 'L_SHORTMESSAGE3' => 'shortMess2',
                 'L_LONGMESSAGE0' => 'longMess',
@@ -280,15 +213,12 @@ class TransactionResultTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(1, count($errors));
         self::assertInstanceOf(Error::class, $errors[0]);
-        self::assertEquals('err1', $errors[0]->getCode());
+        self::assertEquals(123, $errors[0]->getCode());
         self::assertEquals('shortMess', $errors[0]->getShortMessage());
         self::assertEquals('longMess', $errors[0]->getLongMessage());
         self::assertEquals('warning', $errors[0]->getSeverity());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\TransactionResult::getRawValues()
-     */
     public function testGetRawValues()
     {
         $array = $this->generateObject(['foo' => 'bar', 'hello' => 'world'])->getRawValues();

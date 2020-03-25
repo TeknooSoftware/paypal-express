@@ -22,10 +22,12 @@
 
 declare(strict_types=1);
 
-namespace Teknoo\Paypal\Express\Transport;
+namespace Teknoo\Paypal\Express\Contract;
 
 /**
- * Interface to define transport to use to communicate with the Paypal API.
+ * Interface to represent consumer accounts of transactions to get informations
+ * for Paypal API from the vendor's business model
+ *
  *
  * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
@@ -34,10 +36,17 @@ namespace Teknoo\Paypal\Express\Transport;
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-interface TransportInterface
+interface ConsumerInterface
 {
-    /**
-     * @return array<string, mixed>
-     */
-    public function call(string $methodName, ArgumentBagInterface $arguments): array;
+    public function getConsumerName(): string;
+
+    public function getShippingAddress(): string;
+
+    public function getShippingExtraAddress(): string;
+
+    public function getShippingZip(): string;
+
+    public function getShippingCity(): string;
+
+    public function getPhone(): string;
 }

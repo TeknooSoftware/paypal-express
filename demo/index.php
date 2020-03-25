@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -11,21 +11,20 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
 namespace Acme\Demo;
 
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Teknoo\Paypal\Express\Service\ExpressCheckout;
-use Teknoo\Paypal\Express\Transport\Curl93;
-use Teknoo\Curl\RequestGenerator;
+use Teknoo\Paypal\Express\Transport\PsrTransport;
 
 //Initialize composer
 require_once '../vendor/autoload.php';
@@ -36,24 +35,25 @@ try {
 
     //Initialize Paypal library
 
-    //Request generator to communicate with paypal via curl
-    $requestGenerator = new RequestGenerator();
-
     //Transport object to communicate with curl
-    $transport = new Curl93(
-        '',
-        '',
-        '',
+    $transport = new PsrTransport(
+        HttpClientDiscovery::find(),
+        Psr17FactoryDiscovery::findUrlFactory(),
+        Psr17FactoryDiscovery::findRequestFactory(),
+        Psr17FactoryDiscovery::findStreamFactory(),
         'https://api-3t.sandbox.paypal.com/nvp',
-        'https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token={token}',
-        93,
-        'PP-ECWizard',
-        60,
-        $requestGenerator
+        '93',
+        '',
+        '',
+        '',
+        'PP-ECWizard'
     );
 
     //Paypal service
-    $service = new ExpressCheckout($transport);
+    $service = new ExpressCheckout(
+        $transport,
+        'https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token={token}'
+    );
 
     //Prepare demo purchase
     $purchase = new Purchase('http://localhost:'.$_SERVER['SERVER_PORT'].'/index.php');
@@ -69,35 +69,37 @@ try {
     <body>
     <h1>Teknoo Software, Paypal Express library demo</h1>
     <?php if (isset($_GET['method'])):
-        if ('cancel' == $_GET['method']): ?>
+        if ('cancel' === $_GET['method']): ?>
             <p>Checkout canceled by the consumer</p>
         <?php else:
             $result = $service->getTransactionResult($_GET['token']);
-    if ($result->isSuccessful()) {
-        $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
-        if ($confirmationResult->isSuccessful()) {
-            echo '<p>Checkout successful</p>';
-        } else {
-            $errors = $confirmationResult->getErrors();
-            foreach ($errors as $error) {
-                echo '<p>'.$error->getShortMessage().' : '.$error->getLongMessage().'</p>';
+            if ($result->isSuccessful()) {
+                $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
+                if ($confirmationResult->isSuccessful()) {
+                    echo '<p>Checkout successful</p>';
+                } else {
+                    $errors = $confirmationResult->getErrors();
+                    foreach ($errors as $error) {
+                        echo '<p>'.$error->getShortMessage().' : '.$error->getLongMessage().'</p>';
+                    }
+                }
+            } else {
+                echo '<p>Error from Paypal</p>';
             }
-        }
-    } else {
-        echo '<p>Error from Paypal</p>';
-    }
-    endif; else: ?>
+        endif; else: ?>
         <p>
             <a href="<?php echo $service->prepareTransaction($purchase);
-    ?>">Process to checkout to paypal</a>
+            ?>">Process to checkout to paypal</a>
         </p>
     <?php endif;
     ?>
     </body>
     </html>
-<?php
+    <?php
     ob_end_flush();
 } catch (\Exception $e) {
     ob_end_clean();
-    echo 'Error : '.$e->getMessage();
+    print 'Error : '.$e->getMessage().'<br/>';
+    print $e->getTraceAsString().'<br/>';
+    print $e->getPrevious().'<br/>';
 }

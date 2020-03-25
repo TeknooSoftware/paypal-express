@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,26 +12,25 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
+
+declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Transport;
 
-use Teknoo\Paypal\Express\Entity\PurchaseItemInterface;
+use Teknoo\Paypal\Express\Contract\PurchaseItemInterface;
 
 /**
- * Interface ArgumentBagInterface
  * Interface to define arguments container for all request to the api.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -42,45 +41,33 @@ interface ArgumentBagInterface
 {
     /**
      * Reset this bag.
-     *
-     * @return $this
      */
-    public function reset();
+    public function reset(): ArgumentBagInterface;
 
     /**
      * Define an argument in the bag.
      *
-     * @param string $name
-     * @param mixed  $value
-     *
-     * @return $this
+     * @param mixed $value
      *
      * @throws \InvalidArgumentException when $name is not a string
      */
-    public function set($name, $value);
+    public function set(string $name, $value): ArgumentBagInterface;
 
     /**
      * Return an argument defined in the bag.
-     *
-     * @param string $name
      *
      * @return mixed
      *
      * @throws \InvalidArgumentException when $name is not a string
      */
-    public function get($name);
+    public function get(string $name);
 
     /**
      * Return the list of argument as an array object.
      *
-     * @return \ArrayAccess|\Countable
+     * @return array<string, mixed>
      */
-    public function toArray();
+    public function toArray(): array;
 
-    /**
-     * @param PurchaseItemInterface $purchaseItem
-     *
-     * @return self
-     */
-    public function addItem(PurchaseItemInterface $purchaseItem);
+    public function addItem(PurchaseItemInterface $purchaseItem): ArgumentBagInterface;
 }

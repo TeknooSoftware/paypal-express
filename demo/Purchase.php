@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,7 +12,7 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -24,15 +24,18 @@
  */
 namespace Acme\demo;
 
-use Teknoo\Paypal\Express\Entity\ConsumerInterface;
-use Teknoo\Paypal\Express\Entity\PurchaseInterface;
+use Teknoo\Paypal\Express\Contract\ConsumerInterface;
+use Teknoo\Paypal\Express\Contract\PurchaseInterface;
+use Teknoo\Paypal\Express\Contract\PurchaseItemInterface;
+use Teknoo\Paypal\Express\Transport\ArgumentBag;
+use Teknoo\Paypal\Express\Transport\ArgumentBagInterface;
 
 /**
  * Class Purchase
  * Demo business class representing a purchase.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -42,76 +45,92 @@ use Teknoo\Paypal\Express\Entity\PurchaseInterface;
  */
 class Purchase implements PurchaseInterface
 {
-    /**
-     * @var string
-     */
-    protected $baseUrl = null;
+    protected string $baseUrl;
 
-    /**
-     * @param string $baseUrl
-     */
-    public function __construct($baseUrl)
+    public function __construct(string $baseUrl)
     {
         $this->baseUrl = $baseUrl;
     }
 
-    /**
-     * Get the amount of the purchase, feet included, in float representation.
-     *
-     * @return float
-     */
-    public function getAmount()
+    public function getAmount(): float
     {
         return 314.15;
     }
 
-    /**
-     * Get the payment action to use in the transaction (sale, ..).
-     *
-     * @return string
-     */
-    public function getPaymentAction()
+    public function getPaymentAction(): string
     {
         return 'SALE';
     }
 
-    /**
-     * Get the url to redirect the consumer after the payment operation.
-     *
-     * @return string
-     */
-    public function getReturnUrl()
+    public function getReturnUrl(): string
     {
         return $this->baseUrl.'?method=return';
     }
 
-    /**
-     * Get the url to redirect the consumer when it cancel the transaction in paypal.
-     *
-     * @return string
-     */
-    public function getCancelUrl()
+    public function getCancelUrl(): string
     {
         return $this->baseUrl.'?method=cancel';
     }
 
-    /**
-     * Get the currency used for this transaction.
-     *
-     * @return string
-     */
-    public function getCurrencyCode()
+    public function getCurrencyCode(): string
     {
         return 'EUR';
     }
 
-    /**
-     * Get the consumer of this transaction.
-     *
-     * @return ConsumerInterface
-     */
-    public function getConsumer()
+    public function getConsumer(): ConsumerInterface
     {
         return new Consumer();
+    }
+
+    public function configureArgumentBag(ArgumentBagInterface $argumentBag): PurchaseInterface
+    {
+        $argumentBag->addItem(
+            new class implements PurchaseItemInterface {
+                public function getName(): string
+                {
+                    return 'Acme Item';
+                }
+
+                public function getDescription(): string
+                {
+                    return 'Acme Item Desc';
+                }
+
+                public function getAmount(): float
+                {
+                    return 123.0;
+                }
+
+                public function getQantity(): int
+                {
+                    return 1;
+                }
+
+                public function getReference(): string
+                {
+                    return 'foo';
+                }
+
+                public function getRequestUrl(): string
+                {
+                    return '';
+                }
+
+                public function getItemCategory(): string
+                {
+                    return 'Digital';
+                }
+
+            }
+        );
+
+        $argumentBag->set('PAYMENTREQUEST_0_ITEMAMT', '123.00');
+        $argumentBag->set('PAYMENTREQUEST_0_AMT', '123.00');
+        $argumentBag->set('PAYMENTREQUEST_0_INVNUM', 'B'.\date('Ymd'));
+        $argumentBag->set('PAYMENTREQUEST_0_NOTETEXT', 'Acme Purchase');
+        $argumentBag->set('PAYMENTREQUEST_0_DESC', 'Acme Purchase');
+        $argumentBag->set('PAYMENTREQUEST_0_CUSTOM', 'Acme Purchase');
+
+        return $this;
     }
 }

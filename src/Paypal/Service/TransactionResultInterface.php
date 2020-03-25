@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,24 +12,23 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
+
+declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
 /**
- * Interface TransactionResultInterface
  * Interface to define object parsing paypal return.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -40,71 +39,55 @@ interface TransactionResultInterface
 {
     /**
      * Return the raw value of the ACK field from the paypal API for this transaction.
-     *
-     * @return string
      */
-    public function getAckValue();
+    public function getAckValue(): string;
 
     /**
      * Return a boolean to test if the operation via the api is successful.
-     *
-     * @return bool
      */
-    public function isSuccessful();
+    public function isSuccessful(): bool;
 
     /**
      * Return the raw value of the Token field from the paypal API for this transaction.
-     *
-     * @return string
      */
-    public function getTokenValue();
+    public function getTokenValue(): string;
 
     /**
      * Return the raw value of the PayerId field from the paypal API for this transaction.
-     *
-     * @return string
      */
-    public function getPayerIdValue();
+    public function getPayerIdValue(): string;
 
     /**
      * Return the raw value of the Timestamp field from the paypal API for this transaction.
-     *
-     * @return string
      */
-    public function getTimestampValue();
+    public function getTimestampValue(): string;
 
     /**
      * Return the raw value of the CorrelationId field from the paypal API for this transaction.
-     *
-     * @return string
      */
-    public function getCorrelationIdValue();
+    public function getCorrelationIdValue(): string;
 
     /**
      * Return the raw value of the Version field from the paypal API for this transaction.
-     *
-     * @return string
      */
-    public function getVersionValue();
+    public function getVersionValue(): string;
 
     /**
      * Return the raw value of the Build field from the paypal API for this transaction.
-     *
-     * @return string
      */
-    public function getBuildValue();
+    public function getBuildValue(): string;
 
     /**
      * Return errors from paypal.
      *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
-    public function getErrors();
+    public function getErrors(): array;
 
     /**
      * Return raw value from the request.
      *
-     * @return mixed
+     * @return array<string, mixed>
      */
-    public function getRawValues();
+    public function getRawValues(): array;
 }

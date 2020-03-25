@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,26 +12,25 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
+
+declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Transport;
 
-use Teknoo\Paypal\Express\Entity\PurchaseItemInterface;
+use Teknoo\Paypal\Express\Contract\PurchaseItemInterface;
 
 /**
- * Class ArgumentBag
  * Class to allow developer to pass arguments for request.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -41,125 +40,85 @@ use Teknoo\Paypal\Express\Entity\PurchaseItemInterface;
 class ArgumentBag implements ArgumentBagInterface
 {
     /**
-     * @var \ArrayObject
+     * @var array<string, mixed>
      */
-    protected $parameters;
+    private array $parameters = [];
+
+    private int $purchaseItemCounter = 0;
 
     /**
-     * To count all purchase item added with addItem().
-     *
-     * @var int
+     * @param array<string, mixed> $parameters
      */
-    protected $purchaseItemCounter = 0;
-
-    /**
-     * To initialize this bag.
-     *
-     * @param array|null $parameters
-     */
-    public function __construct($parameters = null)
+    public function __construct(array $parameters = [])
     {
-        $this->reset();
-        if (!empty($parameters)) {
-            $this->parameters->exchangeArray($parameters);
-        }
+        $this->parameters = $parameters;
     }
 
-    /**
-     * Reset this bag.
-     *
-     * @return $this
-     */
-    public function reset()
+    public function reset(): ArgumentBagInterface
     {
-        $this->parameters = new \ArrayObject();
+        $this->parameters = [];
 
         return $this;
     }
 
     /**
-     * Define an argument in the bag.
-     *
-     * @param string $name
-     * @param mixed  $value
-     *
-     * @return $this
-     *
-     * @throws \InvalidArgumentException when $name is not a string
+     * @param mixed $value
+     * throws \InvalidArgumentException when $name is not a string
      */
-    public function set($name, $value)
+    public function set(string $name, $value): ArgumentBagInterface
     {
-        if (!\is_string($name)) {
-            throw new \InvalidArgumentException('The name is not a string');
-        }
-
         $this->parameters[$name] = $value;
 
         return $this;
     }
 
     /**
-     * Return an argument defined in the bag.
-     *
-     * @param string $name
-     *
-     * @return mixed
-     *
      * @throws \InvalidArgumentException when $name is not a string
+     * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
-        if (!\is_string($name)) {
-            throw new \InvalidArgumentException('The name is not a string');
-        }
-
         if (isset($this->parameters[$name])) {
             return $this->parameters[$name];
         }
 
-        throw new \RuntimeException(sprintf('Error, the required parameter %s is not defined', $name));
+        throw new \RuntimeException("Error, the required parameter $name is not defined");
     }
 
     /**
-     * Return the list of argument as an array object.
-     *
-     * @return \ArrayAccess|\Countable
+     * @return array<string, mixed>
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * To increase the purchase coutner for the next add.
-     *
-     * @return self
-     */
-    private function increasePurchaseItemCounter()
+    private function increasePurchaseItemCounter(): ArgumentBagInterface
     {
         ++$this->purchaseItemCounter;
 
         return $this;
     }
 
-    /**
-     * @param PurchaseItemInterface $purchaseItem
-     *
-     * @return self
-     */
-    public function addItem(PurchaseItemInterface $purchaseItem)
+    public function addItem(PurchaseItemInterface $purchaseItem): ArgumentBagInterface
     {
         $purchaseItemCounter = $this->purchaseItemCounter;
 
-        $this->set('L_PAYMENTREQUEST_0_NAME'.$purchaseItemCounter, $purchaseItem->getPaymentRequestName());
-        $this->set('L_PAYMENTREQUEST_0_DESC'.$purchaseItemCounter, $purchaseItem->getPaymentRequestDesc());
-        $this->set('L_PAYMENTREQUEST_0_AMT'.$purchaseItemCounter, $purchaseItem->getPaymentRequestAmount());
-        $this->set('L_PAYMENTREQUEST_0_QTY'.$purchaseItemCounter, $purchaseItem->getPaymentRequestQantity());
-        $this->set('L_PAYMENTREQUEST_0_NUMBER'.$purchaseItemCounter, $purchaseItem->getPaymentRequestNumber());
-        $this->set('L_PAYMENTREQUEST_0_ITEMURL'.$purchaseItemCounter, $purchaseItem->getPaymentRequestUrl());
+        $this->set('L_PAYMENTREQUEST_0_NAME' . $purchaseItemCounter, $purchaseItem->getName());
+        $this->set('L_PAYMENTREQUEST_0_DESC' . $purchaseItemCounter, $purchaseItem->getDescription());
         $this->set(
-            'L_PAYMENTREQUEST_0_ITEMCATEGORY'.$purchaseItemCounter,
-            $purchaseItem->getPaymentRequestItemCategory()
+            'L_PAYMENTREQUEST_0_AMT' . $purchaseItemCounter,
+            \number_format($purchaseItem->getAmount(), 2, '.', ',')
+        );
+        $this->set(
+            'L_PAYMENTREQUEST_0_QTY' . $purchaseItemCounter,
+            \number_format($purchaseItem->getQantity(), 2, '.', ', ')
+        );
+        $this->set('L_PAYMENTREQUEST_0_NUMBER' . $purchaseItemCounter, $purchaseItem->getReference());
+        $this->set('L_PAYMENTREQUEST_0_ITEMURL' . $purchaseItemCounter, $purchaseItem->getRequestUrl());
+        $this->set(
+            'L_PAYMENTREQUEST_0_ITEMCATEGORY' . $purchaseItemCounter,
+            $purchaseItem->getItemCategory()
         );
 
         $this->increasePurchaseItemCounter();

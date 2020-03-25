@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,29 +12,27 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
+
+declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
-use Teknoo\Paypal\Express\Entity\ConsumerInterface;
-use Teknoo\Paypal\Express\Entity\PurchaseInterface;
+use Teknoo\Paypal\Express\Contract\PurchaseInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\TransportInterface;
 
 /**
- * Class ExpressCheckout
  * Implementation of ServiceInterface to do transaction with paypal api.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -43,31 +41,20 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
  */
 class ExpressCheckout implements ServiceInterface
 {
-    /**
-     * @var TransportInterface
-     */
-    protected $transport;
+    private TransportInterface $transport;
 
-    /**
-     * To initialize the service.
-     *
-     * @param TransportInterface $transport
-     */
-    public function __construct($transport)
+    private string $paypalUrl;
+
+    private string $jokerInUrlValue;
+
+    public function __construct(TransportInterface $transport, string $paypalUrl, string $jokerInUrlValue = '{token}')
     {
         $this->transport = $transport;
+        $this->paypalUrl = $paypalUrl;
+        $this->jokerInUrlValue = $jokerInUrlValue;
     }
 
-    /**
-     * Check the value of the currency attempted by the paypal api.
-     *
-     * @param string $currencyCode
-     *
-     * @return string
-     *
-     * @SuppressWarnings(PHPMD)
-     */
-    protected function getValidCurrencyCode($currencyCode)
+    private function getValidCurrencyCode(string $currencyCode): string
     {
         switch (\strtoupper($currencyCode)) {
             case 'AUD':
@@ -96,77 +83,57 @@ class ExpressCheckout implements ServiceInterface
             case 'TRY':
             case 'USD':
                 return \strtoupper($currencyCode);
-                break;
             default:
                 throw new \DomainException('Error, the payment action is not valid');
-                break;
         }
     }
 
-    /**
-     * Check the value of the payment action attempted by the paypal api.
-     *
-     * @param string $paymentAction
-     *
-     * @return string
-     */
-    protected function getValidPaymentAction($paymentAction)
+    private function getValidPaymentAction(string $paymentAction): string
     {
         switch (\strtoupper($paymentAction)) {
             case 'SALE':
             case 'AUTHORIZATION':
             case 'ORDER':
                 return \strtoupper($paymentAction);
-                break;
             default:
                 throw new \DomainException('Error, the payment action is not valid');
-                break;
         }
     }
 
     /**
-     * @param array|\ArrayAccess $result
-     *
-     * @return TransactionResultInterface
+     * @param array<string, mixed> $result
      */
-    protected function buildTransactionResultObject($result)
+    private function buildTransactionResultObject(array $result): TransactionResultInterface
     {
         return new TransactionResult($result);
     }
 
     /**
-     * Prepare a transaction via the Paypal API and get the token to identify
-     * the transaction and the consumer on the paypal service.
-     *
-     * @param PurchaseInterface $purchase
-     *
-     * @return TransactionResultInterface
-     *
      * @throws \RuntimeException if the purchase object is invalid
      * @throws \Exception
      */
-    public function generateToken(PurchaseInterface $purchase)
+    public function generateToken(PurchaseInterface $purchase): TransactionResultInterface
     {
         $user = $purchase->getConsumer();
-
-        if (!$user instanceof ConsumerInterface) {
-            throw new \RuntimeException('Error, invalid consumer');
-        }
 
         $requestParams = new ArgumentBag();
 
         // Construct the parameter string that describes the SetExpressCheckout API call in the shortcut implementation
         $requestParams->set('PAYMENTREQUEST_0_AMT', $purchase->getAmount());
+
         $requestParams->set(
             'PAYMENTREQUEST_0_PAYMENTACTION',
             $this->getValidPaymentAction($purchase->getPaymentAction())
         ); //Sale, Authorization, Order
+
         $requestParams->set('RETURNURL', $purchase->getReturnUrl());
         $requestParams->set('CANCELURL', $purchase->getCancelUrl());
+
         $requestParams->set(
             'PAYMENTREQUEST_0_CURRENCYCODE',
             $this->getValidCurrencyCode($purchase->getCurrencyCode())
         ); //EUR, USD, ...
+
         $requestParams->set('ADDROVERRIDE', 1);
 
         $name = $user->getConsumerName();
@@ -177,6 +144,7 @@ class ExpressCheckout implements ServiceInterface
         $address = $user->getShippingAddress();
         $zip = $user->getShippingZip();
         $city = $user->getShippingCity();
+
         if (!empty($address) && !empty($city) && !empty($zip)) {
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTREET', $address);
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTREET2', $user->getShippingExtraAddress());
@@ -190,12 +158,17 @@ class ExpressCheckout implements ServiceInterface
 
         $purchase->configureArgumentBag($requestParams);
 
-        $result = $this->buildTransactionResultObject($this->transport->call('SetExpressCheckout', $requestParams));
+        $result = $this->buildTransactionResultObject(
+            $this->transport->call('SetExpressCheckout', $requestParams)
+        );
 
         if (!$result->isSuccessful()) {
             $errors = $result->getErrors();
             $error = $errors[0];
-            throw new \Exception($error->getShortMessage().' : '.$error->getLongMessage());
+            throw new \RuntimeException(
+                $error->getShortMessage() . ' : ' . $error->getLongMessage(),
+                $error->getCode()
+            );
         }
 
         return $result;
@@ -204,46 +177,38 @@ class ExpressCheckout implements ServiceInterface
     /**
      * Prepare a transaction via the Paypal API and get the url to redirect
      * the user to paypal service to process of the payment.
-     *
-     * @param PurchaseInterface $purchase
-     *
-     * @return string
      */
-    public function prepareTransaction(PurchaseInterface $purchase)
-    {
+    public function prepareTransaction(
+        PurchaseInterface $purchase
+    ): string {
         return \str_replace(
-            '{token}',
+            $this->jokerInUrlValue,
             $this->generateToken($purchase)->getTokenValue(),
-            $this->transport->getPaypalUrl()
+            $this->paypalUrl
         );
     }
 
     /**
      * Get the transaction result from the Paypal API.
-     *
-     * @param string $token
-     *
-     * @return TransactionResultInterface
      */
-    public function getTransactionResult($token)
+    public function getTransactionResult(string $token): TransactionResultInterface
     {
         $arguments = new ArgumentBag();
         $arguments->set('TOKEN', $token);
 
-        return $this->buildTransactionResultObject($this->transport->call('GetExpressCheckoutDetails', $arguments));
+        return $this->buildTransactionResultObject(
+            $this->transport->call('GetExpressCheckoutDetails', $arguments)
+        );
     }
 
     /**
      * To confirm an active transaction on the Paypal API and unblock amounts.
-     *
-     * @param string            $token
-     * @param string            $payerId
-     * @param PurchaseInterface $purchase
-     *
-     * @return TransactionResultInterface
      */
-    public function confirmTransaction($token, $payerId, PurchaseInterface $purchase)
-    {
+    public function confirmTransaction(
+        string $token,
+        string $payerId,
+        PurchaseInterface $purchase
+    ): TransactionResultInterface {
         $arguments = new ArgumentBag();
         $arguments->set('TOKEN', $token);
         $arguments->set('PAYERID', $payerId);
@@ -251,6 +216,8 @@ class ExpressCheckout implements ServiceInterface
         $arguments->set('PAYMENTREQUEST_0_AMT', $purchase->getAmount());
         $arguments->set('PAYMENTREQUEST_0_CURRENCYCODE', $this->getValidCurrencyCode($purchase->getCurrencyCode()));
 
-        return $this->buildTransactionResultObject($this->transport->call('DoExpressCheckoutPayment', $arguments));
+        return $this->buildTransactionResultObject(
+            $this->transport->call('DoExpressCheckoutPayment', $arguments)
+        );
     }
 }

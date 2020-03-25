@@ -12,7 +12,7 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -20,82 +20,64 @@
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  *
- * @version     0.8.3
+ *
  */
 namespace Teknoo\tests\Paypal\Service;
 
+use PHPUnit\Framework\TestCase;
 use Teknoo\Paypal\Express\Service\Error;
 
 /**
  * Class ErrorTest.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
+ *
+ * @covers \Teknoo\Paypal\Express\Service\Error
  */
-class ErrorTest extends \PHPUnit\Framework\TestCase
+class ErrorTest extends TestCase
 {
-    /**
-     * Build the object to test.
-     *
-     * @param string|null $code
-     * @param string|null $shortMessage
-     * @param string|null $longMessage
-     * @param string|null $severity
-     *
-     * @return Error
-     */
-    protected function generateError($code = null, $shortMessage = null, $longMessage = null, $severity = null)
-    {
+    private function generateError(
+        int $code = 0,
+        string $shortMessage = '',
+        string $longMessage = '',
+        string $severity = ''
+    ): Error {
         return new Error($code, $shortMessage, $longMessage, $severity);
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\Error::getCode()
-     */
     public function testGetCode()
     {
-        self::assertNull($this->generateError()->getCode());
-        self::assertEquals('fooBar', $this->generateError('fooBar')->getCode());
+        self::assertEmpty($this->generateError()->getCode());
+        self::assertEquals(123, $this->generateError(123)->getCode());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\Error::getShortMessage()
-     */
     public function testGetShortMessage()
     {
-        self::assertNull($this->generateError()->getShortMessage());
-        self::assertEquals('fooBar', $this->generateError(null, 'fooBar')->getShortMessage());
+        self::assertEmpty($this->generateError()->getShortMessage());
+        self::assertEquals('fooBar', $this->generateError(123, 'fooBar')->getShortMessage());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\Error::getLongMessage()
-     */
     public function testGetLongMessage()
     {
-        self::assertNull($this->generateError()->getLongMessage());
-        self::assertEquals('fooBar', $this->generateError(null, null, 'fooBar')->getLongMessage());
+        self::assertEmpty($this->generateError()->getLongMessage());
+        self::assertEquals('fooBar', $this->generateError(123, '', 'fooBar')->getLongMessage());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\Error::getSeverity()
-     */
     public function testGetSeverity()
     {
-        self::assertNull($this->generateError()->getSeverity());
-        self::assertEquals('fooBar', $this->generateError(null, null, null, 'fooBar')->getSeverity());
+        self::assertEmpty($this->generateError()->getSeverity());
+        self::assertEquals('fooBar', $this->generateError(123, '', '', 'fooBar')->getSeverity());
     }
 
-    /**
-     * @covers \Teknoo\Paypal\Express\Service\Error::__construct()
-     */
     public function testConstruct()
     {
-        self::assertInstanceOf(Error::class, $this->generateError('code', 'sort', 'long', 'fooBar'));
+        self::assertInstanceOf(Error::class, $this->generateError(123, 'sort', 'long', 'fooBar'));
     }
 }

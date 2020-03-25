@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,24 +12,22 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
+
+declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
 /**
- * Class Error
  * To manipulate errors from paypal.
  *
- *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -38,43 +36,15 @@ namespace Teknoo\Paypal\Express\Service;
  */
 class Error implements ErrorInterface
 {
-    /**
-     * Code of the error.
-     *
-     * @var string
-     */
-    protected $code;
+    private int $code;
 
-    /**
-     * Short message of the error.
-     *
-     * @var string
-     */
-    protected $shortMessage;
+    private string $shortMessage;
 
-    /**
-     * Long message of the error.
-     *
-     * @var string
-     */
-    protected $longMessage;
+    private string $longMessage;
 
-    /**
-     * Severity of the error.
-     *
-     * @var string
-     */
-    protected $severity;
+    private string $severity;
 
-    /**
-     * Initialize object error.
-     *
-     * @param string $code
-     * @param string $shortMessage
-     * @param string $longMessage
-     * @param string $severity
-     */
-    public function __construct($code, $shortMessage, $longMessage, $severity)
+    public function __construct(int $code, string $shortMessage, string $longMessage, string $severity)
     {
         $this->code = $code;
         $this->shortMessage = $shortMessage;
@@ -82,42 +52,22 @@ class Error implements ErrorInterface
         $this->severity = $severity;
     }
 
-    /**
-     * Get the code of the error.
-     *
-     * @return string
-     */
-    public function getCode()
+    public function getCode(): int
     {
         return $this->code;
     }
 
-    /**
-     * Return the short message of the error.
-     *
-     * @return string
-     */
-    public function getShortMessage()
+    public function getShortMessage(): string
     {
         return $this->shortMessage;
     }
 
-    /**
-     * Return the long message of the error.
-     *
-     * @return string
-     */
-    public function getLongMessage()
+    public function getLongMessage(): string
     {
         return $this->longMessage;
     }
 
-    /**
-     * Return the severity of the error.
-     *
-     * @return string
-     */
-    public function getSeverity()
+    public function getSeverity(): string
     {
         return $this->severity;
     }

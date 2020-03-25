@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Paypal Express.
  *
  * LICENSE
@@ -12,24 +12,23 @@
  * to richarddeloge@gmail.com so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
- *
- * @version     0.8.3
  */
+
+declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
 /**
- * Interface ErrorInterface
  * Interface to define errors returned by paypal.
  *
  *
- * @copyright   Copyright (c) 2009-2016 Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) 2009-2020 Richard Déloge (richarddeloge@gmail.com)
  *
  * @link        http://teknoo.software/paypal Project website
  *
@@ -38,31 +37,11 @@ namespace Teknoo\Paypal\Express\Service;
  */
 interface ErrorInterface
 {
-    /**
-     * Get the code of the error.
-     *
-     * @return string
-     */
-    public function getCode();
+    public function getCode(): int;
 
-    /**
-     * Return the short message of the error.
-     *
-     * @return string
-     */
-    public function getShortMessage();
+    public function getShortMessage(): string;
 
-    /**
-     * Return the long message of the error.
-     *
-     * @return string
-     */
-    public function getLongMessage();
+    public function getLongMessage(): string;
 
-    /**
-     * Return the severity of the error.
-     *
-     * @return string
-     */
-    public function getSeverity();
+    public function getSeverity(): string;
 }
