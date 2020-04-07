@@ -1,5 +1,10 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[2.0.0] - 2020-04-07
+###Updated
+- Switch to PSR HTTP Client instead of Curl implementation
+- Last major version, this library is deprecated, please consider the official [Paypal PHP SDK](https://paypal.github.io/PayPal-PHP-SDK/).
+
 ##[2.0.0-beta1] - 2020-04-06
 ###Updated
 - Switch to PSR HTTP Client instead of Curl implementation
