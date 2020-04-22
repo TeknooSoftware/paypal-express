@@ -5,6 +5,57 @@ This library allows you to integrate quickly and easily the service "Paypal Expr
 
 This library is deprecated, please consider the official [Paypal PHP SDK](https://paypal.github.io/PayPal-PHP-SDK/).
 
+Quick Example
+-------------
+    <?php
+    
+    declare(strict_types=1);
+    
+    require_once 'vendor/autoload.php';
+    
+    use Http\Discovery\HttpClientDiscovery;
+    use Http\Discovery\Psr17FactoryDiscovery;
+    use Teknoo\Paypal\Express\Service\ExpressCheckout;
+    use Teknoo\Paypal\Express\Transport\PsrTransport;
+    
+    //Initialize Paypal library
+    
+    //Transport object to communicate with curl
+    $transport = new PsrTransport(
+        HttpClientDiscovery::find(),
+        Psr17FactoryDiscovery::findUrlFactory(),
+        Psr17FactoryDiscovery::findRequestFactory(),
+        Psr17FactoryDiscovery::findStreamFactory(),
+        'https://api-3t.sandbox.paypal.com/nvp',
+        '93',
+        'user id',
+        'password',
+        'paypal signature',
+        'PP-ECWizard'
+    );
+    
+    //Paypal service
+    $service = new ExpressCheckout(
+        $transport,
+        'https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token={token}'
+    );
+    
+    //Prepare demo purchase
+    $purchase = new class implementing Teknoo\Paypal\Express\Entity\PurchaseInterface {
+    // ...
+    };
+    
+    //In your html, purchase is an custom object implementing the interface PurchaseInterface
+    <a href="<?php echo $service->prepareTransaction($purchase); ?>">Process to checkout to paypal</a>
+    
+    //On the result page
+    $result = $service->getTransactionResult($_GET['token']);
+    if ($result->isSuccessful()) {
+        /* ... */
+    } else {
+        $errors = $result->getErrors();
+    }
+
 Installation & Requirements
 ---------------------------
 To install this library with composer, run this command :
