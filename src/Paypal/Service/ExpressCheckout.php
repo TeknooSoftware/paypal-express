@@ -150,8 +150,8 @@ class ExpressCheckout implements ServiceInterface
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTREET2', $user->getShippingExtraAddress());
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOZIP', $zip);
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOCITY', $city);
-            $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTATE', $user->getShippingState());
-            $requestParams->set('PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE', $user->getShippingCountryCode());
+            $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTATE', (string) $user->getShippingState());
+            $requestParams->set('PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE', (string) $user->getShippingCountryCode());
         }
 
         $requestParams->set('PAYMENTREQUEST_0_SHIPTOPHONENUM', $user->getPhone());

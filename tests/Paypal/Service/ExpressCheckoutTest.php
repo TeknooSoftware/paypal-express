@@ -138,6 +138,14 @@ class ExpressCheckoutTest extends TestCase
             ->method('getShippingCity')
             ->willReturn('Caen');
 
+        $consumer->expects(self::any())
+            ->method('getShippingCountryCode')
+            ->willReturn('FR');
+
+        $consumer->expects(self::any())
+            ->method('getShippingState')
+            ->willReturn('');
+
         return $consumer;
     }
 

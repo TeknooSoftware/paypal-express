@@ -1,5 +1,9 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[2.0.1] - 2020-06-17
+###Fix
+- fixed shipping country and state #1 (Thanks to Ekliptor)
+
 ##[2.0.0] - 2020-04-07
 ###Updated
 - Switch to PSR HTTP Client instead of Curl implementation

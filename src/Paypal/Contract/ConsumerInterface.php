@@ -48,5 +48,9 @@ interface ConsumerInterface
 
     public function getShippingCity(): string;
 
+    public function getShippingState(): ?string;
+
+    public function getShippingCountryCode(): ?string;
+
     public function getPhone(): string;
 }
