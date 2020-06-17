@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
+use Teknoo\Paypal\Express\Contract\ConsumerWithCountryInterface;
 use Teknoo\Paypal\Express\Contract\PurchaseInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\TransportInterface;
@@ -145,13 +146,20 @@ class ExpressCheckout implements ServiceInterface
         $zip = $user->getShippingZip();
         $city = $user->getShippingCity();
 
+        $state = '';
+        $countryCode = '';
+        if ($user instanceof ConsumerWithCountryInterface) {
+            $state = (string)$user->getShippingState();
+            $countryCode = (string)$user->getShippingCountryCode();
+        }
+
         if (!empty($address) && !empty($city) && !empty($zip)) {
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTREET', $address);
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTREET2', $user->getShippingExtraAddress());
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOZIP', $zip);
             $requestParams->set('PAYMENTREQUEST_0_SHIPTOCITY', $city);
-            $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTATE', (string) $user->getShippingState());
-            $requestParams->set('PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE', (string) $user->getShippingCountryCode());
+            $requestParams->set('PAYMENTREQUEST_0_SHIPTOSTATE', $state);
+            $requestParams->set('PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE', $countryCode);
         }
 
         $requestParams->set('PAYMENTREQUEST_0_SHIPTOPHONENUM', $user->getPhone());

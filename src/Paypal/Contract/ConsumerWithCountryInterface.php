@@ -36,17 +36,9 @@ namespace Teknoo\Paypal\Express\Contract;
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-interface ConsumerInterface
+interface ConsumerWithCountryInterface extends ConsumerInterface
 {
-    public function getConsumerName(): string;
+    public function getShippingState(): ?string;
 
-    public function getShippingAddress(): string;
-
-    public function getShippingExtraAddress(): string;
-
-    public function getShippingZip(): string;
-
-    public function getShippingCity(): string;
-
-    public function getPhone(): string;
+    public function getShippingCountryCode(): ?string;
 }

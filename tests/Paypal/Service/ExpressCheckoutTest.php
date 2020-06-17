@@ -27,6 +27,7 @@ namespace Teknoo\tests\Paypal\Service;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Teknoo\Paypal\Express\Contract\ConsumerInterface;
+use Teknoo\Paypal\Express\Contract\ConsumerWithCountryInterface;
 use Teknoo\Paypal\Express\Contract\PurchaseInterface;
 use Teknoo\Paypal\Express\Service\ExpressCheckout;
 use Teknoo\Paypal\Express\Service\TransactionResultInterface;
@@ -65,12 +66,12 @@ class ExpressCheckoutTest extends TestCase
     }
 
     /**
-     * @return MockObject|ConsumerInterface
+     * @return MockObject|ConsumerWithCountryInterface
      */
-    private function getConsumerMock(): ConsumerInterface
+    private function getConsumerMock(): ConsumerWithCountryInterface
     {
         if (!$this->consumer instanceof MockObject) {
-            $this->consumer = $this->createMock(ConsumerInterface::class);
+            $this->consumer = $this->createMock(ConsumerWithCountryInterface::class);
         }
 
         return $this->consumer;

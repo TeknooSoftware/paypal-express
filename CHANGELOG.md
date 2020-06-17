@@ -1,5 +1,9 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[2.0.2] - 2020-06-17
+###Update
+- Add ConsumerWithCountryInterface to allow pass country and state to avoid BC break.
+
 ##[2.0.1] - 2020-06-17
 ###Fix
 - fixed shipping country and state #1 (Thanks to Ekliptor)
