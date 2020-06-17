@@ -22,7 +22,7 @@
  */
 namespace Acme\demo;
 
-use Teknoo\Paypal\Express\Contract\ConsumerInterface;
+use Teknoo\Paypal\Express\Contract\ConsumerWithCountryInterface;
 
 /**
  * Class Consumer
@@ -37,7 +37,7 @@ use Teknoo\Paypal\Express\Contract\ConsumerInterface;
  *
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
-class Consumer implements ConsumerInterface
+class Consumer implements ConsumerWithCountryInterface
 {
     public function getConsumerName(): string
     {
@@ -71,7 +71,7 @@ class Consumer implements ConsumerInterface
 
     public function getShippingCountryCode(): string
     {
-        return 'France';
+        return 'FR';
     }
 
     public function getPhone(): string
