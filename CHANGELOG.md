@@ -1,5 +1,10 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[2.0.3] - 2020-06-17
+###Update
+- Set default country in ExpressCheckout, to use for simple consumer, configurable in constructor
+  To avoid BC Break, it's default value is "FR".
+
 ##[2.0.2] - 2020-06-17
 ###Update
 - Add ConsumerWithCountryInterface to allow pass country and state to avoid BC break.

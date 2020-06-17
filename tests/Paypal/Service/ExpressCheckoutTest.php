@@ -66,9 +66,21 @@ class ExpressCheckoutTest extends TestCase
     }
 
     /**
+     * @return MockObject|ConsumerInterface
+     */
+    private function getConsumerMock(): ConsumerInterface
+    {
+        if (!$this->consumer instanceof MockObject) {
+            $this->consumer = $this->createMock(ConsumerInterface::class);
+        }
+
+        return $this->consumer;
+    }
+
+    /**
      * @return MockObject|ConsumerWithCountryInterface
      */
-    private function getConsumerMock(): ConsumerWithCountryInterface
+    private function getConsumerWithCountryMock(): ConsumerWithCountryInterface
     {
         if (!$this->consumer instanceof MockObject) {
             $this->consumer = $this->createMock(ConsumerWithCountryInterface::class);
@@ -98,12 +110,13 @@ class ExpressCheckoutTest extends TestCase
         );
     }
 
-    /**
-     * @return MockObject|ConsumerInterface
-     */
-    private function setIdentityToConsumer(): ConsumerInterface
+    private function setIdentityToConsumer(bool $withCountry = false): ConsumerInterface
     {
-        $consumer = $this->getConsumerMock();
+        if (true === $withCountry) {
+            $consumer = $this->getConsumerWithCountryMock();
+        } else {
+            $consumer = $this->getConsumerMock();
+        }
 
         $this->getPurchaseMock()->expects(self::any())
             ->method('getConsumer')
@@ -120,12 +133,9 @@ class ExpressCheckoutTest extends TestCase
         return $consumer;
     }
 
-    /**
-     * @return MockObject|ConsumerInterface
-     */
-    private function setAddressToConsumer(): ConsumerInterface
+    private function setAddressToConsumer(bool $withCountry = false): ConsumerInterface
     {
-        $consumer = $this->setIdentityToConsumer();
+        $consumer = $this->setIdentityToConsumer($withCountry);
 
         $consumer->expects(self::any())
             ->method('getShippingAddress')
@@ -139,13 +149,15 @@ class ExpressCheckoutTest extends TestCase
             ->method('getShippingCity')
             ->willReturn('Caen');
 
-        $consumer->expects(self::any())
-            ->method('getShippingCountryCode')
-            ->willReturn('FR');
+        if (true === $withCountry) {
+            $consumer->expects(self::any())
+                ->method('getShippingCountryCode')
+                ->willReturn('US');
 
-        $consumer->expects(self::any())
-            ->method('getShippingState')
-            ->willReturn('');
+            $consumer->expects(self::any())
+                ->method('getShippingState')
+                ->willReturn('Washington');
+        }
 
         return $consumer;
     }
@@ -266,6 +278,58 @@ class ExpressCheckoutTest extends TestCase
             );
 
         $this->setAddressToConsumer();
+
+        $purchase = $this->setPurchase();
+        $purchase->expects(self::once())
+            ->method('configureArgumentBag')
+            ->with($this->callback(function ($arg) {
+                return $arg instanceof ArgumentBag;
+            }))
+            ->willReturnSelf();
+
+        $result = $this->buildService()
+            ->generateToken($purchase);
+
+        self::assertInstanceOf(TransactionResultInterface::class, $result);
+        self::assertTrue($result->isSuccessful());
+        self::assertEquals('tokenFake', $result->getTokenValue());
+    }
+
+    public function testGenerateTokenAddressWithCountry()
+    {
+        $exceptedBody = array(
+            'PAYMENTREQUEST_0_AMT' => 150.12,
+            'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
+            'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
+            'ADDROVERRIDE' => 1,
+            'PAYMENTREQUEST_0_SHIPTONAME' => 'Roger Rabbit',
+            'PAYMENTREQUEST_0_SHIPTOSTREET' => 'adr1',
+            'PAYMENTREQUEST_0_SHIPTOZIP' => 14000,
+            'PAYMENTREQUEST_0_SHIPTOCITY' => 'Caen',
+            'PAYMENTREQUEST_0_SHIPTOSTATE' => 'Washington',
+            'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => 'US',
+            'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
+            'RETURNURL' => 'http://teknoo.software',
+            'CANCELURL' => 'http://teknoo.software/cancel',
+            'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
+        );
+
+        $this->getTransportMock()
+            ->expects(self::once())
+            ->method('call')
+            ->willReturnCallback(
+                function ($name, $args) use (&$exceptedBody) {
+                    self::assertEquals('SetExpressCheckout', $name);
+                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
+
+                    return array(
+                        'ACK' => 'SUCCESS',
+                        'TOKEN' => 'tokenFake',
+                    );
+                }
+            );
+
+        $this->setAddressToConsumer(true);
 
         $purchase = $this->setPurchase();
         $purchase->expects(self::once())

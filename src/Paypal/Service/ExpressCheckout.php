@@ -48,11 +48,18 @@ class ExpressCheckout implements ServiceInterface
 
     private string $jokerInUrlValue;
 
-    public function __construct(TransportInterface $transport, string $paypalUrl, string $jokerInUrlValue = '{token}')
-    {
+    private string $defaultCountry;
+
+    public function __construct(
+        TransportInterface $transport,
+        string $paypalUrl,
+        string $jokerInUrlValue = '{token}',
+        string $defaultCountry = 'FR'
+    ) {
         $this->transport = $transport;
         $this->paypalUrl = $paypalUrl;
         $this->jokerInUrlValue = $jokerInUrlValue;
+        $this->defaultCountry = $defaultCountry;
     }
 
     private function getValidCurrencyCode(string $currencyCode): string
@@ -147,7 +154,7 @@ class ExpressCheckout implements ServiceInterface
         $city = $user->getShippingCity();
 
         $state = '';
-        $countryCode = '';
+        $countryCode = $this->defaultCountry;
         if ($user instanceof ConsumerWithCountryInterface) {
             $state = (string)$user->getShippingState();
             $countryCode = (string)$user->getShippingCountryCode();
