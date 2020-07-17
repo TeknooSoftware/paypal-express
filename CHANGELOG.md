@@ -1,5 +1,10 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[2.0.4] - 2020-07-17
+###Stable Release
+###Change
+- Add travis run also with lowest dependencies.
+
 ##[2.0.3] - 2020-06-17
 ###Update
 - Set default country in ExpressCheckout, to use for simple consumer, configurable in constructor
