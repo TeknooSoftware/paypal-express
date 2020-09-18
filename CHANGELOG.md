@@ -1,5 +1,10 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[2.0.6] - 2020-09-18
+###Stable Release
+- Update QA and CI tools
+- fix minimum requirement about psr/http-factory and psr/http-message
+
 ##[2.0.5] - 2020-08-25
 ###Stable Release
 ###Update
