@@ -1,5 +1,9 @@
 #Teknoo Software - Paypal express library - Change Log
 
+##[2.0.7] - 2020-10-12
+###Stable Release
+- Prepare library to support also PHP8.
+
 ##[2.0.6] - 2020-09-18
 ###Stable Release
 - Update QA and CI tools
