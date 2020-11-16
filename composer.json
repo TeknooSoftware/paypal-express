@@ -16,6 +16,12 @@
         "issues": "https://github.com/TeknooSoftware/paypal-express/issues",
         "source": "https://github.com/TeknooSoftware/paypal-express"
     },
+    "funding": [
+        {
+            "type": "patreon",
+            "url": "https://www.patreon.com/teknoo_software"
+        }
+    ],
     "require":{
         "php": "~7.4||~8.0",
         "psr/http-message":"^1.0.1",
