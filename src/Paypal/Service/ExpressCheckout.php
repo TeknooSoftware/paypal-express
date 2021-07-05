@@ -191,7 +191,7 @@ class ExpressCheckout implements ServiceInterface
         return $result;
     }
 
-    /**
+    /*
      * Prepare a transaction via the Paypal API and get the url to redirect
      * the user to paypal service to process of the payment.
      */
@@ -205,7 +205,7 @@ class ExpressCheckout implements ServiceInterface
         );
     }
 
-    /**
+    /*
      * Get the transaction result from the Paypal API.
      */
     public function getTransactionResult(string $token): TransactionResultInterface
@@ -218,7 +218,7 @@ class ExpressCheckout implements ServiceInterface
         );
     }
 
-    /**
+    /*
      * To confirm an active transaction on the Paypal API and unblock amounts.
      */
     public function confirmTransaction(

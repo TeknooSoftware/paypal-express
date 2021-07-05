@@ -49,12 +49,12 @@ interface PurchaseItemInterface
 
     public function getReference(): string;
 
-    /**
+    /*
      * Get the url about this item in the purchase.
      */
     public function getRequestUrl(): string;
 
-    /**
+    /*
      * Get the item category (Digital or Physical).
      */
     public function getItemCategory(): string;

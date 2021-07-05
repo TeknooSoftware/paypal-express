@@ -45,22 +45,22 @@ interface PurchaseInterface
 {
     public function getAmount(): float;
 
-    /**
+    /*
      * Get the payment action to use in the transaction (sale, ..).
      */
     public function getPaymentAction(): string;
 
-    /**
+    /*
      * Get the url to redirect the consumer after the payment operation.
      */
     public function getReturnUrl(): string;
 
-    /**
+    /*
      * Get the url to redirect the consumer when it cancel the transaction in paypal.
      */
     public function getCancelUrl(): string;
 
-    /**
+    /*
      * Get the currency used for this transaction.
      */
     public function getCurrencyCode(): string;

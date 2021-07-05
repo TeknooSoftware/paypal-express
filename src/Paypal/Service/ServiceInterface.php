@@ -50,18 +50,18 @@ interface ServiceInterface
      */
     public function generateToken(PurchaseInterface $purchase): TransactionResultInterface;
 
-    /**
+    /*
      * Prepare a transaction via the Paypal API and get the url to redirect
      * the user to paypal service to process of the payment.
      */
     public function prepareTransaction(PurchaseInterface $purchase): string;
 
-    /**
+    /*
      * Get the transaction result from the Paypal API.
      */
     public function getTransactionResult(string $token): TransactionResultInterface;
 
-    /**
+    /*
      * To confirm an active transaction on the Paypal API and unblock amounts.
      */
     public function confirmTransaction(

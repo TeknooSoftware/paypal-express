@@ -41,7 +41,7 @@ use Teknoo\Paypal\Express\Contract\PurchaseItemInterface;
  */
 interface ArgumentBagInterface
 {
-    /**
+    /*
      * Reset this bag.
      */
     public function reset(): ArgumentBagInterface;

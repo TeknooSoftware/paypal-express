@@ -39,42 +39,42 @@ namespace Teknoo\Paypal\Express\Service;
  */
 interface TransactionResultInterface
 {
-    /**
+    /*
      * Return the raw value of the ACK field from the paypal API for this transaction.
      */
     public function getAckValue(): string;
 
-    /**
+    /*
      * Return a boolean to test if the operation via the api is successful.
      */
     public function isSuccessful(): bool;
 
-    /**
+    /*
      * Return the raw value of the Token field from the paypal API for this transaction.
      */
     public function getTokenValue(): string;
 
-    /**
+    /*
      * Return the raw value of the PayerId field from the paypal API for this transaction.
      */
     public function getPayerIdValue(): string;
 
-    /**
+    /*
      * Return the raw value of the Timestamp field from the paypal API for this transaction.
      */
     public function getTimestampValue(): string;
 
-    /**
+    /*
      * Return the raw value of the CorrelationId field from the paypal API for this transaction.
      */
     public function getCorrelationIdValue(): string;
 
-    /**
+    /*
      * Return the raw value of the Version field from the paypal API for this transaction.
      */
     public function getVersionValue(): string;
 
-    /**
+    /*
      * Return the raw value of the Build field from the paypal API for this transaction.
      */
     public function getBuildValue(): string;
