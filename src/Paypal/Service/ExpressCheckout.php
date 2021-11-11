@@ -111,7 +111,7 @@ class ExpressCheckout implements ServiceInterface
     }
 
     /**
-     * @param array<string, mixed> $result
+     * @param array<string, string> $result
      */
     private function buildTransactionResultObject(array $result): TransactionResultInterface
     {

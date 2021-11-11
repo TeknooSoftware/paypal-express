@@ -39,7 +39,7 @@ namespace Teknoo\Paypal\Express\Transport;
 interface TransportInterface
 {
     /**
-     * @return array<string, mixed>
+     * @return array<string, string>
      */
     public function call(string $methodName, ArgumentBagInterface $arguments): array;
 }

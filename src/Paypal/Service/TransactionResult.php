@@ -38,12 +38,12 @@ namespace Teknoo\Paypal\Express\Service;
 class TransactionResult implements TransactionResultInterface
 {
     /**
-     * @var array<string, mixed>
+     * @var array<string, string>
      */
     private array $values;
 
     /**
-     * @param array<string, mixed> $values
+     * @param array<string, string> $values
      */
     public function __construct(array $values)
     {
