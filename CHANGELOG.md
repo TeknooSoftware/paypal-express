@@ -1,5 +1,9 @@
 # Teknoo Software - Paypal express library - Change Log
 
+## [2.0.13] - 2022-08-06
+### Stable Release
+- Update composer.json
+
 ## [2.0.12] - 2021-12-12
 ### Stable Release
 - Remove unused QA tool

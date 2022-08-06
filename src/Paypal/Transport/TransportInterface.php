@@ -15,7 +15,7 @@
  * @copyright   Copyright (c) EIRL Richard Déloge (richarddeloge@gmail.com)
  * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software)
  *
- * @link        http://teknoo.software/paypal Project website
+ * @link        http://teknoo.software/paypal-express Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
@@ -31,7 +31,7 @@ namespace Teknoo\Paypal\Express\Transport;
  * @copyright   Copyright (c) EIRL Richard Déloge (richarddeloge@gmail.com)
  * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software)
  *
- * @link        http://teknoo.software/paypal Project website
+ * @link        http://teknoo.software/paypal-express Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>

@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Library to perform quickly sales with the service Paypal Express Checkout",
     "keywords": ["paypal","express"],
-    "homepage": "http://teknoo.software/paypal",
+    "homepage": "http://teknoo.software/paypal-express",
     "license": ["MIT"],
     "authors": [
         {
