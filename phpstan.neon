@@ -1,0 +1,5 @@
+parameters:
+    ignoreErrors:
+        -
+            message: '#PsrTransport::call#'
+            path: src/Paypal/Transport/PsrTransport.php

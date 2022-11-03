@@ -30,6 +30,9 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
+use function parse_str;
+use function urldecode;
+
 /**
  * @copyright   Copyright (c) EIRL Richard Déloge (richarddeloge@gmail.com)
  * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software)
@@ -107,7 +110,7 @@ class PsrTransport implements TransportInterface
 
         //converting request response to an Associative Array
         $resultArray = array();
-        \parse_str(\urldecode((string) $response->getBody()), $resultArray);
+        parse_str(urldecode((string) $response->getBody()), $resultArray);
 
         return $resultArray;
     }

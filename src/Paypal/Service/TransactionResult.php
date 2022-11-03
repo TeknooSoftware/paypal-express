@@ -25,6 +25,8 @@ declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
+use RuntimeException;
+
 /**
  * Class to manipulate result.
  *
@@ -56,7 +58,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['ACK'];
         }
 
-        throw new \RuntimeException('Error, the ACK value is not available in the response');
+        throw new RuntimeException('Error, the ACK value is not available in the response');
     }
 
     public function isSuccessful(): bool
@@ -71,7 +73,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['TOKEN'];
         }
 
-        throw new \RuntimeException('Error, the TOKEN value is not available in the response');
+        throw new RuntimeException('Error, the TOKEN value is not available in the response');
     }
 
     public function getPayerIdValue(): string
@@ -80,7 +82,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['PAYERID'];
         }
 
-        throw new \RuntimeException('Error, the PAYERID value is not available in the response');
+        throw new RuntimeException('Error, the PAYERID value is not available in the response');
     }
 
     public function getTimestampValue(): string
@@ -89,7 +91,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['TIMESTAMP'];
         }
 
-        throw new \RuntimeException('Error, the TIMESTAMP value is not available in the response');
+        throw new RuntimeException('Error, the TIMESTAMP value is not available in the response');
     }
 
     public function getCorrelationIdValue(): string
@@ -98,7 +100,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['CORRELATIONID'];
         }
 
-        throw new \RuntimeException('Error, the CORRELATIONID value is not available in the response');
+        throw new RuntimeException('Error, the CORRELATIONID value is not available in the response');
     }
 
     public function getVersionValue(): string
@@ -107,7 +109,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['VERSION'];
         }
 
-        throw new \RuntimeException('Error, the VERSION value is not available in the response');
+        throw new RuntimeException('Error, the VERSION value is not available in the response');
     }
 
     public function getBuildValue(): string
@@ -116,7 +118,7 @@ class TransactionResult implements TransactionResultInterface
             return $this->values['BUILD'];
         }
 
-        throw new \RuntimeException('Error, the BUILD value is not available in the response');
+        throw new RuntimeException('Error, the BUILD value is not available in the response');
     }
 
     /**
