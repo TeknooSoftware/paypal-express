@@ -23,7 +23,10 @@
  *
  *
  */
-namespace Teknoo\tests\Paypal\Transport;
+
+declare(strict_types=1);
+
+namespace Teknoo\Tests\Paypal\Transport;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

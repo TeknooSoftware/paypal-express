@@ -23,7 +23,10 @@
  *
  *
  */
-namespace Teknoo\tests\Paypal\Transport;
+
+declare(strict_types=1);
+
+namespace Teknoo\Tests\Paypal\Transport;
 
 use PHPUnit\Framework\TestCase;
 use Teknoo\Paypal\Express\Contract\PurchaseItemInterface;

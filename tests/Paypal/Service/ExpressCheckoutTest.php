@@ -23,7 +23,10 @@
  *
  *
  */
-namespace Teknoo\tests\Paypal\Service;
+
+declare(strict_types=1);
+
+namespace Teknoo\Tests\Paypal\Service;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;

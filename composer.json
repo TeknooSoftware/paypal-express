@@ -47,7 +47,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Teknoo\\Paypal\\Express\\": ["src/Paypal/"],
+            "Teknoo\\Paypal\\Express\\": ["src/Paypal/"]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Teknoo\\Tests\\Paypal\\": ["tests/Paypal"]
         }
     },
