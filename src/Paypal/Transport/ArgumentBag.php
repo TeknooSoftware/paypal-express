@@ -41,19 +41,14 @@ use Teknoo\Paypal\Express\Contract\PurchaseItemInterface;
  */
 class ArgumentBag implements ArgumentBagInterface
 {
-    /**
-     * @var array<string, mixed>
-     */
-    private array $parameters = [];
-
     private int $purchaseItemCounter = 0;
 
     /**
      * @param array<string, mixed> $parameters
      */
-    public function __construct(array $parameters = [])
-    {
-        $this->parameters = $parameters;
+    public function __construct(
+        private array $parameters = []
+    ) {
     }
 
     public function reset(): ArgumentBagInterface

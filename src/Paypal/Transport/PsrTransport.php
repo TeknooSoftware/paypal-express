@@ -30,6 +30,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
+use function http_build_query;
 use function parse_str;
 use function urldecode;
 
@@ -44,48 +45,18 @@ use function urldecode;
  */
 class PsrTransport implements TransportInterface
 {
-    private ClientInterface $client;
-
-    private UriFactoryInterface $uriFactory;
-
-    private RequestFactoryInterface $requestFactory;
-
-    private StreamFactoryInterface $streamFactory;
-
-    private string $apiEndPoint;
-
-    private string $paypalVersion;
-
-    private string $password;
-
-    private string $user;
-
-    private string $signature;
-
-    private string $bNCode;
-
     public function __construct(
-        ClientInterface $client,
-        UriFactoryInterface $uriFactory,
-        RequestFactoryInterface $requestFactory,
-        StreamFactoryInterface $streamFactory,
-        string $apiEndPoint,
-        string $paypalVersion,
-        string $user,
-        string $password,
-        string $signature,
-        string $bNCode
+        private readonly ClientInterface $client,
+        private readonly UriFactoryInterface $uriFactory,
+        private readonly RequestFactoryInterface $requestFactory,
+        private readonly StreamFactoryInterface $streamFactory,
+        private readonly string $apiEndPoint,
+        private readonly string $paypalVersion,
+        private readonly string $user,
+        private readonly string $password,
+        private readonly string $signature,
+        private readonly string $bNCode,
     ) {
-        $this->client = $client;
-        $this->uriFactory = $uriFactory;
-        $this->requestFactory = $requestFactory;
-        $this->streamFactory = $streamFactory;
-        $this->apiEndPoint = $apiEndPoint;
-        $this->paypalVersion = $paypalVersion;
-        $this->password = $password;
-        $this->user = $user;
-        $this->signature = $signature;
-        $this->bNCode = $bNCode;
     }
 
     public function call(string $methodName, ArgumentBagInterface $arguments): array
@@ -102,14 +73,14 @@ class PsrTransport implements TransportInterface
         $postFields['BUTTONSOURCE'] = $this->bNCode;
 
         //setting the nvpreq as POST FIELD to curl
-        $stream = $this->streamFactory->createStream(\http_build_query($postFields));
+        $stream = $this->streamFactory->createStream(http_build_query($postFields));
         $request = $request->withBody($stream);
 
         //getting response from server
         $response = $this->client->sendRequest($request);
 
         //converting request response to an Associative Array
-        $resultArray = array();
+        $resultArray = [];
         parse_str(urldecode((string) $response->getBody()), $resultArray);
 
         return $resultArray;

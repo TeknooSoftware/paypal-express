@@ -25,10 +25,15 @@ declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
+use DomainException;
+use RuntimeException;
 use Teknoo\Paypal\Express\Contract\ConsumerWithCountryInterface;
 use Teknoo\Paypal\Express\Contract\PurchaseInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\TransportInterface;
+
+use function str_replace;
+use function strtoupper;
 
 /**
  * Implementation of ServiceInterface to do transaction with paypal api.
@@ -44,70 +49,52 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
  */
 class ExpressCheckout implements ServiceInterface
 {
-    private TransportInterface $transport;
-
-    private string $paypalUrl;
-
-    private string $jokerInUrlValue;
-
-    private string $defaultCountry;
-
     public function __construct(
-        TransportInterface $transport,
-        string $paypalUrl,
-        string $jokerInUrlValue = '{token}',
-        string $defaultCountry = 'FR'
+        private readonly TransportInterface $transport,
+        private readonly string $paypalUrl,
+        private readonly string $jokerInUrlValue = '{token}',
+        private readonly string $defaultCountry = 'FR'
     ) {
-        $this->transport = $transport;
-        $this->paypalUrl = $paypalUrl;
-        $this->jokerInUrlValue = $jokerInUrlValue;
-        $this->defaultCountry = $defaultCountry;
     }
 
     private function getValidCurrencyCode(string $currencyCode): string
     {
-        switch (\strtoupper($currencyCode)) {
-            case 'AUD':
-            case 'BRL':
-            case 'CAD':
-            case 'CZK':
-            case 'DKK':
-            case 'EUR':
-            case 'HKD':
-            case 'HUF':
-            case 'ILS':
-            case 'JPY':
-            case 'MYR':
-            case 'MXN':
-            case 'NOK':
-            case 'NZD':
-            case 'PHP':
-            case 'PLN':
-            case 'GBP':
-            case 'RUB':
-            case 'SGD':
-            case 'SEK':
-            case 'CHF':
-            case 'TWD':
-            case 'THB':
-            case 'TRY':
-            case 'USD':
-                return \strtoupper($currencyCode);
-            default:
-                throw new \DomainException('Error, the payment action is not valid');
-        }
+        return match (strtoupper($currencyCode)) {
+            'AUD',
+            'BRL',
+            'CAD',
+            'CZK',
+            'DKK',
+            'EUR',
+            'HKD',
+            'HUF',
+            'ILS',
+            'JPY',
+            'MYR',
+            'MXN',
+            'NOK',
+            'NZD',
+            'PHP',
+            'PLN',
+            'GBP',
+            'RUB',
+            'SGD',
+            'SEK',
+            'CHF',
+            'TWD',
+            'THB',
+            'TRY',
+            'USD' => strtoupper($currencyCode),
+            default => throw new DomainException('Error, the payment action is not valid'),
+        };
     }
 
     private function getValidPaymentAction(string $paymentAction): string
     {
-        switch (\strtoupper($paymentAction)) {
-            case 'SALE':
-            case 'AUTHORIZATION':
-            case 'ORDER':
-                return \strtoupper($paymentAction);
-            default:
-                throw new \DomainException('Error, the payment action is not valid');
-        }
+        return match (strtoupper($paymentAction)) {
+            'SALE', 'AUTHORIZATION', 'ORDER' => strtoupper($paymentAction),
+            default => throw new DomainException('Error, the payment action is not valid'),
+        };
     }
 
     /**
@@ -119,7 +106,7 @@ class ExpressCheckout implements ServiceInterface
     }
 
     /**
-     * @throws \RuntimeException if the purchase object is invalid
+     * @throws RuntimeException if the purchase object is invalid
      * @throws \Exception
      */
     public function generateToken(PurchaseInterface $purchase): TransactionResultInterface
@@ -182,7 +169,7 @@ class ExpressCheckout implements ServiceInterface
         if (!$result->isSuccessful()) {
             $errors = $result->getErrors();
             $error = $errors[0];
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 $error->getShortMessage() . ' : ' . $error->getLongMessage(),
                 $error->getCode()
             );
@@ -198,7 +185,7 @@ class ExpressCheckout implements ServiceInterface
     public function prepareTransaction(
         PurchaseInterface $purchase
     ): string {
-        return \str_replace(
+        return str_replace(
             $this->jokerInUrlValue,
             $this->generateToken($purchase)->getTokenValue(),
             $this->paypalUrl

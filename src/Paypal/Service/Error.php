@@ -38,20 +38,12 @@ namespace Teknoo\Paypal\Express\Service;
  */
 class Error implements ErrorInterface
 {
-    private int $code;
-
-    private string $shortMessage;
-
-    private string $longMessage;
-
-    private string $severity;
-
-    public function __construct(int $code, string $shortMessage, string $longMessage, string $severity)
-    {
-        $this->code = $code;
-        $this->shortMessage = $shortMessage;
-        $this->longMessage = $longMessage;
-        $this->severity = $severity;
+    public function __construct(
+        private readonly int $code,
+        private readonly string $shortMessage,
+        private readonly string $longMessage,
+        private readonly string $severity
+    ) {
     }
 
     public function getCode(): int

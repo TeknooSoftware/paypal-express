@@ -40,16 +40,11 @@ use RuntimeException;
 class TransactionResult implements TransactionResultInterface
 {
     /**
-     * @var array<string, string>
-     */
-    private array $values;
-
-    /**
      * @param array<string, string> $values
      */
-    public function __construct(array $values)
-    {
-        $this->values = $values;
+    public function __construct(
+        private array $values
+    ) {
     }
 
     public function getAckValue(): string
