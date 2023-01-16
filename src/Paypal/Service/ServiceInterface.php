@@ -25,7 +25,7 @@ declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Service;
 
-use Teknoo\Paypal\Express\Contract\PurchaseInterface;
+use Teknoo\Paypal\Express\Contracts\PurchaseInterface;
 
 /**
  * Interface to define available service to use paypal express checkout in php platform.

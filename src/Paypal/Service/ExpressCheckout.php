@@ -27,8 +27,8 @@ namespace Teknoo\Paypal\Express\Service;
 
 use DomainException;
 use RuntimeException;
-use Teknoo\Paypal\Express\Contract\ConsumerWithCountryInterface;
-use Teknoo\Paypal\Express\Contract\PurchaseInterface;
+use Teknoo\Paypal\Express\Contracts\ConsumerWithCountryInterface;
+use Teknoo\Paypal\Express\Contracts\PurchaseInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\TransportInterface;
 

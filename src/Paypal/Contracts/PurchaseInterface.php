@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace Teknoo\Paypal\Express\Contract;
+namespace Teknoo\Paypal\Express\Contracts;
 
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\ArgumentBagInterface;

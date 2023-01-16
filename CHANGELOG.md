@@ -1,5 +1,9 @@
 # Teknoo Software - Paypal express library - Change Log
 
+## [3.0.1] - 2023-01-16
+### Stable Release
+- Rename `Teknoo\Paypal\Express\Contract` to `Teknoo\Paypal\Express\Contracts`
+ 
 ## [3.0.0] - 2022-12-16
 ### Stable Release
 - Some QA Fixes

@@ -23,7 +23,7 @@
  */
 namespace Acme\demo;
 
-use Teknoo\Paypal\Express\Contract\ConsumerWithCountryInterface;
+use Teknoo\Paypal\Express\Contracts\ConsumerWithCountryInterface;
 
 /**
  * Class Consumer

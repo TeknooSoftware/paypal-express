@@ -25,9 +25,9 @@
  */
 namespace Acme\demo;
 
-use Teknoo\Paypal\Express\Contract\ConsumerInterface;
-use Teknoo\Paypal\Express\Contract\PurchaseInterface;
-use Teknoo\Paypal\Express\Contract\PurchaseItemInterface;
+use Teknoo\Paypal\Express\Contracts\ConsumerInterface;
+use Teknoo\Paypal\Express\Contracts\PurchaseInterface;
+use Teknoo\Paypal\Express\Contracts\PurchaseItemInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\ArgumentBagInterface;
 

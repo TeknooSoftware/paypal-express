@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace Teknoo\Paypal\Express\Contract;
+namespace Teknoo\Paypal\Express\Contracts;
 
 /**
  * Interface to represent consumer accounts of transactions to get informations

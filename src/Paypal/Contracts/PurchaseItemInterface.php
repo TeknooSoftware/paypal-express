@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace Teknoo\Paypal\Express\Contract;
+namespace Teknoo\Paypal\Express\Contracts;
 
 /**
  * Interface to represent an intem into a purchase in the vendor's informations system.

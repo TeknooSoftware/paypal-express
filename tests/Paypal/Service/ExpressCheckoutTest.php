@@ -30,9 +30,9 @@ namespace Teknoo\Tests\Paypal\Service;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Teknoo\Paypal\Express\Contract\ConsumerInterface;
-use Teknoo\Paypal\Express\Contract\ConsumerWithCountryInterface;
-use Teknoo\Paypal\Express\Contract\PurchaseInterface;
+use Teknoo\Paypal\Express\Contracts\ConsumerInterface;
+use Teknoo\Paypal\Express\Contracts\ConsumerWithCountryInterface;
+use Teknoo\Paypal\Express\Contracts\PurchaseInterface;
 use Teknoo\Paypal\Express\Service\ExpressCheckout;
 use Teknoo\Paypal\Express\Service\TransactionResultInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;

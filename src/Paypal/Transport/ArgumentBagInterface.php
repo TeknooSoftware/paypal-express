@@ -25,7 +25,7 @@ declare(strict_types=1);
 
 namespace Teknoo\Paypal\Express\Transport;
 
-use Teknoo\Paypal\Express\Contract\PurchaseItemInterface;
+use Teknoo\Paypal\Express\Contracts\PurchaseItemInterface;
 
 /**
  * Interface to define arguments container for all request to the api.
