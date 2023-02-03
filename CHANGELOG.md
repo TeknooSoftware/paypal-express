@@ -1,5 +1,9 @@
 # Teknoo Software - Paypal express library - Change Log
 
+## [3.0.2] - 2023-02-03
+### Stable Release
+- Update dev libs to support PHPUnit 10 and remove unused phploc
+
 ## [3.0.1] - 2023-01-16
 ### Stable Release
 - Rename `Teknoo\Paypal\Express\Contract` to `Teknoo\Paypal\Express\Contracts`
