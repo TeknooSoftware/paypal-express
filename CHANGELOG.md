@@ -1,5 +1,9 @@
 # Teknoo Software - Paypal express library - Change Log
 
+## [3.0.3] - 2023-02-11
+### Stable Release
+- Remove phpcpd and upgrade phpunit.xml
+
 ## [3.0.2] - 2023-02-03
 ### Stable Release
 - Update dev libs to support PHPUnit 10 and remove unused phploc
