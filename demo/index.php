@@ -78,7 +78,11 @@ try {
         <?php else:
             $result = $service->getTransactionResult($_GET['token']);
             if ($result->isSuccessful()) {
-                $confirmationResult = $service->confirmTransaction($_GET['token'], $result->getPayerIdValue(), $purchase);
+                $confirmationResult = $service->confirmTransaction(
+                        $_GET['token'],
+                        $result->getPayerIdValue(),
+                        $purchase
+                );
                 if ($confirmationResult->isSuccessful()) {
                     echo '<p>Checkout successful</p>';
                 } else {

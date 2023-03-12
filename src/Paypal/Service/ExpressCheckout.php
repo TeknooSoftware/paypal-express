@@ -26,10 +26,10 @@ declare(strict_types=1);
 namespace Teknoo\Paypal\Express\Service;
 
 use DomainException;
-use RuntimeException;
 use Teknoo\Paypal\Express\Contracts\ConsumerWithCountryInterface;
 use Teknoo\Paypal\Express\Contracts\PurchaseInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
+use Teknoo\Paypal\Express\Transport\Exception\ErrorInRequestException;
 use Teknoo\Paypal\Express\Transport\TransportInterface;
 
 use function str_replace;
@@ -106,7 +106,7 @@ class ExpressCheckout implements ServiceInterface
     }
 
     /**
-     * @throws RuntimeException if the purchase object is invalid
+     * @throws ErrorInRequestException if the purchase object is invalid
      * @throws \Exception
      */
     public function generateToken(PurchaseInterface $purchase): TransactionResultInterface
@@ -169,7 +169,7 @@ class ExpressCheckout implements ServiceInterface
         if (!$result->isSuccessful()) {
             $errors = $result->getErrors();
             $error = $errors[0];
-            throw new RuntimeException(
+            throw new ErrorInRequestException(
                 $error->getShortMessage() . ' : ' . $error->getLongMessage(),
                 $error->getCode()
             );

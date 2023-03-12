@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace Teknoo\Paypal\Express\Transport;
 
 use Teknoo\Paypal\Express\Contracts\PurchaseItemInterface;
+use Teknoo\Paypal\Express\Service\Exception\MissingParameterException;
 
 /**
  * Class to allow developer to pass arguments for request.
@@ -79,7 +80,7 @@ class ArgumentBag implements ArgumentBagInterface
             return $this->parameters[$name];
         }
 
-        throw new \RuntimeException("Error, the required parameter $name is not defined");
+        throw new MissingParameterException("Error, the required parameter $name is not defined");
     }
 
     /**

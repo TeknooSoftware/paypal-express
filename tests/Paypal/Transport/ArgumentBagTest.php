@@ -93,7 +93,7 @@ class ArgumentBagTest extends TestCase
 
     public function testGetFailureNotFound()
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $object = $this->generateObject();
         $object->get('notFound');
     }
