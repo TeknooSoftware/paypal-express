@@ -30,9 +30,6 @@ use InvalidArgumentException;
 /**
  * @copyright   Copyright (c) EIRL Richard Déloge (richarddeloge@gmail.com)
  * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software)
- *
- * @link        http://teknoo.software/paypal-express Project website
- *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richarddeloge@gmail.com>
  */
