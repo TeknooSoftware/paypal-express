@@ -9,17 +9,17 @@
  * license that are bundled with this package in the folder licences
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to richarddeloge@gmail.com so we can send you a copy immediately.
+ * to richard@teknoo.software so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) EIRL Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) EIRL Richard Déloge (richard@teknoo.software)
  * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software)
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  *
- * @author      Richard Déloge <richarddeloge@gmail.com>
+ * @author      Richard Déloge <richard@teknoo.software>
  */
 namespace Acme\demo;
 
@@ -30,14 +30,14 @@ use Teknoo\Paypal\Express\Contracts\ConsumerWithCountryInterface;
  * Demo business class to represent a consumer.
  *
  *
- * @copyright   Copyright (c) EIRL Richard Déloge (richarddeloge@gmail.com)
+ * @copyright   Copyright (c) EIRL Richard Déloge (richard@teknoo.software)
  * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software)
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  *
- * @author      Richard Déloge <richarddeloge@gmail.com>
+ * @author      Richard Déloge <richard@teknoo.software>
  */
 class Consumer implements ConsumerWithCountryInterface
 {

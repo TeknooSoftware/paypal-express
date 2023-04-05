@@ -74,7 +74,7 @@ An example of using this library is available in the folder : [Demo](demo/index.
 
 Credits
 -------
-Richard Déloge - <richarddeloge@gmail.com> - Lead developer.
+Richard Déloge - <richard@teknoo.software> - Lead developer.
 Teknoo Software - <http://teknoo.software>
 
 About Teknoo Software
