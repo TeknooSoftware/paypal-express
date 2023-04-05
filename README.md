@@ -64,7 +64,7 @@ To install this library with composer, run this command :
 
 This library requires :
 
-    * PHP 7.4+
+    * PHP 8.1+
     * A psr/http-message implementation (PSR 7)
     * A psr/http-factory implementation (PSR 17)
 
