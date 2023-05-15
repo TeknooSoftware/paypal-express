@@ -12,8 +12,8 @@
  * to richard@teknoo.software so we can send you a copy immediately.
  *
  *
- * @copyright   Copyright (c) EIRL Richard Déloge (richard@teknoo.software)
- * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software)
+ * @copyright   Copyright (c) EIRL Richard Déloge (https://deloge.io - richard@deloge.io)
+ * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software - contact@teknoo.software)
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
@@ -35,8 +35,8 @@ use function parse_str;
 use function urldecode;
 
 /**
- * @copyright   Copyright (c) EIRL Richard Déloge (richard@teknoo.software)
- * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software)
+ * @copyright   Copyright (c) EIRL Richard Déloge (https://deloge.io - richard@deloge.io)
+ * @copyright   Copyright (c) SASU Teknoo Software (https://teknoo.software - contact@teknoo.software)
  * @license     http://teknoo.software/paypal/license/mit         MIT License
  * @author      Richard Déloge <richard@teknoo.software>
  */
