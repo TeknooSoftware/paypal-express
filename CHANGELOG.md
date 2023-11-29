@@ -1,5 +1,9 @@
 # Teknoo Software - Paypal express library - Change Log
 
+## [3.0.7] - 2023-11-29
+### Stable Release
+- Update dev lib requirements
+
 ## [3.0.6] - 2023-05-15
 ### Stable Release
 - Update dev lib requirements
