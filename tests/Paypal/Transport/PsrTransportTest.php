@@ -135,8 +135,86 @@ class PsrTransportTest extends TestCase
         $request->expects(self::any())->method('withBody')->willReturnSelf();
         $stream = $this->createMock(StreamInterface::class);
         $response = $this->createMock(ResponseInterface::class);
+
+        $stream = new class implements StreamInterface {
+            public function __toString(): string
+            {
+                return \urlencode('first=value&arr[]=foo+bar&arr[]=baz');
+            }
+
+            public function close(): void
+            {
+                // TODO: Implement close() method.
+            }
+
+            public function detach()
+            {
+                // TODO: Implement detach() method.
+            }
+
+            public function getSize(): ?int
+            {
+                // TODO: Implement getSize() method.
+            }
+
+            public function tell(): int
+            {
+                // TODO: Implement tell() method.
+            }
+
+            public function eof(): bool
+            {
+                // TODO: Implement eof() method.
+            }
+
+            public function isSeekable(): bool
+            {
+                // TODO: Implement isSeekable() method.
+            }
+
+            public function seek(int $offset, int $whence = SEEK_SET): void
+            {
+                // TODO: Implement seek() method.
+            }
+
+            public function rewind(): void
+            {
+                // TODO: Implement rewind() method.
+            }
+
+            public function isWritable(): bool
+            {
+                return false;
+            }
+
+            public function write(string $string): int
+            {
+                // TODO: Implement write() method.
+            }
+
+            public function isReadable(): bool
+            {
+                return true;
+            }
+
+            public function read(int $length): string
+            {
+                return \urlencode('first=value&arr[]=foo+bar&arr[]=baz');
+            }
+
+            public function getContents(): string
+            {
+                return \urlencode('first=value&arr[]=foo+bar&arr[]=baz');
+            }
+
+            public function getMetadata(?string $key = null)
+            {
+                // TODO: Implement getMetadata() method.
+            }
+        };
+
         $response->expects(self::any())->method('getBody')->willReturn(
-            \urlencode('first=value&arr[]=foo+bar&arr[]=baz')
+            $stream,
         );
 
         $this->getUriFactoryMock()
