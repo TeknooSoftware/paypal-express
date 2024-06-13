@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace Teknoo\Tests\Paypal\Service;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Teknoo\Paypal\Express\Service\Error;
 use Teknoo\Paypal\Express\Service\TransactionResult;
@@ -45,8 +46,8 @@ use Teknoo\Paypal\Express\Service\TransactionResult;
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
- * @covers \Teknoo\Paypal\Express\Service\TransactionResult
  */
+#[CoversClass(TransactionResult::class)]
 class TransactionResultTest extends TestCase
 {
     private function generateObject(array $param): TransactionResult

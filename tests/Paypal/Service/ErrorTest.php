@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace Teknoo\Tests\Paypal\Service;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Teknoo\Paypal\Express\Service\Error;
 
@@ -44,8 +45,8 @@ use Teknoo\Paypal\Express\Service\Error;
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
- * @covers \Teknoo\Paypal\Express\Service\Error
  */
+#[CoversClass(Error::class)]
 class ErrorTest extends TestCase
 {
     private function generateError(

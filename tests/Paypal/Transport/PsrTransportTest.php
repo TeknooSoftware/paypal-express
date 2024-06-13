@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace Teknoo\Tests\Paypal\Transport;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -52,8 +53,8 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
- * @covers \Teknoo\Paypal\Express\Transport\PsrTransport
  */
+#[CoversClass(PsrTransport::class)]
 class PsrTransportTest extends TestCase
 {
     private ?ClientInterface $client = null;
@@ -132,7 +133,7 @@ class PsrTransportTest extends TestCase
     {
         $uri = $this->createMock(UriInterface::class);
         $request = $this->createMock(RequestInterface::class);
-        $request->expects(self::any())->method('withBody')->willReturnSelf();
+        $request->expects($this->any())->method('withBody')->willReturnSelf();
         $stream = $this->createMock(StreamInterface::class);
         $response = $this->createMock(ResponseInterface::class);
 
@@ -213,28 +214,28 @@ class PsrTransportTest extends TestCase
             }
         };
 
-        $response->expects(self::any())->method('getBody')->willReturn(
+        $response->expects($this->any())->method('getBody')->willReturn(
             $stream,
         );
 
         $this->getUriFactoryMock()
-            ->expects(self::any())
+            ->expects($this->any())
             ->method('createUri')
             ->willReturn($uri);
 
         $this->getRequestFactoryMock()
-            ->expects(self::any())
+            ->expects($this->any())
             ->method('createRequest')
             ->with('POST', $uri)
             ->willReturn($request);
 
         $this->getStreamFactoryMock()
-            ->expects(self::any())
+            ->expects($this->any())
             ->method('createStream')
             ->willReturn($stream);
 
         $this->getClientMock()
-            ->expects(self::any())
+            ->expects($this->any())
             ->method('sendRequest')
             ->with($request)
             ->willReturn($response);

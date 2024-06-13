@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace Teknoo\Tests\Paypal\Transport;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Teknoo\Paypal\Express\Contracts\PurchaseItemInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
@@ -42,8 +43,8 @@ use Teknoo\Paypal\Express\Transport\ArgumentBag;
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
- * @covers \Teknoo\Paypal\Express\Transport\ArgumentBag
  */
+#[CoversClass(ArgumentBag::class)]
 class ArgumentBagTest extends TestCase
 {
     private function generateObject($args = []): ArgumentBag
@@ -117,22 +118,22 @@ class ArgumentBagTest extends TestCase
     public function testAddItem()
     {
         $item1 = $this->createMock(PurchaseItemInterface::class);
-        $item1->expects(self::any())->method('getName')->willReturn('name 1');
-        $item1->expects(self::any())->method('getDescription')->willReturn('desc 1');
-        $item1->expects(self::any())->method('getAmount')->willReturn(123.0);
-        $item1->expects(self::any())->method('getQantity')->willReturn(1);
-        $item1->expects(self::any())->method('getReference')->willReturn('n1234');
-        $item1->expects(self::any())->method('getRequestUrl')->willReturn('https://foo.bar');
-        $item1->expects(self::any())->method('getItemCategory')->willReturn('Digital');
+        $item1->expects($this->any())->method('getName')->willReturn('name 1');
+        $item1->expects($this->any())->method('getDescription')->willReturn('desc 1');
+        $item1->expects($this->any())->method('getAmount')->willReturn(123.0);
+        $item1->expects($this->any())->method('getQantity')->willReturn(1);
+        $item1->expects($this->any())->method('getReference')->willReturn('n1234');
+        $item1->expects($this->any())->method('getRequestUrl')->willReturn('https://foo.bar');
+        $item1->expects($this->any())->method('getItemCategory')->willReturn('Digital');
 
         $item2 = $this->createMock(PurchaseItemInterface::class);
-        $item2->expects(self::any())->method('getName')->willReturn('name 2');
-        $item2->expects(self::any())->method('getDescription')->willReturn('');
-        $item2->expects(self::any())->method('getAmount')->willReturn(456.0);
-        $item2->expects(self::any())->method('getQantity')->willReturn(3);
-        $item2->expects(self::any())->method('getReference')->willReturn('');
-        $item2->expects(self::any())->method('getRequestUrl')->willReturn('');
-        $item2->expects(self::any())->method('getItemCategory')->willReturn('Physical');
+        $item2->expects($this->any())->method('getName')->willReturn('name 2');
+        $item2->expects($this->any())->method('getDescription')->willReturn('');
+        $item2->expects($this->any())->method('getAmount')->willReturn(456.0);
+        $item2->expects($this->any())->method('getQantity')->willReturn(3);
+        $item2->expects($this->any())->method('getReference')->willReturn('');
+        $item2->expects($this->any())->method('getRequestUrl')->willReturn('');
+        $item2->expects($this->any())->method('getItemCategory')->willReturn('Physical');
 
         $object = $this->generateObject();
         self::assertEquals($object, $object->addItem($item1));

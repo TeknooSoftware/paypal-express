@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace Teknoo\Tests\Paypal\Service;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Teknoo\Paypal\Express\Contracts\ConsumerInterface;
@@ -48,8 +49,8 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
- * @covers \Teknoo\Paypal\Express\Service\ExpressCheckout
  */
+#[CoversClass(ExpressCheckout::class)]
 class ExpressCheckoutTest extends TestCase
 {
     private ?TransportInterface $transport = null;
@@ -123,15 +124,15 @@ class ExpressCheckoutTest extends TestCase
             $consumer = $this->getConsumerMock();
         }
 
-        $this->getPurchaseMock()->expects(self::any())
+        $this->getPurchaseMock()->expects($this->any())
             ->method('getConsumer')
             ->willReturn($consumer);
 
-        $consumer->expects(self::any())
+        $consumer->expects($this->any())
             ->method('getConsumerName')
             ->willReturn('Roger Rabbit');
 
-        $consumer->expects(self::any())
+        $consumer->expects($this->any())
             ->method('getPhone')
             ->willReturn('789456123');
 
@@ -142,24 +143,24 @@ class ExpressCheckoutTest extends TestCase
     {
         $consumer = $this->setIdentityToConsumer($withCountry);
 
-        $consumer->expects(self::any())
+        $consumer->expects($this->any())
             ->method('getShippingAddress')
             ->willReturn('adr1');
 
-        $consumer->expects(self::any())
+        $consumer->expects($this->any())
             ->method('getShippingZip')
             ->willReturn('14000');
 
-        $consumer->expects(self::any())
+        $consumer->expects($this->any())
             ->method('getShippingCity')
             ->willReturn('Caen');
 
         if (true === $withCountry) {
-            $consumer->expects(self::any())
+            $consumer->expects($this->any())
                 ->method('getShippingCountryCode')
                 ->willReturn('US');
 
-            $consumer->expects(self::any())
+            $consumer->expects($this->any())
                 ->method('getShippingState')
                 ->willReturn('Washington');
         }
@@ -174,23 +175,23 @@ class ExpressCheckoutTest extends TestCase
     {
         $purchase = $this->getPurchaseMock();
 
-        $purchase->expects(self::any())
+        $purchase->expects($this->any())
             ->method('getAmount')
             ->willReturn(150.12);
 
-        $purchase->expects(self::any())
+        $purchase->expects($this->any())
             ->method('getPaymentAction')
             ->willReturn($operation);
 
-        $purchase->expects(self::any())
+        $purchase->expects($this->any())
             ->method('getReturnUrl')
             ->willReturn('http://teknoo.software');
 
-        $purchase->expects(self::any())
+        $purchase->expects($this->any())
             ->method('getCancelUrl')
             ->willReturn('http://teknoo.software/cancel');
 
-        $purchase->expects(self::any())
+        $purchase->expects($this->any())
             ->method('getCurrencyCode')
             ->willReturn($currency);
 
@@ -216,7 +217,7 @@ class ExpressCheckoutTest extends TestCase
         );
 
         $this->getTransportMock()
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
@@ -233,7 +234,7 @@ class ExpressCheckoutTest extends TestCase
         $this->setIdentityToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects(self::once())
+        $purchase->expects($this->once())
             ->method('configureArgumentBag')
             ->with($this->callback(function ($arg) {
                 return $arg instanceof ArgumentBag;
@@ -268,7 +269,7 @@ class ExpressCheckoutTest extends TestCase
         );
 
         $this->getTransportMock()
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
@@ -285,7 +286,7 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects(self::once())
+        $purchase->expects($this->once())
             ->method('configureArgumentBag')
             ->with($this->callback(function ($arg) {
                 return $arg instanceof ArgumentBag;
@@ -320,7 +321,7 @@ class ExpressCheckoutTest extends TestCase
         );
 
         $this->getTransportMock()
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
@@ -337,7 +338,7 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer(true);
 
         $purchase = $this->setPurchase();
-        $purchase->expects(self::once())
+        $purchase->expects($this->once())
             ->method('configureArgumentBag')
             ->with($this->callback(function ($arg) {
                 return $arg instanceof ArgumentBag;
@@ -379,7 +380,7 @@ class ExpressCheckoutTest extends TestCase
             );
 
             $this->getTransportMock()
-                ->expects(self::any())
+                ->expects($this->any())
                 ->method('call')
                 ->willReturnCallback(
                     function ($name, $args) use (&$exceptedBody) {
@@ -396,7 +397,7 @@ class ExpressCheckoutTest extends TestCase
             $this->setAddressToConsumer();
 
             $purchase = $this->setPurchase($currency);
-            $purchase->expects(self::once())
+            $purchase->expects($this->once())
                 ->method('configureArgumentBag')
                 ->with($this->callback(function ($arg) {
                     return $arg instanceof ArgumentBag;
@@ -415,7 +416,7 @@ class ExpressCheckoutTest extends TestCase
     public function testGenerateTokenAddressBadCurrency()
     {
         $this->getTransportMock()
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('call');
 
         $this->setAddressToConsumer();
@@ -455,7 +456,7 @@ class ExpressCheckoutTest extends TestCase
             );
 
             $this->getTransportMock()
-                ->expects(self::any())
+                ->expects($this->any())
                 ->method('call')
                 ->willReturnCallback(
                     function ($name, $args) use (&$exceptedBody) {
@@ -472,7 +473,7 @@ class ExpressCheckoutTest extends TestCase
             $this->setAddressToConsumer();
 
             $purchase = $this->setPurchase('EUR', $operation);
-            $purchase->expects(self::once())
+            $purchase->expects($this->once())
                 ->method('configureArgumentBag')
                 ->with($this->callback(function ($arg) {
                     return $arg instanceof ArgumentBag;
@@ -491,7 +492,7 @@ class ExpressCheckoutTest extends TestCase
     public function testGenerateTokenAddressBadOperation()
     {
         $this->getTransportMock()
-            ->expects(self::never())
+            ->expects($this->never())
             ->method('call');
 
         $this->setAddressToConsumer();
@@ -525,7 +526,7 @@ class ExpressCheckoutTest extends TestCase
         );
 
         $this->getTransportMock()
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
@@ -545,7 +546,7 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects(self::once())
+        $purchase->expects($this->once())
             ->method('configureArgumentBag')
             ->with($this->callback(function ($arg) {
                 return $arg instanceof ArgumentBag;
@@ -570,7 +571,7 @@ class ExpressCheckoutTest extends TestCase
         );
 
         $this->getTransportMock()
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
@@ -604,7 +605,7 @@ class ExpressCheckoutTest extends TestCase
         );
 
         $this->getTransportMock()
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
@@ -645,7 +646,7 @@ class ExpressCheckoutTest extends TestCase
         );
 
         $this->getTransportMock()
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
                 function ($name, $args) use (&$exceptedBody) {
