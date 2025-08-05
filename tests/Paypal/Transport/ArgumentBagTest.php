@@ -5,7 +5,7 @@
  *
  * LICENSE
  *
- * This source file is subject to the MIT license
+ * This source file is subject to the 3-Clause BSD license
  * it is available in LICENSE file at the root of this package
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
@@ -17,7 +17,7 @@
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -39,7 +39,7 @@ use Teknoo\Paypal\Express\Transport\ArgumentBag;
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -47,27 +47,27 @@ use Teknoo\Paypal\Express\Transport\ArgumentBag;
 #[CoversClass(ArgumentBag::class)]
 class ArgumentBagTest extends TestCase
 {
-    private function generateObject($args = []): ArgumentBag
+    private function generateObject(array $args = []): ArgumentBag
     {
         return new ArgumentBag($args);
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
-        self::assertInstanceOf(ArgumentBag::class, $this->generateObject());
-        self::assertInstanceOf(ArgumentBag::class, $this->generateObject(['foo' => 'bar']));
+        $this->assertInstanceOf(ArgumentBag::class, $this->generateObject());
+        $this->assertInstanceOf(ArgumentBag::class, $this->generateObject(['foo' => 'bar']));
     }
 
-    public function testReset()
+    public function testReset(): void
     {
         $object = $this->generateObject();
         $object->set('foo', 'bar');
         $object->reset();
         $array = $object->toArray();
-        self::assertEquals(0, \count($array));
+        $this->assertCount(0, $array);
     }
 
-    public function testSetFailure()
+    public function testSetFailure(): void
     {
         $this->expectException(\TypeError::class);
 
@@ -75,16 +75,16 @@ class ArgumentBagTest extends TestCase
         $object->set(new \stdClass(), 'bar');
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $object = $this->generateObject();
         $object->set('foo', 'bar');
         $array = $object->toArray();
-        self::assertEquals(1, \count($array));
-        self::assertEquals('bar', $array['foo']);
+        $this->assertCount(1, $array);
+        $this->assertEquals('bar', $array['foo']);
     }
 
-    public function testGetFailure()
+    public function testGetFailure(): void
     {
         $this->expectException(\TypeError::class);
 
@@ -92,72 +92,69 @@ class ArgumentBagTest extends TestCase
         $object->get(new \stdClass());
     }
 
-    public function testGetFailureNotFound()
+    public function testGetFailureNotFound(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $object = $this->generateObject();
         $object->get('notFound');
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $object = $this->generateObject();
         $object->set('foo', 'bar');
-        self::assertEquals('bar', $object->get('foo'));
+        $this->assertEquals('bar', $object->get('foo'));
     }
 
-    public function testToArray()
+    public function testToArray(): void
     {
         $object = $this->generateObject();
         $object->set('foo', 'bar');
         $array = $object->toArray();
-        self::assertEquals(1, \count($array));
-        self::assertEquals('bar', $array['foo']);
+        $this->assertCount(1, $array);
+        $this->assertEquals('bar', $array['foo']);
     }
 
-    public function testAddItem()
+    public function testAddItem(): void
     {
         $item1 = $this->createMock(PurchaseItemInterface::class);
-        $item1->expects($this->any())->method('getName')->willReturn('name 1');
-        $item1->expects($this->any())->method('getDescription')->willReturn('desc 1');
-        $item1->expects($this->any())->method('getAmount')->willReturn(123.0);
-        $item1->expects($this->any())->method('getQantity')->willReturn(1);
-        $item1->expects($this->any())->method('getReference')->willReturn('n1234');
-        $item1->expects($this->any())->method('getRequestUrl')->willReturn('https://foo.bar');
-        $item1->expects($this->any())->method('getItemCategory')->willReturn('Digital');
+        $item1->method('getName')->willReturn('name 1');
+        $item1->method('getDescription')->willReturn('desc 1');
+        $item1->method('getAmount')->willReturn(123.0);
+        $item1->method('getQantity')->willReturn(1);
+        $item1->method('getReference')->willReturn('n1234');
+        $item1->method('getRequestUrl')->willReturn('https://foo.bar');
+        $item1->method('getItemCategory')->willReturn('Digital');
 
         $item2 = $this->createMock(PurchaseItemInterface::class);
-        $item2->expects($this->any())->method('getName')->willReturn('name 2');
-        $item2->expects($this->any())->method('getDescription')->willReturn('');
-        $item2->expects($this->any())->method('getAmount')->willReturn(456.0);
-        $item2->expects($this->any())->method('getQantity')->willReturn(3);
-        $item2->expects($this->any())->method('getReference')->willReturn('');
-        $item2->expects($this->any())->method('getRequestUrl')->willReturn('');
-        $item2->expects($this->any())->method('getItemCategory')->willReturn('Physical');
+        $item2->method('getName')->willReturn('name 2');
+        $item2->method('getDescription')->willReturn('');
+        $item2->method('getAmount')->willReturn(456.0);
+        $item2->method('getQantity')->willReturn(3);
+        $item2->method('getReference')->willReturn('');
+        $item2->method('getRequestUrl')->willReturn('');
+        $item2->method('getItemCategory')->willReturn('Physical');
 
         $object = $this->generateObject();
-        self::assertEquals($object, $object->addItem($item1));
-        self::assertEquals($object, $object->addItem($item2));
+        $this->assertEquals($object, $object->addItem($item1));
+        $this->assertEquals($object, $object->addItem($item2));
 
         $array = $object->toArray();
-        self::assertEquals(
-            [
-                'L_PAYMENTREQUEST_0_NAME0' => 'name 1',
-                'L_PAYMENTREQUEST_0_DESC0' => 'desc 1',
-                'L_PAYMENTREQUEST_0_AMT0' => 123,
-                'L_PAYMENTREQUEST_0_QTY0' => 1,
-                'L_PAYMENTREQUEST_0_NUMBER0' => 'n1234',
-                'L_PAYMENTREQUEST_0_ITEMURL0' => 'https://foo.bar',
-                'L_PAYMENTREQUEST_0_ITEMCATEGORY0' => 'Digital',
-                'L_PAYMENTREQUEST_0_NAME1' => 'name 2',
-                'L_PAYMENTREQUEST_0_DESC1' => '',
-                'L_PAYMENTREQUEST_0_AMT1' => 456,
-                'L_PAYMENTREQUEST_0_QTY1' => 3,
-                'L_PAYMENTREQUEST_0_NUMBER1' => '',
-                'L_PAYMENTREQUEST_0_ITEMURL1' => '',
-                'L_PAYMENTREQUEST_0_ITEMCATEGORY1' => 'Physical',
-            ],
-            $array
-        );
+        $this->assertEquals([
+            'L_PAYMENTREQUEST_0_NAME0' => 'name 1',
+            'L_PAYMENTREQUEST_0_DESC0' => 'desc 1',
+            'L_PAYMENTREQUEST_0_AMT0' => 123,
+            'L_PAYMENTREQUEST_0_QTY0' => 1,
+            'L_PAYMENTREQUEST_0_NUMBER0' => 'n1234',
+            'L_PAYMENTREQUEST_0_ITEMURL0' => 'https://foo.bar',
+            'L_PAYMENTREQUEST_0_ITEMCATEGORY0' => 'Digital',
+            'L_PAYMENTREQUEST_0_NAME1' => 'name 2',
+            'L_PAYMENTREQUEST_0_DESC1' => '',
+            'L_PAYMENTREQUEST_0_AMT1' => 456,
+            'L_PAYMENTREQUEST_0_QTY1' => 3,
+            'L_PAYMENTREQUEST_0_NUMBER1' => '',
+            'L_PAYMENTREQUEST_0_ITEMURL1' => '',
+            'L_PAYMENTREQUEST_0_ITEMCATEGORY1' => 'Physical',
+        ], $array);
     }
 }

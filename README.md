@@ -77,7 +77,7 @@ sharing knowledge and skills.
 
 License
 -------
-This library is licensed under the MIT License - see the licenses folder for details.
+This library is licensed under the 3-Clause BSD License - see the licenses folder for details.
 
 Installation & Requirements
 ---------------------------

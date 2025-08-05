@@ -5,7 +5,7 @@
  *
  * LICENSE
  *
- * This source file is subject to the MIT license
+ * This source file is subject to the 3-Clause BSD license
  * it is available in LICENSE file at the root of this package
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
@@ -17,7 +17,7 @@
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -49,7 +49,7 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -129,11 +129,11 @@ class PsrTransportTest extends TestCase
         );
     }
 
-    public function testCall()
+    public function testCall(): void
     {
         $uri = $this->createMock(UriInterface::class);
         $request = $this->createMock(RequestInterface::class);
-        $request->expects($this->any())->method('withBody')->willReturnSelf();
+        $request->method('withBody')->willReturnSelf();
         $stream = $this->createMock(StreamInterface::class);
         $response = $this->createMock(ResponseInterface::class);
 
@@ -148,7 +148,7 @@ class PsrTransportTest extends TestCase
                 // TODO: Implement close() method.
             }
 
-            public function detach()
+            public function detach(): void
             {
                 // TODO: Implement detach() method.
             }
@@ -208,50 +208,43 @@ class PsrTransportTest extends TestCase
                 return \urlencode('first=value&arr[]=foo+bar&arr[]=baz');
             }
 
-            public function getMetadata(?string $key = null)
+            public function getMetadata(?string $key = null): void
             {
                 // TODO: Implement getMetadata() method.
             }
         };
 
-        $response->expects($this->any())->method('getBody')->willReturn(
+        $response->method('getBody')->willReturn(
             $stream,
         );
 
         $this->getUriFactoryMock()
-            ->expects($this->any())
             ->method('createUri')
             ->willReturn($uri);
 
         $this->getRequestFactoryMock()
-            ->expects($this->any())
             ->method('createRequest')
             ->with('POST', $uri)
             ->willReturn($request);
 
         $this->getStreamFactoryMock()
-            ->expects($this->any())
             ->method('createStream')
             ->willReturn($stream);
 
         $this->getClientMock()
-            ->expects($this->any())
             ->method('sendRequest')
             ->with($request)
             ->willReturn($response);
 
-        self::assertEquals(
-            [
-                'first' => 'value',
-                'arr' => [
-                    'foo bar',
-                    'baz'
-                ]
-            ],
-            $this->buildTransport()->call(
-                'foo',
-                $this->createMock(ArgumentBagInterface::class)
-            )
-        );
+        $this->assertEquals([
+            'first' => 'value',
+            'arr' => [
+                'foo bar',
+                'baz'
+            ]
+        ], $this->buildTransport()->call(
+            'foo',
+            $this->createMock(ArgumentBagInterface::class)
+        ));
     }
 }
