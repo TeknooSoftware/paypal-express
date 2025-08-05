@@ -5,7 +5,7 @@
  *
  * LICENSE
  *
- * This source file is subject to the MIT license
+ * This source file is subject to the 3-Clause BSD license
  * it is available in LICENSE file at the root of this package
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
@@ -17,7 +17,7 @@
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -45,7 +45,7 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -53,11 +53,11 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
 #[CoversClass(ExpressCheckout::class)]
 class ExpressCheckoutTest extends TestCase
 {
-    private ?TransportInterface $transport = null;
+    private ?\PHPUnit\Framework\MockObject\MockObject $transport = null;
 
-    private ?ConsumerInterface $consumer = null;
+    private ?\PHPUnit\Framework\MockObject\MockObject $consumer = null;
 
-    private ?PurchaseInterface $purchase = null;
+    private ?\PHPUnit\Framework\MockObject\MockObject $purchase = null;
 
     /**
      * @return MockObject|TransportInterface
@@ -124,15 +124,15 @@ class ExpressCheckoutTest extends TestCase
             $consumer = $this->getConsumerMock();
         }
 
-        $this->getPurchaseMock()->expects($this->any())
+        $this->getPurchaseMock()
             ->method('getConsumer')
             ->willReturn($consumer);
 
-        $consumer->expects($this->any())
+        $consumer
             ->method('getConsumerName')
             ->willReturn('Roger Rabbit');
 
-        $consumer->expects($this->any())
+        $consumer
             ->method('getPhone')
             ->willReturn('789456123');
 
@@ -143,24 +143,24 @@ class ExpressCheckoutTest extends TestCase
     {
         $consumer = $this->setIdentityToConsumer($withCountry);
 
-        $consumer->expects($this->any())
+        $consumer
             ->method('getShippingAddress')
             ->willReturn('adr1');
 
-        $consumer->expects($this->any())
+        $consumer
             ->method('getShippingZip')
             ->willReturn('14000');
 
-        $consumer->expects($this->any())
+        $consumer
             ->method('getShippingCity')
             ->willReturn('Caen');
 
         if (true === $withCountry) {
-            $consumer->expects($this->any())
+            $consumer
                 ->method('getShippingCountryCode')
                 ->willReturn('US');
 
-            $consumer->expects($this->any())
+            $consumer
                 ->method('getShippingState')
                 ->willReturn('Washington');
         }
@@ -175,37 +175,37 @@ class ExpressCheckoutTest extends TestCase
     {
         $purchase = $this->getPurchaseMock();
 
-        $purchase->expects($this->any())
+        $purchase
             ->method('getAmount')
             ->willReturn(150.12);
 
-        $purchase->expects($this->any())
+        $purchase
             ->method('getPaymentAction')
             ->willReturn($operation);
 
-        $purchase->expects($this->any())
+        $purchase
             ->method('getReturnUrl')
             ->willReturn('http://teknoo.software');
 
-        $purchase->expects($this->any())
+        $purchase
             ->method('getCancelUrl')
             ->willReturn('http://teknoo.software/cancel');
 
-        $purchase->expects($this->any())
+        $purchase
             ->method('getCurrencyCode')
             ->willReturn($currency);
 
         return $purchase;
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
-        self::assertInstanceOf(ExpressCheckout::class, $this->buildService());
+        $this->assertInstanceOf(ExpressCheckout::class, $this->buildService());
     }
 
-    public function testGenerateTokenWithoutAddress()
+    public function testGenerateTokenWithoutAddress(): void
     {
-        $exceptedBody = array(
+        $exceptedBody = [
             'PAYMENTREQUEST_0_AMT' => 150.12,
             'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
@@ -214,20 +214,20 @@ class ExpressCheckoutTest extends TestCase
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '789456123',
             'RETURNURL' => 'http://teknoo.software',
             'CANCELURL' => 'http://teknoo.software/cancel',
-        );
+        ];
 
         $this->getTransportMock()
             ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
-                function ($name, $args) use (&$exceptedBody) {
-                    self::assertEquals('SetExpressCheckout', $name);
-                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                function ($name, $args) use (&$exceptedBody): array {
+                    $this->assertEquals('SetExpressCheckout', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                    return array(
+                    return [
                         'ACK' => 'SUCCESS',
                         'TOKEN' => 'tokenFake',
-                    );
+                    ];
                 }
             );
 
@@ -236,22 +236,20 @@ class ExpressCheckoutTest extends TestCase
         $purchase = $this->setPurchase();
         $purchase->expects($this->once())
             ->method('configureArgumentBag')
-            ->with($this->callback(function ($arg) {
-                return $arg instanceof ArgumentBag;
-            }))
+            ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
 
         $result = $this->buildService()
             ->generateToken($purchase);
 
-        self::assertInstanceOf(TransactionResultInterface::class, $result);
-        self::assertTrue($result->isSuccessful());
-        self::assertEquals('tokenFake', $result->getTokenValue());
+        $this->assertInstanceOf(TransactionResultInterface::class, $result);
+        $this->assertTrue($result->isSuccessful());
+        $this->assertEquals('tokenFake', $result->getTokenValue());
     }
 
-    public function testGenerateTokenAddress()
+    public function testGenerateTokenAddress(): void
     {
-        $exceptedBody = array(
+        $exceptedBody = [
             'PAYMENTREQUEST_0_AMT' => 150.12,
             'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
@@ -266,20 +264,20 @@ class ExpressCheckoutTest extends TestCase
             'RETURNURL' => 'http://teknoo.software',
             'CANCELURL' => 'http://teknoo.software/cancel',
             'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
-        );
+        ];
 
         $this->getTransportMock()
             ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
-                function ($name, $args) use (&$exceptedBody) {
-                    self::assertEquals('SetExpressCheckout', $name);
-                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                function ($name, $args) use (&$exceptedBody): array {
+                    $this->assertEquals('SetExpressCheckout', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                    return array(
+                    return [
                         'ACK' => 'SUCCESS',
                         'TOKEN' => 'tokenFake',
-                    );
+                    ];
                 }
             );
 
@@ -288,22 +286,20 @@ class ExpressCheckoutTest extends TestCase
         $purchase = $this->setPurchase();
         $purchase->expects($this->once())
             ->method('configureArgumentBag')
-            ->with($this->callback(function ($arg) {
-                return $arg instanceof ArgumentBag;
-            }))
+            ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
 
         $result = $this->buildService()
             ->generateToken($purchase);
 
-        self::assertInstanceOf(TransactionResultInterface::class, $result);
-        self::assertTrue($result->isSuccessful());
-        self::assertEquals('tokenFake', $result->getTokenValue());
+        $this->assertInstanceOf(TransactionResultInterface::class, $result);
+        $this->assertTrue($result->isSuccessful());
+        $this->assertEquals('tokenFake', $result->getTokenValue());
     }
 
-    public function testGenerateTokenAddressWithCountry()
+    public function testGenerateTokenAddressWithCountry(): void
     {
-        $exceptedBody = array(
+        $exceptedBody = [
             'PAYMENTREQUEST_0_AMT' => 150.12,
             'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
@@ -318,20 +314,20 @@ class ExpressCheckoutTest extends TestCase
             'RETURNURL' => 'http://teknoo.software',
             'CANCELURL' => 'http://teknoo.software/cancel',
             'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
-        );
+        ];
 
         $this->getTransportMock()
             ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
-                function ($name, $args) use (&$exceptedBody) {
-                    self::assertEquals('SetExpressCheckout', $name);
-                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                function ($name, $args) use (&$exceptedBody): array {
+                    $this->assertEquals('SetExpressCheckout', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                    return array(
+                    return [
                         'ACK' => 'SUCCESS',
                         'TOKEN' => 'tokenFake',
-                    );
+                    ];
                 }
             );
 
@@ -340,20 +336,18 @@ class ExpressCheckoutTest extends TestCase
         $purchase = $this->setPurchase();
         $purchase->expects($this->once())
             ->method('configureArgumentBag')
-            ->with($this->callback(function ($arg) {
-                return $arg instanceof ArgumentBag;
-            }))
+            ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
 
         $result = $this->buildService()
             ->generateToken($purchase);
 
-        self::assertInstanceOf(TransactionResultInterface::class, $result);
-        self::assertTrue($result->isSuccessful());
-        self::assertEquals('tokenFake', $result->getTokenValue());
+        $this->assertInstanceOf(TransactionResultInterface::class, $result);
+        $this->assertTrue($result->isSuccessful());
+        $this->assertEquals('tokenFake', $result->getTokenValue());
     }
 
-    public function testGenerateTokenAddressCurrency()
+    public function testGenerateTokenAddressCurrency(): void
     {
         $currencies = ['AUD', 'BRL', 'CAD', 'CZK', 'DKK', 'EUR', 'HKD', 'HUF', 'ILS', 'JPY', 'MYR', 'MXN', 'NOK',
             'NZD', 'PHP', 'PLN', 'GBP', 'RUB', 'SGD', 'SEK', 'CHF', 'TWD', 'THB', 'TRY', 'USD'];
@@ -362,7 +356,7 @@ class ExpressCheckoutTest extends TestCase
             $this->purchase = null;
             $this->consumer = null;
             $this->transport = null;
-            $exceptedBody = array(
+            $exceptedBody = [
                 'PAYMENTREQUEST_0_AMT' => 150.12,
                 'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
                 'PAYMENTREQUEST_0_CURRENCYCODE' => $currency,
@@ -377,20 +371,19 @@ class ExpressCheckoutTest extends TestCase
                 'RETURNURL' => 'http://teknoo.software',
                 'CANCELURL' => 'http://teknoo.software/cancel',
                 'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
-            );
+            ];
 
             $this->getTransportMock()
-                ->expects($this->any())
                 ->method('call')
                 ->willReturnCallback(
-                    function ($name, $args) use (&$exceptedBody) {
-                        self::assertEquals('SetExpressCheckout', $name);
-                        self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                    function ($name, $args) use (&$exceptedBody): array {
+                        $this->assertEquals('SetExpressCheckout', $name);
+                        $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                        return array(
+                        return [
                             'ACK' => 'SUCCESS',
                             'TOKEN' => 'tokenFake',
-                        );
+                        ];
                     }
                 );
 
@@ -399,21 +392,19 @@ class ExpressCheckoutTest extends TestCase
             $purchase = $this->setPurchase($currency);
             $purchase->expects($this->once())
                 ->method('configureArgumentBag')
-                ->with($this->callback(function ($arg) {
-                    return $arg instanceof ArgumentBag;
-                }))
+                ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
                 ->willReturnSelf();
 
             $result = $this->buildService()
                 ->generateToken($purchase);
 
-            self::assertInstanceOf(TransactionResultInterface::class, $result);
-            self::assertTrue($result->isSuccessful());
-            self::assertEquals('tokenFake', $result->getTokenValue());
+            $this->assertInstanceOf(TransactionResultInterface::class, $result);
+            $this->assertTrue($result->isSuccessful());
+            $this->assertEquals('tokenFake', $result->getTokenValue());
         }
     }
 
-    public function testGenerateTokenAddressBadCurrency()
+    public function testGenerateTokenAddressBadCurrency(): void
     {
         $this->getTransportMock()
             ->expects($this->never())
@@ -422,15 +413,15 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer();
         try {
             $this->buildService()->generateToken($this->setPurchase('BAD'));
-        } catch (\DomainException $e) {
+        } catch (\DomainException) {
             return;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         $this->fail('Error, the service must throws exception when the currency is not accepted');
     }
 
-    public function testGenerateTokenAddressOperation()
+    public function testGenerateTokenAddressOperation(): void
     {
         $operations = ['SALE', 'AUTHORIZATION', 'ORDER'];
 
@@ -438,7 +429,7 @@ class ExpressCheckoutTest extends TestCase
             $this->purchase = null;
             $this->consumer = null;
             $this->transport = null;
-            $exceptedBody = array(
+            $exceptedBody = [
                 'PAYMENTREQUEST_0_AMT' => 150.12,
                 'PAYMENTREQUEST_0_PAYMENTACTION' => $operation, //SALE, Authorization, Order
                 'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR',
@@ -453,20 +444,19 @@ class ExpressCheckoutTest extends TestCase
                 'RETURNURL' => 'http://teknoo.software',
                 'CANCELURL' => 'http://teknoo.software/cancel',
                 'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
-            );
+            ];
 
             $this->getTransportMock()
-                ->expects($this->any())
                 ->method('call')
                 ->willReturnCallback(
-                    function ($name, $args) use (&$exceptedBody) {
-                        self::assertEquals('SetExpressCheckout', $name);
-                        self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                    function ($name, $args) use (&$exceptedBody): array {
+                        $this->assertEquals('SetExpressCheckout', $name);
+                        $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                        return array(
+                        return [
                             'ACK' => 'SUCCESS',
                             'TOKEN' => 'tokenFake',
-                        );
+                        ];
                     }
                 );
 
@@ -475,21 +465,19 @@ class ExpressCheckoutTest extends TestCase
             $purchase = $this->setPurchase('EUR', $operation);
             $purchase->expects($this->once())
                 ->method('configureArgumentBag')
-                ->with($this->callback(function ($arg) {
-                    return $arg instanceof ArgumentBag;
-                }))
+                ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
                 ->willReturnSelf();
 
             $result = $this->buildService()
                 ->generateToken($purchase);
 
-            self::assertInstanceOf(TransactionResultInterface::class, $result);
-            self::assertTrue($result->isSuccessful());
-            self::assertEquals('tokenFake', $result->getTokenValue());
+            $this->assertInstanceOf(TransactionResultInterface::class, $result);
+            $this->assertTrue($result->isSuccessful());
+            $this->assertEquals('tokenFake', $result->getTokenValue());
         }
     }
 
-    public function testGenerateTokenAddressBadOperation()
+    public function testGenerateTokenAddressBadOperation(): void
     {
         $this->getTransportMock()
             ->expects($this->never())
@@ -498,17 +486,17 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer();
         try {
             $this->buildService()->generateToken($this->setPurchase('EUR', 'BAD'));
-        } catch (\DomainException $e) {
+        } catch (\DomainException) {
             return;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         $this->fail('Error, the service must throws exception when the currency is not accepted');
     }
 
-    public function testGenerateTokenAddressFailure()
+    public function testGenerateTokenAddressFailure(): void
     {
-        $exceptedBody = array(
+        $exceptedBody = [
             'PAYMENTREQUEST_0_AMT' => 150.12,
             'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
@@ -523,23 +511,23 @@ class ExpressCheckoutTest extends TestCase
             'RETURNURL' => 'http://teknoo.software',
             'CANCELURL' => 'http://teknoo.software/cancel',
             'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
-        );
+        ];
 
         $this->getTransportMock()
             ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
-                function ($name, $args) use (&$exceptedBody) {
-                    self::assertEquals('SetExpressCheckout', $name);
-                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                function ($name, $args) use (&$exceptedBody): array {
+                    $this->assertEquals('SetExpressCheckout', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                    return array(
+                    return [
                         'ACK' => 'FAILURE',
                         'L_ERRORCODE0' => 'err1',
                         'L_SHORTMESSAGE0' => 'shortMessage',
                         'L_LONGMESSAGE0' => 'longMessage',
                         'L_SEVERITYCODE0' => 'severity',
-                    );
+                    ];
                 }
             );
 
@@ -548,15 +536,13 @@ class ExpressCheckoutTest extends TestCase
         $purchase = $this->setPurchase();
         $purchase->expects($this->once())
             ->method('configureArgumentBag')
-            ->with($this->callback(function ($arg) {
-                return $arg instanceof ArgumentBag;
-            }))
+            ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
 
         try {
             $this->buildService()->generateToken($purchase);
         } catch (\Exception $e) {
-            self::assertEquals('shortMessage : longMessage', $e->getMessage());
+            $this->assertEquals('shortMessage : longMessage', $e->getMessage());
 
             return;
         }
@@ -564,24 +550,24 @@ class ExpressCheckoutTest extends TestCase
         $this->fail('Error, on bad return must throws exception');
     }
 
-    public function testGetTransactionResult()
+    public function testGetTransactionResult(): void
     {
-        $exceptedBody = array(
+        $exceptedBody = [
             'TOKEN' => 'fakeToken',
-        );
+        ];
 
         $this->getTransportMock()
             ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
-                function ($name, $args) use (&$exceptedBody) {
-                    self::assertEquals('GetExpressCheckoutDetails', $name);
-                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                function ($name, $args) use (&$exceptedBody): array {
+                    $this->assertEquals('GetExpressCheckoutDetails', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                    return array(
+                    return [
                         'ACK' => 'SUCCESS',
                         'PAYERID' => 'idFake',
-                    );
+                    ];
                 }
             );
 
@@ -589,32 +575,32 @@ class ExpressCheckoutTest extends TestCase
         $result = $this->buildService()
             ->getTransactionResult('fakeToken');
 
-        self::assertInstanceOf(TransactionResultInterface::class, $result);
-        self::assertTrue($result->isSuccessful());
-        self::assertEquals('idFake', $result->getPayerIdValue());
+        $this->assertInstanceOf(TransactionResultInterface::class, $result);
+        $this->assertTrue($result->isSuccessful());
+        $this->assertEquals('idFake', $result->getPayerIdValue());
     }
 
-    public function testConfirmTransaction()
+    public function testConfirmTransaction(): void
     {
-        $exceptedBody = array(
+        $exceptedBody = [
             'TOKEN' => 'fakeToken',
             'PAYERID' => 'fakeId',
             'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_AMT' => 150.12,
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
-        );
+        ];
 
         $this->getTransportMock()
             ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
-                function ($name, $args) use (&$exceptedBody) {
-                    self::assertEquals('DoExpressCheckoutPayment', $name);
-                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                function ($name, $args) use (&$exceptedBody): array {
+                    $this->assertEquals('DoExpressCheckoutPayment', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                    return array(
+                    return [
                         'ACK' => 'SUCCESS',
-                    );
+                    ];
                 }
             );
 
@@ -622,13 +608,13 @@ class ExpressCheckoutTest extends TestCase
         $result = $this->buildService()
             ->confirmTransaction('fakeToken', 'fakeId', $this->setPurchase());
 
-        self::assertInstanceOf(TransactionResultInterface::class, $result);
-        self::assertTrue($result->isSuccessful());
+        $this->assertInstanceOf(TransactionResultInterface::class, $result);
+        $this->assertTrue($result->isSuccessful());
     }
 
-    public function testPrepareTransaction()
+    public function testPrepareTransaction(): void
     {
-        $exceptedBody = array(
+        $exceptedBody = [
             'PAYMENTREQUEST_0_AMT' => 150.12,
             'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE', //SALE, Authorization, Order
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'EUR', //USD, ...
@@ -643,28 +629,25 @@ class ExpressCheckoutTest extends TestCase
             'RETURNURL' => 'http://teknoo.software',
             'CANCELURL' => 'http://teknoo.software/cancel',
             'PAYMENTREQUEST_0_SHIPTOSTREET2' => null,
-        );
+        ];
 
         $this->getTransportMock()
             ->expects($this->once())
             ->method('call')
             ->willReturnCallback(
-                function ($name, $args) use (&$exceptedBody) {
-                    self::assertEquals('SetExpressCheckout', $name);
-                    self::assertEquals(new ArgumentBag($exceptedBody), $args);
+                function ($name, $args) use (&$exceptedBody): array {
+                    $this->assertEquals('SetExpressCheckout', $name);
+                    $this->assertEquals(new ArgumentBag($exceptedBody), $args);
 
-                    return array(
+                    return [
                         'ACK' => 'SUCCESS',
                         'TOKEN' => 'tokenFake',
-                    );
+                    ];
                 }
             );
 
         $this->setAddressToConsumer();
-        self::assertEquals(
-            'http://paypalUrl/tokenFake',
-            $this->buildService('123', 'pwd', 'azer', false, 'endPointFake', 'http://paypalUrl/{token}/aaa')
-                ->prepareTransaction($this->setPurchase(), 'http://paypalUrl/{token}')
-        );
+        $this->assertEquals('http://paypalUrl/tokenFake', $this->buildService()
+            ->prepareTransaction($this->setPurchase()));
     }
 }

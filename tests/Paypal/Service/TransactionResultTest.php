@@ -5,7 +5,7 @@
  *
  * LICENSE
  *
- * This source file is subject to the MIT license
+ * This source file is subject to the 3-Clause BSD license
  * it is available in LICENSE file at the root of this package
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
@@ -17,7 +17,7 @@
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -42,7 +42,7 @@ use Teknoo\Paypal\Express\Service\TransactionResult;
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -55,107 +55,107 @@ class TransactionResultTest extends TestCase
         return new TransactionResult($param);
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
-        self::assertInstanceOf(TransactionResult::class, $this->generateObject([]));
+        $this->assertInstanceOf(TransactionResult::class, $this->generateObject([]));
     }
 
-    public function testGetAckValueFailure()
+    public function testGetAckValueFailure(): void
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getAckValue();
     }
 
-    public function testGetAckValue()
+    public function testGetAckValue(): void
     {
-        self::assertEquals('fooBar', $this->generateObject(['ACK' => 'fooBar'])->getAckValue());
+        $this->assertEquals('fooBar', $this->generateObject(['ACK' => 'fooBar'])->getAckValue());
     }
 
-    public function testIsSuccessfulFailure()
+    public function testIsSuccessfulFailure(): void
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->isSuccessful();
     }
 
-    public function testIsSuccessful()
+    public function testIsSuccessful(): void
     {
-        self::assertFalse($this->generateObject(['ACK' => 'fooBar'])->isSuccessful());
-        self::assertTrue($this->generateObject(['ACK' => 'SUCCESS'])->isSuccessful());
-        self::assertTrue($this->generateObject(['ACK' => 'SUCCESSWITHWARNING'])->isSuccessful());
+        $this->assertFalse($this->generateObject(['ACK' => 'fooBar'])->isSuccessful());
+        $this->assertTrue($this->generateObject(['ACK' => 'SUCCESS'])->isSuccessful());
+        $this->assertTrue($this->generateObject(['ACK' => 'SUCCESSWITHWARNING'])->isSuccessful());
     }
 
-    public function testGetTokenValueFailure()
+    public function testGetTokenValueFailure(): void
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getTokenValue();
     }
 
-    public function testGetTokenValue()
+    public function testGetTokenValue(): void
     {
-        self::assertEquals('fooBar', $this->generateObject(['TOKEN' => 'fooBar'])->getTokenValue());
+        $this->assertEquals('fooBar', $this->generateObject(['TOKEN' => 'fooBar'])->getTokenValue());
     }
 
-    public function testGetPayerIdValueFailure()
+    public function testGetPayerIdValueFailure(): void
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getPayerIdValue();
     }
 
-    public function testGetPayerIdValue()
+    public function testGetPayerIdValue(): void
     {
-        self::assertEquals('fooBar', $this->generateObject(['PAYERID' => 'fooBar'])->getPayerIdValue());
+        $this->assertEquals('fooBar', $this->generateObject(['PAYERID' => 'fooBar'])->getPayerIdValue());
     }
 
-    public function testGetTimestampValueFailure()
+    public function testGetTimestampValueFailure(): void
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getTimestampValue();
     }
 
-    public function testGetTimestampValue()
+    public function testGetTimestampValue(): void
     {
-        self::assertEquals('fooBar', $this->generateObject(['TIMESTAMP' => 'fooBar'])->getTimestampValue());
+        $this->assertEquals('fooBar', $this->generateObject(['TIMESTAMP' => 'fooBar'])->getTimestampValue());
     }
 
-    public function testGetCorrelationIdValueFailure()
+    public function testGetCorrelationIdValueFailure(): void
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getCorrelationIdValue();
     }
 
-    public function testGetCorrelationIdValue()
+    public function testGetCorrelationIdValue(): void
     {
-        self::assertEquals('fooBar', $this->generateObject(['CORRELATIONID' => 'fooBar'])->getCorrelationIdValue());
+        $this->assertEquals('fooBar', $this->generateObject(['CORRELATIONID' => 'fooBar'])->getCorrelationIdValue());
     }
 
-    public function testGetVersionValueFailure()
+    public function testGetVersionValueFailure(): void
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getVersionValue();
     }
 
-    public function testGetVersionValue()
+    public function testGetVersionValue(): void
     {
-        self::assertEquals('fooBar', $this->generateObject(['VERSION' => 'fooBar'])->getVersionValue());
+        $this->assertEquals('fooBar', $this->generateObject(['VERSION' => 'fooBar'])->getVersionValue());
     }
 
-    public function testGetBuildValueFailure()
+    public function testGetBuildValueFailure(): void
     {
         $this->expectException(\Exception::class);
         $this->generateObject([])->getBuildValue();
     }
 
-    public function testGetBuildValue()
+    public function testGetBuildValue(): void
     {
-        self::assertEquals('fooBar', $this->generateObject(['BUILD' => 'fooBar'])->getBuildValue());
+        $this->assertEquals('fooBar', $this->generateObject(['BUILD' => 'fooBar'])->getBuildValue());
     }
 
-    public function testGetErrorsEmpty()
+    public function testGetErrorsEmpty(): void
     {
-        self::assertEmpty($this->generateObject([])->getErrors());
+        $this->assertEmpty($this->generateObject([])->getErrors());
     }
 
-    public function testGetErrorsOne()
+    public function testGetErrorsOne(): void
     {
         $errors = $this->generateObject(
             [
@@ -166,15 +166,15 @@ class TransactionResultTest extends TestCase
             ]
         )->getErrors();
 
-        self::assertEquals(1, count($errors));
-        self::assertInstanceOf(Error::class, $errors[0]);
-        self::assertEquals(123, $errors[0]->getCode());
-        self::assertEquals('shortMess', $errors[0]->getShortMessage());
-        self::assertEquals('longMess', $errors[0]->getLongMessage());
-        self::assertEquals('warning', $errors[0]->getSeverity());
+        $this->assertCount(1, $errors);
+        $this->assertInstanceOf(Error::class, $errors[0]);
+        $this->assertEquals(123, $errors[0]->getCode());
+        $this->assertEquals('shortMess', $errors[0]->getShortMessage());
+        $this->assertEquals('longMess', $errors[0]->getLongMessage());
+        $this->assertEquals('warning', $errors[0]->getSeverity());
     }
 
-    public function testGetErrorsTwo()
+    public function testGetErrorsTwo(): void
     {
         $errors = $this->generateObject(
             [
@@ -189,20 +189,20 @@ class TransactionResultTest extends TestCase
             ]
         )->getErrors();
 
-        self::assertEquals(2, count($errors));
-        self::assertInstanceOf(Error::class, $errors[0]);
-        self::assertEquals(123, $errors[0]->getCode());
-        self::assertEquals('shortMess', $errors[0]->getShortMessage());
-        self::assertEquals('longMess', $errors[0]->getLongMessage());
-        self::assertEquals('warning', $errors[0]->getSeverity());
-        self::assertInstanceOf(Error::class, $errors[1]);
-        self::assertEquals(456, $errors[1]->getCode());
-        self::assertEquals('shortMess2', $errors[1]->getShortMessage());
-        self::assertEquals('longMess2', $errors[1]->getLongMessage());
-        self::assertEquals('warning2', $errors[1]->getSeverity());
+        $this->assertCount(2, $errors);
+        $this->assertInstanceOf(Error::class, $errors[0]);
+        $this->assertEquals(123, $errors[0]->getCode());
+        $this->assertEquals('shortMess', $errors[0]->getShortMessage());
+        $this->assertEquals('longMess', $errors[0]->getLongMessage());
+        $this->assertEquals('warning', $errors[0]->getSeverity());
+        $this->assertInstanceOf(Error::class, $errors[1]);
+        $this->assertEquals(456, $errors[1]->getCode());
+        $this->assertEquals('shortMess2', $errors[1]->getShortMessage());
+        $this->assertEquals('longMess2', $errors[1]->getLongMessage());
+        $this->assertEquals('warning2', $errors[1]->getSeverity());
     }
 
-    public function testGetErrorsOneThree()
+    public function testGetErrorsOneThree(): void
     {
         $errors = $this->generateObject(
             [
@@ -217,17 +217,17 @@ class TransactionResultTest extends TestCase
             ]
         )->getErrors();
 
-        self::assertEquals(1, count($errors));
-        self::assertInstanceOf(Error::class, $errors[0]);
-        self::assertEquals(123, $errors[0]->getCode());
-        self::assertEquals('shortMess', $errors[0]->getShortMessage());
-        self::assertEquals('longMess', $errors[0]->getLongMessage());
-        self::assertEquals('warning', $errors[0]->getSeverity());
+        $this->assertCount(1, $errors);
+        $this->assertInstanceOf(Error::class, $errors[0]);
+        $this->assertEquals(123, $errors[0]->getCode());
+        $this->assertEquals('shortMess', $errors[0]->getShortMessage());
+        $this->assertEquals('longMess', $errors[0]->getLongMessage());
+        $this->assertEquals('warning', $errors[0]->getSeverity());
     }
 
-    public function testGetRawValues()
+    public function testGetRawValues(): void
     {
         $array = $this->generateObject(['foo' => 'bar', 'hello' => 'world'])->getRawValues();
-        self::assertEquals(['foo' => 'bar', 'hello' => 'world'], $array);
+        $this->assertEquals(['foo' => 'bar', 'hello' => 'world'], $array);
     }
 }

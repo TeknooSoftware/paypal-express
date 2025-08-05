@@ -5,7 +5,7 @@
  *
  * LICENSE
  *
- * This source file is subject to the MIT license
+ * This source file is subject to the 3-Clause BSD license
  * it is available in LICENSE file at the root of this package
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
@@ -17,7 +17,7 @@
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -41,7 +41,7 @@ use Teknoo\Paypal\Express\Service\Error;
  *
  * @link        http://teknoo.software/paypal-express Project website
  *
- * @license     http://teknoo.software/paypal/license/mit         MIT License
+ * @license     http://teknoo.software/license/bsd-3         3-Clause BSD License
  *
  * @author      Richard Déloge <richard@teknoo.software>
  *
@@ -58,32 +58,32 @@ class ErrorTest extends TestCase
         return new Error($code, $shortMessage, $longMessage, $severity);
     }
 
-    public function testGetCode()
+    public function testGetCode(): void
     {
-        self::assertEmpty($this->generateError()->getCode());
-        self::assertEquals(123, $this->generateError(123)->getCode());
+        $this->assertEmpty($this->generateError()->getCode());
+        $this->assertEquals(123, $this->generateError(123)->getCode());
     }
 
-    public function testGetShortMessage()
+    public function testGetShortMessage(): void
     {
-        self::assertEmpty($this->generateError()->getShortMessage());
-        self::assertEquals('fooBar', $this->generateError(123, 'fooBar')->getShortMessage());
+        $this->assertEmpty($this->generateError()->getShortMessage());
+        $this->assertEquals('fooBar', $this->generateError(123, 'fooBar')->getShortMessage());
     }
 
-    public function testGetLongMessage()
+    public function testGetLongMessage(): void
     {
-        self::assertEmpty($this->generateError()->getLongMessage());
-        self::assertEquals('fooBar', $this->generateError(123, '', 'fooBar')->getLongMessage());
+        $this->assertEmpty($this->generateError()->getLongMessage());
+        $this->assertEquals('fooBar', $this->generateError(123, '', 'fooBar')->getLongMessage());
     }
 
-    public function testGetSeverity()
+    public function testGetSeverity(): void
     {
-        self::assertEmpty($this->generateError()->getSeverity());
-        self::assertEquals('fooBar', $this->generateError(123, '', '', 'fooBar')->getSeverity());
+        $this->assertEmpty($this->generateError()->getSeverity());
+        $this->assertEquals('fooBar', $this->generateError(123, '', '', 'fooBar')->getSeverity());
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
-        self::assertInstanceOf(Error::class, $this->generateError(123, 'sort', 'long', 'fooBar'));
+        $this->assertInstanceOf(Error::class, $this->generateError(123, 'sort', 'long', 'fooBar'));
     }
 }
