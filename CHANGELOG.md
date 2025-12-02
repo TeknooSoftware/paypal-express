@@ -1,5 +1,9 @@
 # Teknoo Software - Paypal express library - Change Log
 
+## [4.0.1] - 2025-12-02
+### Stable Release
+- Update dev libraries
+
 ## [4.0.0] - 2025-08-04
 ### Stable Release
 - Drop support of PHP 8.3
