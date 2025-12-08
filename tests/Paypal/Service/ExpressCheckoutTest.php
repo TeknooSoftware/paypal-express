@@ -28,7 +28,10 @@ declare(strict_types=1);
 
 namespace Teknoo\Tests\Paypal\Service;
 
+use DomainException;
+use Exception;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Teknoo\Paypal\Express\Contracts\ConsumerInterface;
@@ -38,6 +41,8 @@ use Teknoo\Paypal\Express\Service\ExpressCheckout;
 use Teknoo\Paypal\Express\Service\TransactionResultInterface;
 use Teknoo\Paypal\Express\Transport\ArgumentBag;
 use Teknoo\Paypal\Express\Transport\TransportInterface;
+
+use function is_object;
 
 /**
  * @copyright   Copyright (c) EIRL Richard Déloge (https://deloge.io - richard@deloge.io)
@@ -53,55 +58,50 @@ use Teknoo\Paypal\Express\Transport\TransportInterface;
 #[CoversClass(ExpressCheckout::class)]
 class ExpressCheckoutTest extends TestCase
 {
-    private ?\PHPUnit\Framework\MockObject\MockObject $transport = null;
+    private ?MockObject $transport = null;
 
-    private ?\PHPUnit\Framework\MockObject\MockObject $consumer = null;
+    private ?Stub $consumer = null;
 
-    private ?\PHPUnit\Framework\MockObject\MockObject $purchase = null;
+    private ?Stub $purchase = null;
 
     /**
      * @return MockObject|TransportInterface
      */
     private function getTransportMock(): TransportInterface
     {
-        if (!$this->transport instanceof MockObject) {
+        if (!is_object($this->transport)) {
             $this->transport = $this->createMock(TransportInterface::class);
         }
 
         return $this->transport;
     }
 
-    /**
-     * @return MockObject|ConsumerInterface
-     */
-    private function getConsumerMock(): ConsumerInterface
+    private function getConsumerStub(): ConsumerInterface&Stub
     {
-        if (!$this->consumer instanceof MockObject) {
-            $this->consumer = $this->createMock(ConsumerInterface::class);
+        if (!is_object($this->consumer)) {
+            $this->consumer = $this->createStub(ConsumerInterface::class);
+        }
+
+        return $this->consumer;
+    }
+
+    private function getConsumerWithCountryStub(): ConsumerWithCountryInterface&Stub
+    {
+        if (!is_object($this->consumer)) {
+            $this->consumer = $this->createStub(ConsumerWithCountryInterface::class);
         }
 
         return $this->consumer;
     }
 
     /**
-     * @return MockObject|ConsumerWithCountryInterface
-     */
-    private function getConsumerWithCountryMock(): ConsumerWithCountryInterface
-    {
-        if (!$this->consumer instanceof MockObject) {
-            $this->consumer = $this->createMock(ConsumerWithCountryInterface::class);
-        }
-
-        return $this->consumer;
-    }
-
-    /**
-     * @return MockObject|PurchaseInterface
+     * @return PurchaseInterface
      */
     private function getPurchaseMock(): PurchaseInterface
     {
-        if (!$this->purchase instanceof MockObject) {
-            $this->purchase = $this->createMock(PurchaseInterface::class);
+        if (!is_object($this->purchase)) {
+            // Use a stub to avoid PHPUnit notice when no explicit expectations are set
+            $this->purchase = $this->createStub(PurchaseInterface::class);
         }
 
         return $this->purchase;
@@ -119,9 +119,9 @@ class ExpressCheckoutTest extends TestCase
     private function setIdentityToConsumer(bool $withCountry = false): ConsumerInterface
     {
         if (true === $withCountry) {
-            $consumer = $this->getConsumerWithCountryMock();
+            $consumer = $this->getConsumerWithCountryStub();
         } else {
-            $consumer = $this->getConsumerMock();
+            $consumer = $this->getConsumerStub();
         }
 
         $this->getPurchaseMock()
@@ -200,6 +200,10 @@ class ExpressCheckoutTest extends TestCase
 
     public function testConstruct(): void
     {
+        // Ensure the transport mock has an explicit expectation to avoid PHPUnit notice
+        $this->getTransportMock()
+            ->expects($this->never())
+            ->method('call');
         $this->assertInstanceOf(ExpressCheckout::class, $this->buildService());
     }
 
@@ -234,7 +238,7 @@ class ExpressCheckoutTest extends TestCase
         $this->setIdentityToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects($this->once())
+        $purchase
             ->method('configureArgumentBag')
             ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
@@ -284,7 +288,7 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects($this->once())
+        $purchase
             ->method('configureArgumentBag')
             ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
@@ -334,7 +338,7 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer(true);
 
         $purchase = $this->setPurchase();
-        $purchase->expects($this->once())
+        $purchase
             ->method('configureArgumentBag')
             ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
@@ -374,6 +378,7 @@ class ExpressCheckoutTest extends TestCase
             ];
 
             $this->getTransportMock()
+                ->expects($this->once())
                 ->method('call')
                 ->willReturnCallback(
                     function ($name, $args) use (&$exceptedBody): array {
@@ -390,7 +395,7 @@ class ExpressCheckoutTest extends TestCase
             $this->setAddressToConsumer();
 
             $purchase = $this->setPurchase($currency);
-            $purchase->expects($this->once())
+            $purchase
                 ->method('configureArgumentBag')
                 ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
                 ->willReturnSelf();
@@ -413,9 +418,9 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer();
         try {
             $this->buildService()->generateToken($this->setPurchase('BAD'));
-        } catch (\DomainException) {
+        } catch (DomainException) {
             return;
-        } catch (\Exception) {
+        } catch (Exception) {
         }
 
         $this->fail('Error, the service must throws exception when the currency is not accepted');
@@ -447,6 +452,7 @@ class ExpressCheckoutTest extends TestCase
             ];
 
             $this->getTransportMock()
+                ->expects($this->once())
                 ->method('call')
                 ->willReturnCallback(
                     function ($name, $args) use (&$exceptedBody): array {
@@ -463,7 +469,7 @@ class ExpressCheckoutTest extends TestCase
             $this->setAddressToConsumer();
 
             $purchase = $this->setPurchase('EUR', $operation);
-            $purchase->expects($this->once())
+            $purchase
                 ->method('configureArgumentBag')
                 ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
                 ->willReturnSelf();
@@ -486,9 +492,9 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer();
         try {
             $this->buildService()->generateToken($this->setPurchase('EUR', 'BAD'));
-        } catch (\DomainException) {
+        } catch (DomainException) {
             return;
-        } catch (\Exception) {
+        } catch (Exception) {
         }
 
         $this->fail('Error, the service must throws exception when the currency is not accepted');
@@ -534,14 +540,14 @@ class ExpressCheckoutTest extends TestCase
         $this->setAddressToConsumer();
 
         $purchase = $this->setPurchase();
-        $purchase->expects($this->once())
+        $purchase
             ->method('configureArgumentBag')
             ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
 
         try {
             $this->buildService()->generateToken($purchase);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->assertEquals('shortMessage : longMessage', $e->getMessage());
 
             return;

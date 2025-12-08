@@ -33,9 +33,9 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "phpunit/phpunit": "^12.4.5",
+        "phpunit/phpunit": "^12.5.2",
         "squizlabs/php_codesniffer": "^4.0.1",
-        "phpstan/phpstan": "^2.1.32",
+        "phpstan/phpstan": "^2.1.33",
         "symfony/property-access": "^6.4||^7.3||^8",
         "php-http/client-common": "^2.7.3",
         "php-http/curl-client": "^2.3.3",

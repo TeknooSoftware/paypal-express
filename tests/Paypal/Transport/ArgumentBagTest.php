@@ -117,7 +117,7 @@ class ArgumentBagTest extends TestCase
 
     public function testAddItem(): void
     {
-        $item1 = $this->createMock(PurchaseItemInterface::class);
+        $item1 = $this->createStub(PurchaseItemInterface::class);
         $item1->method('getName')->willReturn('name 1');
         $item1->method('getDescription')->willReturn('desc 1');
         $item1->method('getAmount')->willReturn(123.0);
@@ -126,7 +126,7 @@ class ArgumentBagTest extends TestCase
         $item1->method('getRequestUrl')->willReturn('https://foo.bar');
         $item1->method('getItemCategory')->willReturn('Digital');
 
-        $item2 = $this->createMock(PurchaseItemInterface::class);
+        $item2 = $this->createStub(PurchaseItemInterface::class);
         $item2->method('getName')->willReturn('name 2');
         $item2->method('getDescription')->willReturn('');
         $item2->method('getAmount')->willReturn(456.0);
