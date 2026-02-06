@@ -33,12 +33,12 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "phpunit/phpunit": "^12.5.2",
+        "phpunit/phpunit": "^13",
         "squizlabs/php_codesniffer": "^4.0.1",
-        "phpstan/phpstan": "^2.1.33",
-        "symfony/property-access": "^6.4||^7.3||^8",
+        "phpstan/phpstan": "^2.1.38",
+        "symfony/property-access": "^6.4||^7.4||^8",
         "php-http/client-common": "^2.7.3",
-        "php-http/curl-client": "^2.3.3",
+        "php-http/curl-client": "^2.4",
         "php-http/message": "^1.16.2",
         "php-http/discovery": "^1.20",
         "nyholm/psr7": "^1.8.2"
