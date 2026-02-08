@@ -67,10 +67,10 @@ class PsrTransportTest extends TestCase
 
     private ?StreamFactoryInterface $streamFactory = null;
 
-    private function getClientMock(): ClientInterface&Stub
+    private function getClientMock(): ClientInterface&MockObject
     {
         if (!$this->client instanceof ClientInterface) {
-            $this->client = $this->createStub(ClientInterface::class);
+            $this->client = $this->createMock(ClientInterface::class);
         }
 
         return $this->client;
@@ -85,10 +85,10 @@ class PsrTransportTest extends TestCase
         return $this->uriFactory;
     }
 
-    private function getRequestFactoryMock(): RequestFactoryInterface&Stub
+    private function getRequestFactoryMock(): RequestFactoryInterface&MockObject
     {
         if (!$this->requestFactory instanceof RequestFactoryInterface) {
-            $this->requestFactory = $this->createStub(RequestFactoryInterface::class);
+            $this->requestFactory = $this->createMock(RequestFactoryInterface::class);
         }
 
         return $this->requestFactory;
@@ -203,6 +203,7 @@ class PsrTransportTest extends TestCase
             ->willReturn($uri);
 
         $this->getRequestFactoryMock()
+            ->expects($this->atLeastOnce())
             ->method('createRequest')
             ->with('POST', $uri)
             ->willReturn($request);
@@ -212,6 +213,7 @@ class PsrTransportTest extends TestCase
             ->willReturn($stream);
 
         $this->getClientMock()
+            ->expects($this->atLeastOnce())
             ->method('sendRequest')
             ->with($request)
             ->willReturn($response);

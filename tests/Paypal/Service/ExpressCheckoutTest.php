@@ -101,7 +101,7 @@ class ExpressCheckoutTest extends TestCase
     {
         if (!is_object($this->purchase)) {
             // Use a stub to avoid PHPUnit notice when no explicit expectations are set
-            $this->purchase = $this->createStub(PurchaseInterface::class);
+            $this->purchase = $this->createMock(PurchaseInterface::class);
         }
 
         return $this->purchase;
@@ -239,6 +239,7 @@ class ExpressCheckoutTest extends TestCase
 
         $purchase = $this->setPurchase();
         $purchase
+            ->expects($this->atLeastOnce())
             ->method('configureArgumentBag')
             ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
@@ -289,6 +290,7 @@ class ExpressCheckoutTest extends TestCase
 
         $purchase = $this->setPurchase();
         $purchase
+            ->expects($this->atLeastOnce())
             ->method('configureArgumentBag')
             ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
@@ -339,6 +341,7 @@ class ExpressCheckoutTest extends TestCase
 
         $purchase = $this->setPurchase();
         $purchase
+            ->expects($this->atLeastOnce())
             ->method('configureArgumentBag')
             ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
@@ -396,6 +399,7 @@ class ExpressCheckoutTest extends TestCase
 
             $purchase = $this->setPurchase($currency);
             $purchase
+                ->expects($this->atLeastOnce())
                 ->method('configureArgumentBag')
                 ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
                 ->willReturnSelf();
@@ -470,6 +474,7 @@ class ExpressCheckoutTest extends TestCase
 
             $purchase = $this->setPurchase('EUR', $operation);
             $purchase
+                ->expects($this->atLeastOnce())
                 ->method('configureArgumentBag')
                 ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
                 ->willReturnSelf();
@@ -541,6 +546,7 @@ class ExpressCheckoutTest extends TestCase
 
         $purchase = $this->setPurchase();
         $purchase
+            ->expects($this->atLeastOnce())
             ->method('configureArgumentBag')
             ->with($this->callback(fn($arg): bool => $arg instanceof ArgumentBag))
             ->willReturnSelf();
